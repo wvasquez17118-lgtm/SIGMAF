@@ -42,7 +42,7 @@
             groupBox3 = new GroupBox();
             comboBox2 = new ComboBox();
             label4 = new Label();
-            comboBox1 = new ComboBox();
+            cmbProveedor = new ComboBox();
             label2 = new Label();
             dateTimePicker1 = new DateTimePicker();
             label1 = new Label();
@@ -194,6 +194,7 @@
             btnGuardar.Text = "GUARDAR";
             btnGuardar.TextAlign = ContentAlignment.BottomCenter;
             btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -214,7 +215,7 @@
             // 
             groupBox3.Controls.Add(comboBox2);
             groupBox3.Controls.Add(label4);
-            groupBox3.Controls.Add(comboBox1);
+            groupBox3.Controls.Add(cmbProveedor);
             groupBox3.Controls.Add(label2);
             groupBox3.Controls.Add(dateTimePicker1);
             groupBox3.Controls.Add(label1);
@@ -244,14 +245,14 @@
             label4.TabIndex = 4;
             label4.Text = "Tipo factura";
             // 
-            // comboBox1
+            // cmbProveedor
             // 
-            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(6, 99);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(219, 28);
-            comboBox1.TabIndex = 3;
+            cmbProveedor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbProveedor.FormattingEnabled = true;
+            cmbProveedor.Location = new Point(6, 99);
+            cmbProveedor.Name = "cmbProveedor";
+            cmbProveedor.Size = new Size(219, 28);
+            cmbProveedor.TabIndex = 3;
             // 
             // label2
             // 
@@ -488,7 +489,7 @@
         private GroupBox groupBox3;
         private Label label1;
         private DateTimePicker dateTimePicker1;
-        private ComboBox comboBox1;
+        private ComboBox cmbProveedor;
         private Label label2;
         private ComboBox comboBox2;
         private Label label4;

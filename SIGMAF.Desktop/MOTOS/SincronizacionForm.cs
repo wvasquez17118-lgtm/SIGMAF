@@ -9,6 +9,7 @@ namespace SIGMAF.Desktop.MOTOS
 {
     public partial class SincronizacionForm : Form
     {
+        CatalogoService api = new CatalogoService();
         public SincronizacionForm()
         {
             InitializeComponent();
@@ -44,9 +45,18 @@ namespace SIGMAF.Desktop.MOTOS
                     {
                         SqliteDatabase.DeleteDatabase(AppServices.ConnectionString);
                         SqliteDatabase.Initialize(AppServices.ConnectionString);
-                        CatalogoService api = new CatalogoService();
-                        var resultado = await api.ObtenerCatalogoAsync();
-                        AppServices.Catalogos.InsertarVarios(resultado);
+                        
+                        var catalogos = await api.ObtenerCatalogoAsync();
+                        var proveedor = await api.ObtenerProveedoresAsync();
+                        if (catalogos.Any())
+                        {
+                            AppServices.Catalogos.InsertarVarios(catalogos);
+                        }
+                        if (proveedor.Any())
+                        {
+                            AppServices.Proveedores.InsertarVarios(proveedor);
+                        }
+
                         MessageBox.Show(chActualizarInventarioVenta.Checked ? string.Format(ConstantesMensajes.MensajeTituloSincronizarInventarioExitosamente, dateFechaSincronizacion.Value.ToString("dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"))) : ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "Confirmación");
                         btnSincronizar.Enabled = false;
                         chActualizarInventarioVenta.Checked = false;
@@ -91,6 +101,11 @@ namespace SIGMAF.Desktop.MOTOS
         private void SincronizacionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.FormularioAbierto = false;
+        }
+
+        private async void SincronizacionForm_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

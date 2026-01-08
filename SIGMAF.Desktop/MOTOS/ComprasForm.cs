@@ -1,5 +1,7 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.DB;
 using SIGMAF.Domain.MOTOS;
+using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
 using System.ComponentModel;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -9,7 +11,8 @@ namespace SIGMAF.Desktop.MOTOS
     public partial class ComprasForm : Form
     {
         private List<CatalogoModel> resultado = new List<CatalogoModel>();
-        private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
+        private List<ProveedorModel> ProveedoresLista = new List<ProveedorModel>();
+        //  private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
         private BindingSource bsRealizados = new BindingSource();
 
         CatalogoService api = new CatalogoService();
@@ -26,6 +29,10 @@ namespace SIGMAF.Desktop.MOTOS
         private async void ComprasForm_Load(object sender, EventArgs e)
         {
             // Fuerza un cambio de tamaño para que se reajusten los controles
+
+            SqliteDatabase.Initialize(AppServices.ConnectionString);
+            CatalogoService api = new CatalogoService();             
+
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
             using (var loading = new FrmLoading())
@@ -42,8 +49,27 @@ namespace SIGMAF.Desktop.MOTOS
                 try
                 {
                     ConfiguracionGridProductos();
-                    resultado = await api.ObtenerCatalogoAsync();
+
+                    resultado = AppServices.Catalogos.ListarTodos();
+                    if (!resultado.Any())
+                    {
+                        resultado = await api.ObtenerCatalogoAsync();
+                    }
+
+                    ProveedoresLista = AppServices.Proveedores.ListarTodos();
+
+                    if (!ProveedoresLista.Any())
+                    {
+                        ProveedoresLista = await api.ObtenerProveedoresAsync();
+                    }
                     dataGridProductosCatalogos.DataSource = resultado;
+
+                    cmbProveedor.DataSource = ProveedoresLista;
+                    cmbProveedor.DisplayMember = "Nombre";
+                    cmbProveedor.ValueMember = "ProveedorId";
+                    cmbProveedor.SelectedIndex = -1;
+                    cmbProveedor.DropDownStyle = ComboBoxStyle.DropDownList;
+
                 }
                 finally
                 {
@@ -163,18 +189,23 @@ namespace SIGMAF.Desktop.MOTOS
             long idServicio = long.Parse(filaOrigen.Cells["IdCatalogo"].Value?.ToString() ?? "0");
             var nombreServicio = filaOrigen.Cells["Nombre"].Value?.ToString();
 
-            if (Data.Any(p => p.CatTrabajoRealizadoId == idServicio))
-            {
-                MessageBox.Show("Este servicio ya fue agregado.", "Moto FIX LUZ");
-                return;
-            }
-           /* Data.Add(new IngresoTallerDetalleDTO()
-            {
-                CatTrabajoRealizadoId = (long)idServicio,
-                TrabajoRealizado = nombreServicio ?? "",
-                StatusTrabajoRealizado = true,
-                IngresoTallerDetalleId = 0
-            });*/
+            //if (Data.Any(p => p.CatTrabajoRealizadoId == idServicio))
+            //{
+            //    MessageBox.Show("Este servicio ya fue agregado.", "Moto FIX LUZ");
+            //    return;
+            //}
+            /* Data.Add(new IngresoTallerDetalleDTO()
+             {
+                 CatTrabajoRealizadoId = (long)idServicio,
+                 TrabajoRealizado = nombreServicio ?? "",
+                 StatusTrabajoRealizado = true,
+                 IngresoTallerDetalleId = 0
+             });*/
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

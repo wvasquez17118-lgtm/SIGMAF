@@ -171,6 +171,7 @@
             Text = "Sincronización";
             TopMost = true;
             FormClosing += SincronizacionForm_FormClosing;
+            Load += SincronizacionForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

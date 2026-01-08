@@ -27,6 +27,15 @@ namespace SIGMAF.Infrastructure
                     CodigoCategoria TEXT,
                     Estado TEXT
                 );
+
+                CREATE TABLE IF NOT EXISTS MotosProveedores (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ProveedorId TEXT,
+                    Direccion TEXT,
+                    Nombre TEXT,
+                    Celular TEXT,
+                    Estado TEXT
+                );
             ";
             cmd.ExecuteNonQuery();
         }

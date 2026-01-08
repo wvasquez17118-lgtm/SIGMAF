@@ -98,3 +98,9 @@ INSERT INTO moto_categoria VALUES (1,'RM','Repuestos moto',1);
 INSERT INTO moto_categoria VALUES (2,'LUB','Lubricantes',1);
 INSERT INTO moto_categoria VALUES (3,'ACC','Accesorios',1);
 INSERT INTO moto_categoria VALUES (4,'LULED','Luces led',1);
+
+INSERT INTO `moto_proveedores` (`proveedor_id`, `nombre`, `celular`, `direccion`, `estado`) 
+VALUES (NULL, 'Don Juan', '77681415', NULL, '1'), (NULL, 'BTS', '-', NULL, '1');
+
+
+ 
