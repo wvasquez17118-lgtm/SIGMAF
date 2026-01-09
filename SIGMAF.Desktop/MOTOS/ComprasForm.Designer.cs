@@ -44,7 +44,7 @@
             label4 = new Label();
             cmbProveedor = new ComboBox();
             label2 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            dateFechaCompra = new DateTimePicker();
             label1 = new Label();
             groupBox4 = new GroupBox();
             txtTotal = new TextBox();
@@ -57,8 +57,8 @@
             tableLayoutPanel4 = new TableLayoutPanel();
             dataGridProductosComprados = new DataGridView();
             groupBox6 = new GroupBox();
-            label11 = new Label();
-            label10 = new Label();
+            lblSumaTotalPrecio = new Label();
+            lblTotalProductos = new Label();
             label9 = new Label();
             label8 = new Label();
             panel1.SuspendLayout();
@@ -219,7 +219,7 @@
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(cmbProveedor);
             groupBox3.Controls.Add(label2);
-            groupBox3.Controls.Add(dateTimePicker1);
+            groupBox3.Controls.Add(dateFechaCompra);
             groupBox3.Controls.Add(label1);
             groupBox3.Dock = DockStyle.Fill;
             groupBox3.Location = new Point(3, 3);
@@ -266,13 +266,13 @@
             label2.TabIndex = 2;
             label2.Text = "Proveedor";
             // 
-            // dateTimePicker1
+            // dateFechaCompra
             // 
-            dateTimePicker1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dateTimePicker1.Location = new Point(6, 46);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(219, 27);
-            dateTimePicker1.TabIndex = 1;
+            dateFechaCompra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dateFechaCompra.Location = new Point(6, 46);
+            dateFechaCompra.Name = "dateFechaCompra";
+            dateFechaCompra.Size = new Size(219, 27);
+            dateFechaCompra.TabIndex = 1;
             // 
             // label1
             // 
@@ -389,11 +389,12 @@
             dataGridProductosComprados.Name = "dataGridProductosComprados";
             dataGridProductosComprados.Size = new Size(748, 255);
             dataGridProductosComprados.TabIndex = 0;
+            dataGridProductosComprados.CellClick += dataGridProductosComprados_CellClick;
             // 
             // groupBox6
             // 
-            groupBox6.Controls.Add(label11);
-            groupBox6.Controls.Add(label10);
+            groupBox6.Controls.Add(lblSumaTotalPrecio);
+            groupBox6.Controls.Add(lblTotalProductos);
             groupBox6.Controls.Add(label9);
             groupBox6.Controls.Add(label8);
             groupBox6.Dock = DockStyle.Fill;
@@ -403,25 +404,25 @@
             groupBox6.TabIndex = 1;
             groupBox6.TabStop = false;
             // 
-            // label11
+            // lblSumaTotalPrecio
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label11.Location = new Point(16, 124);
-            label11.Name = "label11";
-            label11.Size = new Size(96, 37);
-            label11.TabIndex = 11;
-            label11.Text = "C$  25";
+            lblSumaTotalPrecio.AutoSize = true;
+            lblSumaTotalPrecio.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSumaTotalPrecio.Location = new Point(6, 124);
+            lblSumaTotalPrecio.Name = "lblSumaTotalPrecio";
+            lblSumaTotalPrecio.Size = new Size(96, 37);
+            lblSumaTotalPrecio.TabIndex = 11;
+            lblSumaTotalPrecio.Text = "C$  25";
             // 
-            // label10
+            // lblTotalProductos
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label10.Location = new Point(39, 46);
-            label10.Name = "label10";
-            label10.Size = new Size(49, 37);
-            label10.TabIndex = 10;
-            label10.Text = "25";
+            lblTotalProductos.AutoSize = true;
+            lblTotalProductos.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalProductos.Location = new Point(39, 46);
+            lblTotalProductos.Name = "lblTotalProductos";
+            lblTotalProductos.Size = new Size(33, 37);
+            lblTotalProductos.TabIndex = 10;
+            lblTotalProductos.Text = "0";
             // 
             // label9
             // 
@@ -496,7 +497,7 @@
         private Button btnGuardar;
         private GroupBox groupBox3;
         private Label label1;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateFechaCompra;
         private ComboBox cmbProveedor;
         private Label label2;
         private ComboBox cmbTipoFactura;
@@ -514,7 +515,7 @@
         private GroupBox groupBox6;
         private Label label9;
         private Label label8;
-        private Label label10;
-        private Label label11;
+        private Label lblTotalProductos;
+        private Label lblSumaTotalPrecio;
     }
 }

@@ -67,6 +67,7 @@ namespace SIGMAF.Desktop
             flowMenu.SuspendLayout();
             flowMenu.Controls.Clear();
             flowMenu.Controls.Add(CreateRibbonButton("Catálogos", "icon_catalogo.png", () => AbrirCatalogosMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Ventas", "icon_venta.png", () => AbrirVentaRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Compras", "icon_compras.png", () => AbrirAgregarComprasMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Inventarios", "icon_inventory.png", () => AbrirAgregarComprasMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Ajustes stock", "icon_ajustestock.png", () => AbrirCatalogosMotos()));
@@ -89,6 +90,20 @@ namespace SIGMAF.Desktop
                 frm.Show();
             }
         }
+
+        private void AbrirVentaRepuestoMotos()
+        {
+            if (!Global.FormularioAbierto)
+            {
+                Global.FormularioAbierto = true;
+                this.Text = "SIGMAF – Catálogos MOTOS";
+                RegistrarVentaForm frm = new RegistrarVentaForm();
+                frm.MdiParent = this;
+                frm.WindowState = FormWindowState.Maximized;
+                frm.Show();
+            }
+        }
+        
 
         private void AbrirAgregarComprasMotos()
         {

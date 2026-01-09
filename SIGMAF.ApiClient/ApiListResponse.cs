@@ -19,7 +19,7 @@ namespace SIGMAF.ApiClient
         [JsonPropertyName("estado")]
         public bool Estado { get; set; }        
 
-        [JsonPropertyName("mensaje")]
+        [JsonPropertyName("mensajeerror")]
         public string? Mensaje { get; set; }
     }
 }

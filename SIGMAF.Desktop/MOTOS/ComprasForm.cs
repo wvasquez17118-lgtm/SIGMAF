@@ -1,10 +1,13 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Constantes;
 using SIGMAF.Desktop.DB;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
+using System;
 using System.ComponentModel;
-using System.Xml.Linq;
+using System.Globalization;
+using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SIGMAF.Desktop.MOTOS
@@ -16,7 +19,7 @@ namespace SIGMAF.Desktop.MOTOS
         private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
         private BindingSource bsRealizados = new BindingSource();
 
-        CatalogoService api = new CatalogoService();
+        CompraServicio apiCompra = new CompraServicio();
         public ComprasForm()
         {
             InitializeComponent();
@@ -41,7 +44,7 @@ namespace SIGMAF.Desktop.MOTOS
             // Fuerza un cambio de tamaño para que se reajusten los controles
 
             SqliteDatabase.Initialize(AppServices.ConnectionString);
-            CatalogoService api = new CatalogoService();             
+            CatalogoService api = new CatalogoService();
 
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
@@ -191,7 +194,7 @@ namespace SIGMAF.Desktop.MOTOS
 
 
         private void ConfigurarGridProductoComprados()
-        { 
+        {
             dataGridProductosComprados.AutoGenerateColumns = false;
             dataGridProductosComprados.AllowUserToAddRows = false;
             dataGridProductosComprados.AllowUserToDeleteRows = false;
@@ -205,7 +208,7 @@ namespace SIGMAF.Desktop.MOTOS
             colIdDetalle.DataPropertyName = "CompraDetalleId";
             colIdDetalle.Visible = false;
             dataGridProductosComprados.Columns.Add(colIdDetalle);
-                      
+
             var colId = new DataGridViewTextBoxColumn();
             colId.Name = "CompraId";
             colId.HeaderText = "CompraId";
@@ -213,7 +216,7 @@ namespace SIGMAF.Desktop.MOTOS
             colId.Visible = false;
             dataGridProductosComprados.Columns.Add(colId);
 
- 
+
             var colCatalogoId = new DataGridViewTextBoxColumn();
             colCatalogoId.Name = "CatalogoId";
             colCatalogoId.HeaderText = "CatalogoId";
@@ -240,7 +243,7 @@ namespace SIGMAF.Desktop.MOTOS
             colCantidad.ReadOnly = false;      // 👈 sí se edita
             dataGridProductosComprados.Columns.Add(colCantidad);
 
-          
+
             var colPrecioCompra = new DataGridViewTextBoxColumn();
             colPrecioCompra.Name = "PrecioCompra";
             colPrecioCompra.HeaderText = "Precio Compra";
@@ -259,6 +262,17 @@ namespace SIGMAF.Desktop.MOTOS
             colPrecioCompra.ReadOnly = false;      // 👈 sí se edita
             dataGridProductosComprados.Columns.Add(colPrecioVenta);
 
+
+            var colTotal = new DataGridViewTextBoxColumn();
+            colTotal.Name = "Total";
+            colTotal.HeaderText = "Total";
+            colTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colTotal.FillWeight = 120;
+            colTotal.ReadOnly = true;
+            colTotal.DefaultCellStyle.Format = "N2";
+            dataGridProductosComprados.Columns.Add(colTotal);
+
+
             // --- Columna 4: Icono eliminar ---
             var colEliminar = new DataGridViewImageColumn();
             colEliminar.Name = "Eliminar";
@@ -267,6 +281,9 @@ namespace SIGMAF.Desktop.MOTOS
             colEliminar.ImageLayout = DataGridViewImageCellLayout.Zoom;
             colEliminar.Image = Properties.Resources.icon_delete; // agrega tu PNG a Recursos
             dataGridProductosComprados.Columns.Add(colEliminar);
+
+
+
 
             // Grid en general: se permite editar, pero solo en las columnas que NO son ReadOnly
             dataGridProductosComprados.ReadOnly = false;
@@ -282,8 +299,82 @@ namespace SIGMAF.Desktop.MOTOS
             dataGridProductosComprados.EnableHeadersVisualStyles = false; // importante
             dataGridProductosComprados.ColumnHeadersDefaultCellStyle.Font =
                 new Font(dataGridProductosComprados.Font, FontStyle.Bold);
+
+            HookEventosGrid();
         }
 
+        private void HookEventosGrid()
+        {
+            dataGridProductosComprados.CellEndEdit += Grid_CellEndEdit;
+            dataGridProductosComprados.RowsRemoved += (s, e) => RecalcularTotales();
+            dataGridProductosComprados.RowsAdded += (s, e) => RecalcularTotales();
+
+            // Evita errores cuando el usuario escribe letras donde va número
+            dataGridProductosComprados.DataError += (s, e) => { e.ThrowException = false; };
+        }
+        private void Grid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            string colName = dataGridProductosComprados.Columns[e.ColumnIndex].Name;
+
+            if (colName == "Cantidad" || colName == "PrecioCompra" || colName == "PrecioVenta")
+            {
+                RecalcularFila(e.RowIndex);
+                RecalcularTotales();
+            }
+        }
+
+        private void RecalcularFila(int rowIndex)
+        {
+            var row = dataGridProductosComprados.Rows[rowIndex];
+            if (row.IsNewRow) return;
+
+            int cantidad = GetInt(row, "Cantidad");
+            decimal precioCompra = GetDecimal(row, "PrecioCompra");
+            decimal precioVenta = GetDecimal(row, "PrecioVenta");
+
+            // ✅ Decide cuál total quieres:
+            // TotalCosto = cantidad * precioCompra (lo típico en compras)
+
+            // Si quieres total a precio venta, usa:
+            // decimal totalFila = cantidad * precioVenta;
+
+            row.Cells["Total"].Value = cantidad * precioCompra;
+        }
+        private void RecalcularTotales()
+        {
+            int totalProductos = 0;
+            decimal sumaTotalPrecio = 0m;
+
+            foreach (DataGridViewRow row in dataGridProductosComprados.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                int cantidad = GetInt(row, "Cantidad");
+                decimal totalFila = GetDecimal(row, "Total"); // ya calculado
+
+                totalProductos += cantidad;
+                sumaTotalPrecio += totalFila;
+            }
+
+            // ✅ Cambia estos nombres por los tuyos:
+            lblTotalProductos.Text = totalProductos.ToString();
+
+            lblSumaTotalPrecio.Text = $"C$ {sumaTotalPrecio:N2}";
+        }
+
+        private int GetInt(DataGridViewRow row, string colName)
+        {
+            var txt = row.Cells[colName].Value?.ToString();
+            return int.TryParse(txt, NumberStyles.Any, CultureInfo.CurrentCulture, out int v) ? v : 0;
+        }
+
+        private decimal GetDecimal(DataGridViewRow row, string colName)
+        {
+            var txt = row.Cells[colName].Value?.ToString();
+            return decimal.TryParse(txt, NumberStyles.Any, CultureInfo.CurrentCulture, out decimal v) ? v : 0m;
+        }
         private void txtFiltrarProductos_TextChanged(object sender, EventArgs e)
         {
             if (resultado.Any())
@@ -329,9 +420,152 @@ namespace SIGMAF.Desktop.MOTOS
             });
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private async void btnGuardar_Click(object sender, EventArgs e)
         {
+            var detalles = new List<IngresoTallerDetalleDTO>();
+            if (cmbProveedor.SelectedValue?.ToString() == "")
+            {
+                MessageBox.Show("Seleccionar el proveedor es requerido.", "Advertencia");
+                cmbProveedor.Focus();
+                return;
+            } else  if(cmbTipoFactura.SelectedValue?.ToString() == "")
+            {
+                MessageBox.Show("Seleccionar el tipo factura es requerido.", "Advertencia");
+                cmbTipoFactura.Focus();
+                return;
+            } else if(txtSubTotal.Text == "")
+            {
+                MessageBox.Show("Debe ingresar subtotal es requerido.", "Advertencia");
+                txtSubTotal.Focus();
+                return;
+            } else if (txtDescuento.Text == "")
+            {
+                MessageBox.Show("Debe ingresar descuento es requerido.", "Advertencia");
+                txtDescuento.Focus();
+                return;
+            } else if (txtTotal.Text == "")
+            {
+                MessageBox.Show("Debe ingresar total es requerido.", "Advertencia");
+                txtTotal.Focus();
+                return;
+            } else  if (!TryGetDetallesFromGrid(out  detalles))
+                return;
 
+            var compra = new MotoComprasDTO()
+            {
+                CompraId = 0,
+                Fecha = dateFechaCompra.Value,
+                TipoFactura = cmbTipoFactura.SelectedValue?.ToString() ?? "CO",
+                ProveedorId = int.Parse(cmbProveedor?.SelectedValue?.ToString() ?? "0"),
+                SubTotal = decimal.Parse(txtSubTotal.Text),
+                Descuento = decimal.Parse(txtDescuento.Text),
+                Total = decimal.Parse(txtTotal.Text),
+                Observacion = "",
+                Estado = 1
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase // id, name, isActive
+            };
+
+            parameters.Add("Compra", JsonSerializer.Serialize(compra, options));
+            parameters.Add("Detalle", JsonSerializer.Serialize(detalles, options));
+            var resultado = await apiCompra.GuardarCompraRepuestoAsync(parameters);
+            if (resultado.Estado)
+            {
+                MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente);  
+            } else
+            {
+                MessageBox.Show(resultado.Mensaje);
+            }
+
+        }
+
+
+        private bool TryGetDetallesFromGrid(out List<IngresoTallerDetalleDTO> detalles)
+        {
+            detalles = new List<IngresoTallerDetalleDTO>();
+
+            // Si el usuario está editando una celda, fuerza a que termine la edición
+            dataGridProductosComprados.EndEdit();
+
+            foreach (DataGridViewRow row in dataGridProductosComprados.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                // Si tienes filas "vacías" por alguna razón, puedes saltarlas así:
+                // if (row.Cells["CatalogoId"].Value == null) continue;
+
+                int cantidad = GetInt(row, "Cantidad");
+                decimal precioCompra = GetDecimal(row, "PrecioCompra");
+                decimal precioVenta = GetDecimal(row, "PrecioVenta");
+                decimal total = GetDecimal(row, "Total");
+
+                // ✅ Validaciones de no-cero
+                if (cantidad <= 0 || precioCompra <= 0 || precioVenta <= 0 || total <= 0)
+                {
+                    string producto = row.Cells["Producto"].Value?.ToString() ?? "(sin nombre)";
+                    MessageBox.Show(
+                        $"Revisa el producto: {producto}\n" +
+                        $"No se permite Cantidad / PrecioCompra / PrecioVenta / Total en 0.\n\n" +
+                        $"Cantidad: {cantidad}\nPrecio Compra: {precioCompra}\nPrecio Venta: {precioVenta}\nTotal: {total}",
+                        "Validación",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+
+                    // Opcional: enfocar la fila con problema
+                    dataGridProductosComprados.ClearSelection();
+                    row.Selected = true;
+                    dataGridProductosComprados.CurrentCell = row.Cells["Cantidad"];
+                    dataGridProductosComprados.FirstDisplayedScrollingRowIndex = row.Index;
+
+                    return false;
+                }
+
+                // ✅ Armar objeto
+                var item = new IngresoTallerDetalleDTO
+                {
+                    CompraDetalleId = GetInt(row, "CompraDetalleId"),
+                    CompraId = GetInt(row, "CompraId"),
+                    CatalogoId = GetInt(row, "CatalogoId"),
+                    Producto = row.Cells["Producto"].Value?.ToString() ?? "",
+                    Cantidad = cantidad,
+                    PrecioCompra = precioCompra,
+                    PrecioVenta = precioVenta,
+                    Total = total
+                };
+
+                detalles.Add(item);
+            }
+
+            // Validación extra: al menos 1 detalle
+            if (detalles.Count == 0)
+            {
+                MessageBox.Show("Debes agregar al menos un producto.", "Validación",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void dataGridProductosComprados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            if (dataGridProductosComprados.Columns[e.ColumnIndex].Name != "Eliminar") return;
+
+            dataGridProductosComprados.EndEdit();
+            dataGridProductosComprados.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+            if (MessageBox.Show("¿Seguro desea eliminar el registro?", "Confirmar", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+
+            bsRealizados.RemoveAt(e.RowIndex);
+            RecalcularTotales();            
         }
     }
 
