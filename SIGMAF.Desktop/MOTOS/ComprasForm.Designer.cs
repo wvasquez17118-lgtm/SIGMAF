@@ -40,26 +40,26 @@
             btnGuardar = new Button();
             tableLayoutPanel3 = new TableLayoutPanel();
             groupBox3 = new GroupBox();
-            comboBox2 = new ComboBox();
+            cmbTipoFactura = new ComboBox();
             label4 = new Label();
             cmbProveedor = new ComboBox();
             label2 = new Label();
             dateTimePicker1 = new DateTimePicker();
             label1 = new Label();
             groupBox4 = new GroupBox();
-            textBox4 = new TextBox();
+            txtTotal = new TextBox();
             label7 = new Label();
-            textBox3 = new TextBox();
+            txtDescuento = new TextBox();
             label6 = new Label();
-            textBox2 = new TextBox();
+            txtSubTotal = new TextBox();
             label5 = new Label();
             groupBox5 = new GroupBox();
             tableLayoutPanel4 = new TableLayoutPanel();
             dataGridProductosComprados = new DataGridView();
             groupBox6 = new GroupBox();
-            textBox6 = new TextBox();
+            label11 = new Label();
+            label10 = new Label();
             label9 = new Label();
-            textBox5 = new TextBox();
             label8 = new Label();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -143,6 +143,7 @@
             groupBox1.Controls.Add(dataGridProductosCatalogos);
             groupBox1.Controls.Add(txtFiltrarProductos);
             groupBox1.Dock = DockStyle.Fill;
+            groupBox1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(3, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(480, 281);
@@ -174,6 +175,7 @@
             groupBox2.Controls.Add(btnGuardar);
             groupBox2.Controls.Add(tableLayoutPanel3);
             groupBox2.Dock = DockStyle.Fill;
+            groupBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox2.Location = new Point(489, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(480, 281);
@@ -213,7 +215,7 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(comboBox2);
+            groupBox3.Controls.Add(cmbTipoFactura);
             groupBox3.Controls.Add(label4);
             groupBox3.Controls.Add(cmbProveedor);
             groupBox3.Controls.Add(label2);
@@ -226,14 +228,14 @@
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             // 
-            // comboBox2
+            // cmbTipoFactura
             // 
-            comboBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(6, 153);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(219, 28);
-            comboBox2.TabIndex = 5;
+            cmbTipoFactura.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cmbTipoFactura.FormattingEnabled = true;
+            cmbTipoFactura.Location = new Point(6, 153);
+            cmbTipoFactura.Name = "cmbTipoFactura";
+            cmbTipoFactura.Size = new Size(219, 28);
+            cmbTipoFactura.TabIndex = 5;
             // 
             // label4
             // 
@@ -284,11 +286,11 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(textBox4);
+            groupBox4.Controls.Add(txtTotal);
             groupBox4.Controls.Add(label7);
-            groupBox4.Controls.Add(textBox3);
+            groupBox4.Controls.Add(txtDescuento);
             groupBox4.Controls.Add(label6);
-            groupBox4.Controls.Add(textBox2);
+            groupBox4.Controls.Add(txtSubTotal);
             groupBox4.Controls.Add(label5);
             groupBox4.Dock = DockStyle.Fill;
             groupBox4.Location = new Point(240, 3);
@@ -297,13 +299,13 @@
             groupBox4.TabIndex = 1;
             groupBox4.TabStop = false;
             // 
-            // textBox4
+            // txtTotal
             // 
-            textBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox4.Location = new Point(6, 154);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(219, 27);
-            textBox4.TabIndex = 6;
+            txtTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTotal.Location = new Point(6, 154);
+            txtTotal.Name = "txtTotal";
+            txtTotal.Size = new Size(219, 27);
+            txtTotal.TabIndex = 6;
             // 
             // label7
             // 
@@ -315,13 +317,13 @@
             label7.TabIndex = 5;
             label7.Text = "Total";
             // 
-            // textBox3
+            // txtDescuento
             // 
-            textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox3.Location = new Point(6, 100);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(219, 27);
-            textBox3.TabIndex = 4;
+            txtDescuento.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtDescuento.Location = new Point(6, 100);
+            txtDescuento.Name = "txtDescuento";
+            txtDescuento.Size = new Size(219, 27);
+            txtDescuento.TabIndex = 4;
             // 
             // label6
             // 
@@ -334,13 +336,13 @@
             label6.TabIndex = 3;
             label6.Text = "Descuento";
             // 
-            // textBox2
+            // txtSubTotal
             // 
-            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.Location = new Point(6, 48);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(219, 27);
-            textBox2.TabIndex = 2;
+            txtSubTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtSubTotal.Location = new Point(6, 48);
+            txtSubTotal.Name = "txtSubTotal";
+            txtSubTotal.Size = new Size(219, 27);
+            txtSubTotal.TabIndex = 2;
             // 
             // label5
             // 
@@ -356,6 +358,7 @@
             // 
             groupBox5.Controls.Add(tableLayoutPanel4);
             groupBox5.Dock = DockStyle.Fill;
+            groupBox5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox5.Location = new Point(3, 296);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(972, 287);
@@ -389,9 +392,9 @@
             // 
             // groupBox6
             // 
-            groupBox6.Controls.Add(textBox6);
+            groupBox6.Controls.Add(label11);
+            groupBox6.Controls.Add(label10);
             groupBox6.Controls.Add(label9);
-            groupBox6.Controls.Add(textBox5);
             groupBox6.Controls.Add(label8);
             groupBox6.Dock = DockStyle.Fill;
             groupBox6.Location = new Point(757, 3);
@@ -400,37 +403,42 @@
             groupBox6.TabIndex = 1;
             groupBox6.TabStop = false;
             // 
-            // textBox6
+            // label11
             // 
-            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox6.Location = new Point(6, 99);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(191, 27);
-            textBox6.TabIndex = 9;
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(16, 124);
+            label11.Name = "label11";
+            label11.Size = new Size(96, 37);
+            label11.TabIndex = 11;
+            label11.Text = "C$  25";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(39, 46);
+            label10.Name = "label10";
+            label10.Size = new Size(49, 37);
+            label10.TabIndex = 10;
+            label10.Text = "25";
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(6, 76);
+            label9.Location = new Point(6, 104);
             label9.Name = "label9";
             label9.Size = new Size(132, 20);
             label9.TabIndex = 8;
             label9.Text = "Suma total precio";
             // 
-            // textBox5
-            // 
-            textBox5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox5.Location = new Point(6, 46);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(191, 27);
-            textBox5.TabIndex = 7;
-            // 
             // label8
             // 
             label8.AutoSize = true;
+            label8.Dock = DockStyle.Top;
             label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(6, 23);
+            label8.Location = new Point(3, 23);
             label8.Name = "label8";
             label8.Size = new Size(119, 20);
             label8.TabIndex = 6;
@@ -491,22 +499,22 @@
         private DateTimePicker dateTimePicker1;
         private ComboBox cmbProveedor;
         private Label label2;
-        private ComboBox comboBox2;
+        private ComboBox cmbTipoFactura;
         private Label label4;
         private GroupBox groupBox4;
-        private TextBox textBox2;
+        private TextBox txtSubTotal;
         private Label label5;
-        private TextBox textBox4;
+        private TextBox txtTotal;
         private Label label7;
-        private TextBox textBox3;
+        private TextBox txtDescuento;
         private Label label6;
         private GroupBox groupBox5;
         private TableLayoutPanel tableLayoutPanel4;
         private DataGridView dataGridProductosComprados;
         private GroupBox groupBox6;
-        private TextBox textBox6;
         private Label label9;
-        private TextBox textBox5;
         private Label label8;
+        private Label label10;
+        private Label label11;
     }
 }

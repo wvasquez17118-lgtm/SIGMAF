@@ -4,6 +4,7 @@ using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
 using System.ComponentModel;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SIGMAF.Desktop.MOTOS
@@ -12,7 +13,7 @@ namespace SIGMAF.Desktop.MOTOS
     {
         private List<CatalogoModel> resultado = new List<CatalogoModel>();
         private List<ProveedorModel> ProveedoresLista = new List<ProveedorModel>();
-        //  private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
+        private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
         private BindingSource bsRealizados = new BindingSource();
 
         CatalogoService api = new CatalogoService();
@@ -24,6 +25,15 @@ namespace SIGMAF.Desktop.MOTOS
         private void ComprasForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.FormularioAbierto = false;
+        }
+
+        private void CargarGridDetalle()
+        {
+            Data.Clear();
+            bsRealizados.DataSource = Data;
+            dataGridProductosComprados.DataSource = bsRealizados;
+            //var dataResultadoGuardado = 
+            //foreach (var x in dataResultadoGuardado) Data.Add(x);
         }
 
         private async void ComprasForm_Load(object sender, EventArgs e)
@@ -49,6 +59,8 @@ namespace SIGMAF.Desktop.MOTOS
                 try
                 {
                     ConfiguracionGridProductos();
+                    ConfigurarGridProductoComprados();
+                    CargarGridDetalle();
 
                     resultado = AppServices.Catalogos.ListarTodos();
                     if (!resultado.Any())
@@ -64,11 +76,26 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                     dataGridProductosCatalogos.DataSource = resultado;
 
+                    var tiposFactura = new List<ComboItem>
+                    {
+                        new ComboItem { Id = "CR",  Value = "Crédito" },
+                        new ComboItem { Id = "CO",  Value = "Contado" },
+                        new ComboItem { Id = "FIA", Value = "Fiado" }
+                    };
+
                     cmbProveedor.DataSource = ProveedoresLista;
                     cmbProveedor.DisplayMember = "Nombre";
                     cmbProveedor.ValueMember = "ProveedorId";
                     cmbProveedor.SelectedIndex = -1;
                     cmbProveedor.DropDownStyle = ComboBoxStyle.DropDownList;
+
+
+                    cmbTipoFactura.DataSource = tiposFactura;
+                    cmbTipoFactura.DisplayMember = "Value"; // lo que se ve
+                    cmbTipoFactura.ValueMember = "Id";
+
+                    cmbTipoFactura.SelectedIndex = -1;
+                    cmbTipoFactura.DropDownStyle = ComboBoxStyle.DropDownList;
 
                 }
                 finally
@@ -156,6 +183,105 @@ namespace SIGMAF.Desktop.MOTOS
             // (opcional) que no puedan agregar/eliminar filas desde el grid
             dataGridProductosCatalogos.AllowUserToAddRows = false;
             dataGridProductosCatalogos.AllowUserToDeleteRows = false;
+
+            dataGridProductosCatalogos.EnableHeadersVisualStyles = false; // importante
+            dataGridProductosCatalogos.ColumnHeadersDefaultCellStyle.Font =
+                new Font(dataGridProductosCatalogos.Font, FontStyle.Bold);
+        }
+
+
+        private void ConfigurarGridProductoComprados()
+        { 
+            dataGridProductosComprados.AutoGenerateColumns = false;
+            dataGridProductosComprados.AllowUserToAddRows = false;
+            dataGridProductosComprados.AllowUserToDeleteRows = false;
+            dataGridProductosComprados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridProductosComprados.MultiSelect = false;
+
+
+            var colIdDetalle = new DataGridViewTextBoxColumn();
+            colIdDetalle.Name = "CompraDetalleId";
+            colIdDetalle.HeaderText = "CompraDetalleId";
+            colIdDetalle.DataPropertyName = "CompraDetalleId";
+            colIdDetalle.Visible = false;
+            dataGridProductosComprados.Columns.Add(colIdDetalle);
+                      
+            var colId = new DataGridViewTextBoxColumn();
+            colId.Name = "CompraId";
+            colId.HeaderText = "CompraId";
+            colId.DataPropertyName = "CompraId";
+            colId.Visible = false;
+            dataGridProductosComprados.Columns.Add(colId);
+
+ 
+            var colCatalogoId = new DataGridViewTextBoxColumn();
+            colCatalogoId.Name = "CatalogoId";
+            colCatalogoId.HeaderText = "CatalogoId";
+            colCatalogoId.DataPropertyName = "CatalogoId";
+            colCatalogoId.Visible = false;
+            dataGridProductosComprados.Columns.Add(colCatalogoId);
+
+
+            var colProducto = new DataGridViewTextBoxColumn();
+            colProducto.Name = "Producto";
+            colProducto.HeaderText = "Producto";
+            colProducto.DataPropertyName = "Producto";
+            colProducto.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colProducto.FillWeight = 500;
+            colProducto.ReadOnly = true;
+            dataGridProductosComprados.Columns.Add(colProducto);
+
+            var colCantidad = new DataGridViewTextBoxColumn();
+            colCantidad.Name = "Cantidad";
+            colCantidad.HeaderText = "Cantidad";
+            colCantidad.DataPropertyName = "Cantidad";
+            colCantidad.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colCantidad.FillWeight = 100;
+            colCantidad.ReadOnly = false;      // 👈 sí se edita
+            dataGridProductosComprados.Columns.Add(colCantidad);
+
+          
+            var colPrecioCompra = new DataGridViewTextBoxColumn();
+            colPrecioCompra.Name = "PrecioCompra";
+            colPrecioCompra.HeaderText = "Precio Compra";
+            colPrecioCompra.DataPropertyName = "PrecioCompra";
+            colPrecioCompra.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPrecioCompra.FillWeight = 100;
+            colPrecioCompra.ReadOnly = false;      // 👈 sí se edita
+            dataGridProductosComprados.Columns.Add(colPrecioCompra);
+
+            var colPrecioVenta = new DataGridViewTextBoxColumn();
+            colPrecioVenta.Name = "PrecioVenta";
+            colPrecioVenta.HeaderText = "Precio Venta";
+            colPrecioVenta.DataPropertyName = "PrecioVenta";
+            colPrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPrecioVenta.FillWeight = 100;
+            colPrecioCompra.ReadOnly = false;      // 👈 sí se edita
+            dataGridProductosComprados.Columns.Add(colPrecioVenta);
+
+            // --- Columna 4: Icono eliminar ---
+            var colEliminar = new DataGridViewImageColumn();
+            colEliminar.Name = "Eliminar";
+            colEliminar.HeaderText = "";
+            colEliminar.Width = 40;
+            colEliminar.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            colEliminar.Image = Properties.Resources.icon_delete; // agrega tu PNG a Recursos
+            dataGridProductosComprados.Columns.Add(colEliminar);
+
+            // Grid en general: se permite editar, pero solo en las columnas que NO son ReadOnly
+            dataGridProductosComprados.ReadOnly = false;
+
+            // Por si acaso, fuerza que solo Descripcion y Aplicar sean editables
+            foreach (DataGridViewColumn col in dataGridProductosComprados.Columns)
+                col.ReadOnly = true;
+
+            dataGridProductosComprados.Columns["Cantidad"].ReadOnly = false;
+            dataGridProductosComprados.Columns["PrecioCompra"].ReadOnly = false;
+            dataGridProductosComprados.Columns["PrecioVenta"].ReadOnly = false;
+
+            dataGridProductosComprados.EnableHeadersVisualStyles = false; // importante
+            dataGridProductosComprados.ColumnHeadersDefaultCellStyle.Font =
+                new Font(dataGridProductosComprados.Font, FontStyle.Bold);
         }
 
         private void txtFiltrarProductos_TextChanged(object sender, EventArgs e)
@@ -186,26 +312,32 @@ namespace SIGMAF.Desktop.MOTOS
             DataGridViewRow filaOrigen = dataGridProductosCatalogos.Rows[e.RowIndex];
 
             // Tomamos el Id y el nombre del servicio (ajusta los nombres de columnas si son otros)
-            long idServicio = long.Parse(filaOrigen.Cells["IdCatalogo"].Value?.ToString() ?? "0");
+            int catalogoId = int.Parse(filaOrigen.Cells["IdCatalogo"].Value?.ToString() ?? "0");
             var nombreServicio = filaOrigen.Cells["Nombre"].Value?.ToString();
 
-            //if (Data.Any(p => p.CatTrabajoRealizadoId == idServicio))
-            //{
-            //    MessageBox.Show("Este servicio ya fue agregado.", "Moto FIX LUZ");
-            //    return;
-            //}
-            /* Data.Add(new IngresoTallerDetalleDTO()
-             {
-                 CatTrabajoRealizadoId = (long)idServicio,
-                 TrabajoRealizado = nombreServicio ?? "",
-                 StatusTrabajoRealizado = true,
-                 IngresoTallerDetalleId = 0
-             });*/
+            if (Data.Any(p => p.CatalogoId == catalogoId))
+            {
+                MessageBox.Show("Este producto ya fue agregado.", "Advertencia");
+                return;
+            }
+            Data.Add(new IngresoTallerDetalleDTO()
+            {
+                CatalogoId = catalogoId,
+                Producto = nombreServicio ?? "",
+                PrecioCompra = 0,
+                PrecioVenta = 0,
+            });
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
 
         }
+    }
+
+    public class ComboItem
+    {
+        public string Id { get; set; }
+        public string Value { get; set; }
     }
 }
