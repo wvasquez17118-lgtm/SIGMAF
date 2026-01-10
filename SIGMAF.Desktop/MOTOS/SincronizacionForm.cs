@@ -48,6 +48,8 @@ namespace SIGMAF.Desktop.MOTOS
                         
                         var catalogos = await api.ObtenerCatalogoAsync();
                         var proveedor = await api.ObtenerProveedoresAsync();
+                        var catalogosConInventario = await api.ObtenerCatalogosConInventarioMotoAsync();
+
                         if (catalogos.Any())
                         {
                             AppServices.Catalogos.InsertarVarios(catalogos);
@@ -55,6 +57,10 @@ namespace SIGMAF.Desktop.MOTOS
                         if (proveedor.Any())
                         {
                             AppServices.Proveedores.InsertarVarios(proveedor);
+                        }
+                        if (!catalogosConInventario.Any())
+                        {
+                            AppServices.CatalogoConInventario.InsertarVarios(catalogosConInventario);
                         }
 
                         MessageBox.Show(chActualizarInventarioVenta.Checked ? string.Format(ConstantesMensajes.MensajeTituloSincronizarInventarioExitosamente, dateFechaSincronizacion.Value.ToString("dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"))) : ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "Confirmación");
@@ -101,11 +107,6 @@ namespace SIGMAF.Desktop.MOTOS
         private void SincronizacionForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.FormularioAbierto = false;
-        }
-
-        private async void SincronizacionForm_Load(object sender, EventArgs e)
-        {
-            
         }
     }
 }

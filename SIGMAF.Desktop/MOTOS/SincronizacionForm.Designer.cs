@@ -51,7 +51,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(772, 60);
+            panel1.Size = new Size(648, 60);
             panel1.TabIndex = 4;
             // 
             // lblTotalProducto
@@ -80,9 +80,9 @@
             btnSincronizar.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSincronizar.Image = Properties.Resources.icon_sincronizarguardar;
             btnSincronizar.ImageAlign = ContentAlignment.TopCenter;
-            btnSincronizar.Location = new Point(214, 280);
+            btnSincronizar.Location = new Point(8, 258);
             btnSincronizar.Name = "btnSincronizar";
-            btnSincronizar.Size = new Size(276, 60);
+            btnSincronizar.Size = new Size(632, 60);
             btnSincronizar.TabIndex = 5;
             btnSincronizar.Text = "SINCRONIZAR";
             btnSincronizar.TextAlign = ContentAlignment.BottomCenter;
@@ -93,7 +93,7 @@
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
             panel2.Controls.Add(ChDescargarCatalogo);
-            panel2.Location = new Point(18, 77);
+            panel2.Location = new Point(10, 74);
             panel2.Name = "panel2";
             panel2.Size = new Size(309, 178);
             panel2.TabIndex = 6;
@@ -104,9 +104,9 @@
             ChDescargarCatalogo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ChDescargarCatalogo.Location = new Point(38, 72);
             ChDescargarCatalogo.Name = "ChDescargarCatalogo";
-            ChDescargarCatalogo.Size = new Size(237, 24);
+            ChDescargarCatalogo.Size = new Size(213, 24);
             ChDescargarCatalogo.TabIndex = 0;
-            ChDescargarCatalogo.Text = "Descargar catalogo productos";
+            ChDescargarCatalogo.Text = "Descargar configuraciones";
             ChDescargarCatalogo.UseVisualStyleBackColor = true;
             ChDescargarCatalogo.CheckedChanged += ChDescargarCatalogo_CheckedChanged;
             // 
@@ -116,7 +116,7 @@
             panel3.Controls.Add(label1);
             panel3.Controls.Add(dateFechaSincronizacion);
             panel3.Controls.Add(chActualizarInventarioVenta);
-            panel3.Location = new Point(433, 77);
+            panel3.Location = new Point(333, 74);
             panel3.Name = "panel3";
             panel3.Size = new Size(309, 178);
             panel3.TabIndex = 7;
@@ -156,7 +156,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(772, 354);
+            ClientSize = new Size(648, 323);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(btnSincronizar);
@@ -171,7 +171,6 @@
             Text = "Sincronización";
             TopMost = true;
             FormClosing += SincronizacionForm_FormClosing;
-            Load += SincronizacionForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

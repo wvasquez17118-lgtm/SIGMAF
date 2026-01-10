@@ -1,9 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIGMAF.Infrastructure
 {
@@ -36,9 +31,22 @@ namespace SIGMAF.Infrastructure
                     Celular TEXT,
                     Estado TEXT
                 );
+
+                CREATE TABLE IF NOT EXISTS MotosCatalagoConInventario (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CatalogoId TEXT,
+                    NombreProducto TEXT,
+                    DescripcionProducto TEXT,
+                    inventarioStokId TEXT,
+                    StockDisponible TEXT,
+                    StockMinimo TEXT,
+                    PrecioCompra TEXT,
+                    PrecioVenta TEXT
+                );
             ";
             cmd.ExecuteNonQuery();
         }
+         
 
         public static void DeleteDatabase(string connectionString)
         {

@@ -7,6 +7,8 @@ namespace SIGMAF.Desktop.DB
     {
         public static CatalogoRepository Catalogos { get; private set; } = null!;
         public static ProveedorRepository Proveedores { get; private set; } = null!;
+        public static CatalogoConInventarioRepository CatalogoConInventario { get; private set; } = null!;
+        
         public static string ConnectionString { get; private set; } = null!;
 
         public static void Initialize()
@@ -19,6 +21,7 @@ namespace SIGMAF.Desktop.DB
             // Instanciar repositorios
             Catalogos = new CatalogoRepository(ConnectionString);
             Proveedores = new ProveedorRepository(ConnectionString);
+            CatalogoConInventario = new CatalogoConInventarioRepository(ConnectionString);
 
             // Aquí después agregás más repos: UsuariosLocal, SucursalesLocal, etc.
         }

@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            label1 = new Label();
+            lblFechaTitulo = new Label();
             lblTotalProducto = new Label();
             label3 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             groupBox1 = new GroupBox();
-            dataGridView1 = new DataGridView();
+            dataGridProductosCatalogos = new DataGridView();
             textBox1 = new TextBox();
             groupBox2 = new GroupBox();
             textBox4 = new TextBox();
@@ -52,7 +52,7 @@
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridProductosCatalogos).BeginInit();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
@@ -60,7 +60,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
-            panel1.Controls.Add(label1);
+            panel1.Controls.Add(lblFechaTitulo);
             panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
@@ -69,16 +69,16 @@
             panel1.Size = new Size(914, 44);
             panel1.TabIndex = 5;
             // 
-            // label1
+            // lblFechaTitulo
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(750, 13);
-            label1.Name = "label1";
-            label1.Size = new Size(143, 20);
-            label1.TabIndex = 2;
-            label1.Text = "Fecha: 09/01/2026";
+            lblFechaTitulo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblFechaTitulo.AutoSize = true;
+            lblFechaTitulo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFechaTitulo.Location = new Point(750, 13);
+            lblFechaTitulo.Name = "lblFechaTitulo";
+            lblFechaTitulo.Size = new Size(143, 20);
+            lblFechaTitulo.TabIndex = 2;
+            lblFechaTitulo.Text = "Fecha: 09/01/2026";
             // 
             // lblTotalProducto
             // 
@@ -121,7 +121,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(dataGridView1);
+            groupBox1.Controls.Add(dataGridProductosCatalogos);
             groupBox1.Controls.Add(textBox1);
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.Location = new Point(3, 3);
@@ -131,14 +131,14 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Producto";
             // 
-            // dataGridView1
+            // dataGridProductosCatalogos
             // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(6, 70);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(596, 196);
-            dataGridView1.TabIndex = 1;
+            dataGridProductosCatalogos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridProductosCatalogos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridProductosCatalogos.Location = new Point(6, 70);
+            dataGridProductosCatalogos.Name = "dataGridProductosCatalogos";
+            dataGridProductosCatalogos.Size = new Size(596, 196);
+            dataGridProductosCatalogos.TabIndex = 1;
             // 
             // textBox1
             // 
@@ -300,12 +300,14 @@
             Name = "RegistrarVentaForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registrar nueva venta";
+            FormClosing += RegistrarVentaForm_FormClosing;
+            Load += RegistrarVentaForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridProductosCatalogos).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
@@ -318,11 +320,11 @@
         private Panel panel1;
         private Label lblTotalProducto;
         private Label label3;
-        private Label label1;
+        private Label lblFechaTitulo;
         private TableLayoutPanel tableLayoutPanel1;
         private GroupBox groupBox1;
         private TextBox textBox1;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridProductosCatalogos;
         private GroupBox groupBox2;
         private Label label2;
         private TextBox textBox2;

@@ -14,6 +14,11 @@ namespace SIGMAF.ApiClient.ApiRestMoto
             return await services.PostListAsync<CatalogoModel>("listarcatalogomoto");
         }
 
+        public async Task<List<CatalogoConInventarioModel>> ObtenerCatalogosConInventarioMotoAsync()
+        {
+            return await services.PostListAsync<CatalogoConInventarioModel>("obtenercatalogosconinventariomoto");
+        }
+        
         public async Task<List<ProveedorModel>> ObtenerProveedoresAsync()
         {
             return await services.PostListAsync<ProveedorModel>("listarproveedormoto");

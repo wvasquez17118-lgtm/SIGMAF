@@ -117,6 +117,44 @@ CREATE TABLE motos_inventario_stock
 
 
 
+/* =========================================================
+   TABLA: moto_ventas
+   Basada en tu tabla ejemplo "ventas"
+   Relación: moto_ventas.IdCatalogoProducto -> moto_catalogos.id
+   ========================================================= */
+
+ 
+
+CREATE TABLE moto_ventas (
+  IdVenta               BIGINT AUTO_INCREMENT PRIMARY KEY,  
+  IdCatalogoProducto    INT NOT NULL,
+  NombreProducto        VARCHAR(150) NOT NULL,
+  Cantidad              INT NULL,
+  Precio                DOUBLE NULL,
+  Total                 DOUBLE NULL,
+  Descripcion           VARCHAR(255) NULL,
+  DescripcionEliminado  VARCHAR(255) NULL,
+  Estado                BIT NOT NULL DEFAULT b'1',
+
+  FechaCreacion         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FechaModificacion     DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+
+  IdUsuarioCreacion     INT NOT NULL,
+  IdUsuarioModificacion INT NULL,
+  Sucursal              INT NULL COMMENT '1=Altalier, 2=Wama',
+  KEY idx_moto_ventas_catalogo (IdCatalogoProducto),
+  KEY idx_moto_ventas_fecha (FechaCreacion),
+
+  CONSTRAINT fk_moto_ventas_catalogo
+    FOREIGN KEY (IdCatalogoProducto)
+    REFERENCES moto_catalogos(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
+
 INSERT INTO moto_categoria VALUES (1,'RM','Repuestos moto',1);
 INSERT INTO moto_categoria VALUES (2,'LUB','Lubricantes',1);
 INSERT INTO moto_categoria VALUES (3,'ACC','Accesorios',1);
