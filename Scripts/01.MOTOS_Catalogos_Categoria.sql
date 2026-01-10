@@ -94,6 +94,29 @@ CREATE TABLE moto_compras_detalle (
 
 
 
+CREATE TABLE motos_inventario_stock 
+(
+  inventario_stock_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  catalogo_id INT NOT NULL,
+  -- Stock
+  stock_disponible     INT NOT NULL DEFAULT 0,  -- lo que realmente hay
+  -- Precios vigentes (referencia rápida)
+  precio_compra DECIMAL(18,2) NOT NULL DEFAULT 0.00,  -- último costo / costo referencia
+  precio_venta  DECIMAL(18,2) NOT NULL DEFAULT 0.00,  -- precio de venta actual
+  stock_minimo  INT NOT NULL DEFAULT 0,
+  estado        TINYINT(1) NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_inventario_catalogo (catalogo_id),
+  CONSTRAINT fk_inventario_stock_catalogo
+    FOREIGN KEY (catalogo_id)
+    REFERENCES moto_catalogos(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
 INSERT INTO moto_categoria VALUES (1,'RM','Repuestos moto',1);
 INSERT INTO moto_categoria VALUES (2,'LUB','Lubricantes',1);
 INSERT INTO moto_categoria VALUES (3,'ACC','Accesorios',1);
