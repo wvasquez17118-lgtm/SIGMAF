@@ -306,6 +306,7 @@
             txtTotal.Name = "txtTotal";
             txtTotal.Size = new Size(219, 27);
             txtTotal.TabIndex = 6;
+            txtTotal.KeyPress += txtSubTotal_KeyPress;
             // 
             // label7
             // 
@@ -324,6 +325,7 @@
             txtDescuento.Name = "txtDescuento";
             txtDescuento.Size = new Size(219, 27);
             txtDescuento.TabIndex = 4;
+            txtDescuento.KeyPress += txtSubTotal_KeyPress;
             // 
             // label6
             // 
@@ -343,6 +345,7 @@
             txtSubTotal.Name = "txtSubTotal";
             txtSubTotal.Size = new Size(219, 27);
             txtSubTotal.TabIndex = 2;
+            txtSubTotal.KeyPress += txtSubTotal_KeyPress;
             // 
             // label5
             // 

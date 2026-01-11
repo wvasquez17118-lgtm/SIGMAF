@@ -1,6 +1,4 @@
-﻿using SIGMAF.Domain.MOTOS;
-
-namespace SIGMAF.ApiClient.ApiRestMoto
+﻿namespace SIGMAF.ApiClient.ApiRestMoto
 {
     public class CompraServicio
     {
@@ -12,6 +10,11 @@ namespace SIGMAF.ApiClient.ApiRestMoto
         public async Task<ApiCrudResponse> GuardarCompraRepuestoAsync(Dictionary<string, string> parameters)
         {
             return await services.PostCrudAsync("guardarcomprarepuesto", parameters);
+        }
+
+        public async Task<ApiCrudResponse> GuardarVentaRepuestoAsync(Dictionary<string, string> parameters)
+        {
+            return await services.PostCrudAsync("motoguardarventa", parameters);
         }
     }
 }

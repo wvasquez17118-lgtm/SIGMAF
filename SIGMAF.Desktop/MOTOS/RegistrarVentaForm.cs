@@ -1,8 +1,11 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Constantes;
 using SIGMAF.Desktop.DB;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
+using System.Text.Json;
+using System.Windows.Forms;
 
 namespace SIGMAF.Desktop.MOTOS
 {
@@ -10,6 +13,7 @@ namespace SIGMAF.Desktop.MOTOS
     {
         private List<CatalogoConInventarioModel> resultado = new List<CatalogoConInventarioModel>();
         CatalogoService apiConInventario = new CatalogoService();
+        int catalogoId = 0;
         public RegistrarVentaForm()
         {
             InitializeComponent();
@@ -22,6 +26,7 @@ namespace SIGMAF.Desktop.MOTOS
 
         private async void RegistrarVentaForm_Load(object sender, EventArgs e)
         {
+            catalogoId = 0;
             // Fuerza un cambio de tamaño para que se reajusten los controles
             lblFechaTitulo.Text = "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy");
             SqliteDatabase.Initialize(AppServices.ConnectionString);
@@ -42,7 +47,7 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-                    ConfiguracionGridProductos(); 
+                    ConfiguracionGridProductos();
 
                     resultado = AppServices.CatalogoConInventario.ListarTodos();
                     if (!resultado.Any())
@@ -50,7 +55,7 @@ namespace SIGMAF.Desktop.MOTOS
                         resultado = await apiConInventario.ObtenerCatalogosConInventarioMotoAsync();
                     }
 
-                    
+
                     dataGridProductosCatalogos.DataSource = resultado;
 
                     var tiposFactura = new List<ComboItem>
@@ -60,7 +65,7 @@ namespace SIGMAF.Desktop.MOTOS
                         new ComboItem { Id = "FIA", Value = "Fiado" }
                     };
 
-                   
+
 
                 }
                 finally
@@ -80,8 +85,8 @@ namespace SIGMAF.Desktop.MOTOS
 
             var colId = new DataGridViewTextBoxColumn
             {
-                Name = "IdCatalogo",
-                DataPropertyName = "IdCatalogo",
+                Name = "CatalogoId",
+                DataPropertyName = "CatalogoId",
                 Visible = false
             };
 
@@ -110,16 +115,16 @@ namespace SIGMAF.Desktop.MOTOS
                 Name = "PrecioVenta",
                 HeaderText = "Precio venta",
                 DataPropertyName = "PrecioVenta",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                Width = 150
             };
 
             // Stock Minimo (se expande)
-            var colStockMinimo= new DataGridViewTextBoxColumn
+            var colStockMinimo = new DataGridViewTextBoxColumn
             {
                 Name = "StockMinimo",
                 HeaderText = "Sock Minimo",
                 DataPropertyName = "StockMinimo",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                Width = 150
             };
 
             // Stock Disponible (se expande)
@@ -128,7 +133,7 @@ namespace SIGMAF.Desktop.MOTOS
                 Name = "StockDisponible",
                 HeaderText = "Disponible",
                 DataPropertyName = "StockDisponible",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                Width = 150
             };
 
             // Botón Agregar
@@ -148,8 +153,8 @@ namespace SIGMAF.Desktop.MOTOS
             colAgregar.DefaultCellStyle.SelectionBackColor = Color.FromArgb(56, 142, 60); // Verde más oscuro al seleccionar
             colAgregar.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dataGridProductosCatalogos.Columns.AddRange(colId, colNombre, colPrecioVenta, colStockMinimo, colStockDisponible, colDescripcion, colAgregar);
-            dataGridProductosCatalogos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridProductosCatalogos.Columns.AddRange(colId, colNombre, colDescripcion, colPrecioVenta, colStockMinimo, colStockDisponible, colAgregar);
+            //dataGridProductosCatalogos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 
 
@@ -181,6 +186,127 @@ namespace SIGMAF.Desktop.MOTOS
             dataGridProductosCatalogos.EnableHeadersVisualStyles = false; // importante
             dataGridProductosCatalogos.ColumnHeadersDefaultCellStyle.Font =
                 new Font(dataGridProductosCatalogos.Font, FontStyle.Bold);
+        }
+
+        private void dataGridProductosCatalogos_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            // Solo reaccionar si se hizo click en la columna Agregar
+            if (dataGridProductosCatalogos.Columns[e.ColumnIndex].Name != "Agregar")
+                return;
+
+            DataGridViewRow filaOrigen = dataGridProductosCatalogos.Rows[e.RowIndex];
+
+            // Tomamos el Id y el nombre del servicio (ajusta los nombres de columnas si son otros)
+            catalogoId = int.Parse(filaOrigen.Cells["CatalogoId"].Value?.ToString() ?? "0");
+            var nombreServicio = filaOrigen.Cells["NombreProducto"].Value?.ToString();
+            string PrecioVenta = filaOrigen.Cells["PrecioVenta"].Value?.ToString() ?? "";
+            string StockDisponible = filaOrigen.Cells["StockDisponible"].Value?.ToString() ?? "";
+
+            txtDisponible.Text = StockDisponible;
+            txtNombreProducto.Text = nombreServicio;
+            txtPrecio.Text = PrecioVenta;
+
+        }
+
+        private async void btnGuardar_Click(object sender, EventArgs e)
+        { 
+            if (catalogoId == 0)
+            {
+                MessageBox.Show("Debe seleccionar un producto es requerido", "Advertencia");
+                return;
+            }
+            else if (string.IsNullOrEmpty(txtCantidadAVender?.Text))
+            {
+                MessageBox.Show("Debe ingresar una cantidad a vender es requerido", "Advertencia");
+                txtCantidadAVender?.Focus();
+                return;
+            }
+            else if (string.IsNullOrEmpty(txtTotal?.Text))
+            {
+                MessageBox.Show("Debe ingresar un total a vender es requerido", "Advertencia");
+                txtTotal?.Focus();
+                return;
+            }
+
+
+            DialogResult r = MessageBox.Show(ConstantesMensajes.MensajeConfirmacionGuardar + " \n \n \n Producto = " + txtNombreProducto.Text, ConstantesMensajes.MensajeTituloConfirmacionGuardar, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+
+                using (var loading = new FrmLoading())
+                {
+                    loading.StartPosition = FormStartPosition.CenterScreen;
+                    loading.TopMost = true;
+
+                    this.Enabled = false;
+                    this.UseWaitCursor = true;
+                    loading.UseWaitCursor = true;
+
+                    loading.Show(this);
+
+                    try
+                    {
+                        Dictionary<string, string> parameters = new Dictionary<string, string>();
+                        parameters.Add("IdVenta", "0");
+                        parameters.Add("NombreProducto", txtNombreProducto.Text ?? "");
+                        parameters.Add("Cantidad", txtCantidadAVender.Text ?? "0");
+                        parameters.Add("Precio", txtPrecio.Text ?? "0");
+                        parameters.Add("Total", txtTotal.Text ?? "0");
+                        parameters.Add("IdUsuario", "1");
+                        parameters.Add("Descripcion", "");
+                        parameters.Add("DescripcionEliminado", "");
+                        parameters.Add("Accion", "NUEVO");
+                        parameters.Add("IdCatalogoProducto", catalogoId.ToString());
+                        parameters.Add("Sucursal", "WAMA");
+
+                        CompraServicio compraServicio = new CompraServicio();
+                        var resultado = await compraServicio.GuardarVentaRepuestoAsync(parameters);
+                        if (resultado.Estado)
+                        {
+                            MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "WAMA");
+                            catalogoId = 0;
+                            txtPrecio.Clear();
+                            txtTotal.Clear();
+                            txtCantidadAVender.Clear();
+                            txtDisponible.Clear();
+                            txtNombreProducto.Clear();
+                            dataGridProductosCatalogos.ClearSelection();
+                            dataGridProductosCatalogos.CurrentCell = null;
+                        }
+                        else
+                        {
+                            MessageBox.Show(resultado.Mensaje, "WAMA");
+                        }
+                    }
+                    finally
+                    {
+                        loading.Close();
+                        this.Enabled = true;
+                        this.UseWaitCursor = false;
+                    }
+                }
+            }
+        }
+
+        private void txtCantidadAVender_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permite control (Backspace, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Permite dígitos 0-9
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // (Opcional) Permitir signo negativo solo al inicio y solo una vez
+            if (e.KeyChar == '-' && ((TextBox)sender).SelectionStart == 0 && !((TextBox)sender).Text.Contains("-"))
+                return;
+
+            // Bloquea todo lo demás
+            e.Handled = true;
         }
     }
 }

@@ -428,60 +428,93 @@ namespace SIGMAF.Desktop.MOTOS
                 MessageBox.Show("Seleccionar el proveedor es requerido.", "Advertencia");
                 cmbProveedor.Focus();
                 return;
-            } else  if(cmbTipoFactura.SelectedValue?.ToString() == "")
+            }
+            else if (cmbTipoFactura.SelectedValue?.ToString() == "")
             {
                 MessageBox.Show("Seleccionar el tipo factura es requerido.", "Advertencia");
                 cmbTipoFactura.Focus();
                 return;
-            } else if(txtSubTotal.Text == "")
+            }
+            else if (txtSubTotal.Text == "")
             {
                 MessageBox.Show("Debe ingresar subtotal es requerido.", "Advertencia");
                 txtSubTotal.Focus();
                 return;
-            } else if (txtDescuento.Text == "")
+            }
+            else if (txtDescuento.Text == "")
             {
                 MessageBox.Show("Debe ingresar descuento es requerido.", "Advertencia");
                 txtDescuento.Focus();
                 return;
-            } else if (txtTotal.Text == "")
+            }
+            else if (txtTotal.Text == "")
             {
                 MessageBox.Show("Debe ingresar total es requerido.", "Advertencia");
                 txtTotal.Focus();
                 return;
-            } else  if (!TryGetDetallesFromGrid(out  detalles))
+            }
+            else if (!TryGetDetallesFromGrid(out detalles))
                 return;
 
-            var compra = new MotoComprasDTO()
-            {
-                CompraId = 0,
-                Fecha = dateFechaCompra.Value,
-                TipoFactura = cmbTipoFactura.SelectedValue?.ToString() ?? "CO",
-                ProveedorId = int.Parse(cmbProveedor?.SelectedValue?.ToString() ?? "0"),
-                SubTotal = decimal.Parse(txtSubTotal.Text),
-                Descuento = decimal.Parse(txtDescuento.Text),
-                Total = decimal.Parse(txtTotal.Text),
-                Observacion = "",
-                Estado = 1
-            };
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase // id, name, isActive
-            };
+            DialogResult r = MessageBox.Show(ConstantesMensajes.MensajeConfirmacionGuardar, ConstantesMensajes.MensajeTituloConfirmacionGuardar, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            parameters.Add("Compra", JsonSerializer.Serialize(compra, options));
-            parameters.Add("Detalle", JsonSerializer.Serialize(detalles, options));
-            var resultado = await apiCompra.GuardarCompraRepuestoAsync(parameters);
-            if (resultado.Estado)
+            if (r == DialogResult.Yes)
             {
-                MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente);  
-            } else
-            {
-                MessageBox.Show(resultado.Mensaje);
+
+                using (var loading = new FrmLoading())
+                {
+                    loading.StartPosition = FormStartPosition.CenterScreen;
+                    loading.TopMost = true;
+
+                    this.Enabled = false;
+                    this.UseWaitCursor = true;
+                    loading.UseWaitCursor = true;
+
+                    loading.Show(this);
+
+                    try
+                    {
+                        var compra = new MotoComprasDTO()
+                        {
+                            CompraId = 0,
+                            Fecha = dateFechaCompra.Value,
+                            TipoFactura = cmbTipoFactura.SelectedValue?.ToString() ?? "CO",
+                            ProveedorId = int.Parse(cmbProveedor?.SelectedValue?.ToString() ?? "0"),
+                            SubTotal = decimal.Parse(txtSubTotal.Text),
+                            Descuento = decimal.Parse(txtDescuento.Text),
+                            Total = decimal.Parse(txtTotal.Text),
+                            Observacion = "",
+                            Estado = 1
+                        };
+                        Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                        var options = new JsonSerializerOptions
+                        {
+                            WriteIndented = true,
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase // id, name, isActive
+                        };
+
+                        parameters.Add("Compra", JsonSerializer.Serialize(compra, options));
+                        parameters.Add("Detalle", JsonSerializer.Serialize(detalles, options));
+                        var resultado = await apiCompra.GuardarCompraRepuestoAsync(parameters);
+                        if (resultado.Estado)
+                        {
+                            MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente);
+                        }
+                        else
+                        {
+                            MessageBox.Show(resultado.Mensaje);
+                        }
+                    }
+                    finally
+                    {
+                        loading.Close();
+                        this.Enabled = true;
+                        this.UseWaitCursor = false;
+                    }
+                }
             }
-
         }
 
 
@@ -565,7 +598,25 @@ namespace SIGMAF.Desktop.MOTOS
                 return;
 
             bsRealizados.RemoveAt(e.RowIndex);
-            RecalcularTotales();            
+            RecalcularTotales();
+        }
+
+        private void txtSubTotal_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permite control (Backspace, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Permite dígitos 0-9
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // (Opcional) Permitir signo negativo solo al inicio y solo una vez
+            if (e.KeyChar == '-' && ((TextBox)sender).SelectionStart == 0 && !((TextBox)sender).Text.Contains("-"))
+                return;
+
+            // Bloquea todo lo demás
+            e.Handled = true;
         }
     }
 

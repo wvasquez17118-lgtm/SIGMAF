@@ -37,18 +37,18 @@
             dataGridProductosCatalogos = new DataGridView();
             textBox1 = new TextBox();
             groupBox2 = new GroupBox();
-            textBox4 = new TextBox();
+            txtDisponible = new TextBox();
             label5 = new Label();
-            textBox3 = new TextBox();
+            txtPrecio = new TextBox();
             label4 = new Label();
-            textBox2 = new TextBox();
+            txtNombreProducto = new TextBox();
             label2 = new Label();
             groupBox3 = new GroupBox();
-            textBox6 = new TextBox();
+            txtTotal = new TextBox();
             label7 = new Label();
-            textBox5 = new TextBox();
+            txtCantidadAVender = new TextBox();
             label6 = new Label();
-            button1 = new Button();
+            btnGuardar = new Button();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -109,7 +109,7 @@
             tableLayoutPanel1.Controls.Add(groupBox1, 0, 0);
             tableLayoutPanel1.Controls.Add(groupBox2, 0, 1);
             tableLayoutPanel1.Controls.Add(groupBox3, 1, 0);
-            tableLayoutPanel1.Controls.Add(button1, 1, 1);
+            tableLayoutPanel1.Controls.Add(btnGuardar, 1, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 44);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -139,6 +139,7 @@
             dataGridProductosCatalogos.Name = "dataGridProductosCatalogos";
             dataGridProductosCatalogos.Size = new Size(596, 196);
             dataGridProductosCatalogos.TabIndex = 1;
+            dataGridProductosCatalogos.CellContentClick += dataGridProductosCatalogos_CellContentClick;
             // 
             // textBox1
             // 
@@ -150,11 +151,11 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(textBox4);
+            groupBox2.Controls.Add(txtDisponible);
             groupBox2.Controls.Add(label5);
-            groupBox2.Controls.Add(textBox3);
+            groupBox2.Controls.Add(txtPrecio);
             groupBox2.Controls.Add(label4);
-            groupBox2.Controls.Add(textBox2);
+            groupBox2.Controls.Add(txtNombreProducto);
             groupBox2.Controls.Add(label2);
             groupBox2.Dock = DockStyle.Fill;
             groupBox2.Location = new Point(3, 281);
@@ -164,13 +165,13 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Detalle producto";
             // 
-            // textBox4
+            // txtDisponible
             // 
-            textBox4.Enabled = false;
-            textBox4.Location = new Point(6, 201);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(532, 27);
-            textBox4.TabIndex = 5;
+            txtDisponible.Enabled = false;
+            txtDisponible.Location = new Point(6, 201);
+            txtDisponible.Name = "txtDisponible";
+            txtDisponible.Size = new Size(532, 27);
+            txtDisponible.TabIndex = 5;
             // 
             // label5
             // 
@@ -182,13 +183,13 @@
             label5.TabIndex = 4;
             label5.Text = "Disponible";
             // 
-            // textBox3
+            // txtPrecio
             // 
-            textBox3.Enabled = false;
-            textBox3.Location = new Point(6, 134);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(532, 27);
-            textBox3.TabIndex = 3;
+            txtPrecio.Enabled = false;
+            txtPrecio.Location = new Point(6, 134);
+            txtPrecio.Name = "txtPrecio";
+            txtPrecio.Size = new Size(532, 27);
+            txtPrecio.TabIndex = 3;
             // 
             // label4
             // 
@@ -200,13 +201,13 @@
             label4.TabIndex = 2;
             label4.Text = "Precio producto";
             // 
-            // textBox2
+            // txtNombreProducto
             // 
-            textBox2.Enabled = false;
-            textBox2.Location = new Point(6, 71);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(532, 27);
-            textBox2.TabIndex = 1;
+            txtNombreProducto.Enabled = false;
+            txtNombreProducto.Location = new Point(6, 71);
+            txtNombreProducto.Name = "txtNombreProducto";
+            txtNombreProducto.Size = new Size(532, 27);
+            txtNombreProducto.TabIndex = 1;
             // 
             // label2
             // 
@@ -220,9 +221,9 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(textBox6);
+            groupBox3.Controls.Add(txtTotal);
             groupBox3.Controls.Add(label7);
-            groupBox3.Controls.Add(textBox5);
+            groupBox3.Controls.Add(txtCantidadAVender);
             groupBox3.Controls.Add(label6);
             groupBox3.Dock = DockStyle.Fill;
             groupBox3.Location = new Point(617, 3);
@@ -232,14 +233,14 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Detalle venta";
             // 
-            // textBox6
+            // txtTotal
             // 
-            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox6.Enabled = false;
-            textBox6.Location = new Point(6, 123);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(282, 27);
-            textBox6.TabIndex = 5;
+            txtTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtTotal.Location = new Point(6, 123);
+            txtTotal.Name = "txtTotal";
+            txtTotal.Size = new Size(282, 27);
+            txtTotal.TabIndex = 5;
+            txtTotal.KeyPress += txtCantidadAVender_KeyPress;
             // 
             // label7
             // 
@@ -252,14 +253,14 @@
             label7.Text = "Total";
             label7.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // textBox5
+            // txtCantidadAVender
             // 
-            textBox5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox5.Enabled = false;
-            textBox5.Location = new Point(6, 58);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(282, 27);
-            textBox5.TabIndex = 3;
+            txtCantidadAVender.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtCantidadAVender.Location = new Point(6, 58);
+            txtCantidadAVender.Name = "txtCantidadAVender";
+            txtCantidadAVender.Size = new Size(282, 27);
+            txtCantidadAVender.TabIndex = 3;
+            txtCantidadAVender.KeyPress += txtCantidadAVender_KeyPress;
             // 
             // label6
             // 
@@ -272,20 +273,21 @@
             label6.Text = "Cantidad vender";
             label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // btnGuardar
             // 
-            button1.BackColor = Color.Green;
-            button1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Image = Properties.Resources.icon_save;
-            button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(617, 281);
-            button1.Name = "button1";
-            button1.Padding = new Padding(30, 0, 0, 0);
-            button1.Size = new Size(294, 68);
-            button1.TabIndex = 3;
-            button1.Text = "REGISTRAR VENTA";
-            button1.UseVisualStyleBackColor = false;
+            btnGuardar.BackColor = Color.Green;
+            btnGuardar.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGuardar.ForeColor = Color.White;
+            btnGuardar.Image = Properties.Resources.icon_save;
+            btnGuardar.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGuardar.Location = new Point(617, 281);
+            btnGuardar.Name = "btnGuardar";
+            btnGuardar.Padding = new Padding(30, 0, 0, 0);
+            btnGuardar.Size = new Size(294, 68);
+            btnGuardar.TabIndex = 3;
+            btnGuardar.Text = "REGISTRAR VENTA";
+            btnGuardar.UseVisualStyleBackColor = false;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // RegistrarVentaForm
             // 
@@ -327,16 +329,16 @@
         private DataGridView dataGridProductosCatalogos;
         private GroupBox groupBox2;
         private Label label2;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox txtNombreProducto;
+        private TextBox txtPrecio;
         private Label label4;
-        private TextBox textBox4;
+        private TextBox txtDisponible;
         private Label label5;
         private GroupBox groupBox3;
-        private TextBox textBox6;
+        private TextBox txtTotal;
         private Label label7;
-        private TextBox textBox5;
+        private TextBox txtCantidadAVender;
         private Label label6;
-        private Button button1;
+        private Button btnGuardar;
     }
 }
