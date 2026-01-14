@@ -111,7 +111,8 @@ namespace SIGMAF.Desktop
             {
                 Global.FormularioAbierto = true;
                 this.Text = "SIGMAF – Agregar compras MOTOS";
-                ComprasForm frm = new ComprasForm();
+                //ComprasForm frm = new ComprasForm();
+                ListarComprasForm frm = new ListarComprasForm();
                 frm.MdiParent = this;
                 frm.Show();
             }

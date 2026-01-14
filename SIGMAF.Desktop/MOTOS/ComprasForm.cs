@@ -19,6 +19,8 @@ namespace SIGMAF.Desktop.MOTOS
         private BindingList<IngresoTallerDetalleDTO> Data = new BindingList<IngresoTallerDetalleDTO>();
         private BindingSource bsRealizados = new BindingSource();
 
+
+        public long compraid = 0;
         CompraServicio apiCompra = new CompraServicio();
         public ComprasForm()
         {

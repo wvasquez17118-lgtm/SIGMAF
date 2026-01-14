@@ -153,6 +153,11 @@ CREATE TABLE moto_ventas (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 
+-- Agregar columna de estado de proceso a moto_compras
+ALTER TABLE moto_compras
+  ADD COLUMN estado_proceso INT NOT NULL DEFAULT 1
+  COMMENT '1 = Pendiente Aplicar, 2 = Procesado'
+  AFTER estado;
 
 
 INSERT INTO moto_categoria VALUES (1,'RM','Repuestos moto',1);
