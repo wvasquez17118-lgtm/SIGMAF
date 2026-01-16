@@ -1,6 +1,7 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
 using SIGMAF.Desktop.Constantes;
 using SIGMAF.Desktop.DB;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
@@ -36,9 +37,7 @@ namespace SIGMAF.Desktop.MOTOS
         {
             Data.Clear();
             bsRealizados.DataSource = Data;
-            dataGridProductosComprados.DataSource = bsRealizados;
-            //var dataResultadoGuardado = 
-            //foreach (var x in dataResultadoGuardado) Data.Add(x);
+            dataGridProductosComprados.DataSource = bsRealizados;         
         }
 
         private async void ComprasForm_Load(object sender, EventArgs e)
@@ -66,7 +65,7 @@ namespace SIGMAF.Desktop.MOTOS
                     ConfiguracionGridProductos();
                     ConfigurarGridProductoComprados();
                     CargarGridDetalle();
-
+                    ConfigurarFormatoGrid();
                     resultado = AppServices.Catalogos.ListarTodos();
                     if (!resultado.Any())
                     {
@@ -102,6 +101,43 @@ namespace SIGMAF.Desktop.MOTOS
                     cmbTipoFactura.SelectedIndex = -1;
                     cmbTipoFactura.DropDownStyle = ComboBoxStyle.DropDownList;
 
+                    if (compraid > 0)
+                    {
+                        Dictionary<string, string> parameters = new Dictionary<string, string>();
+                        parameters.Add("id",compraid.ToString());
+                        var resultadoDetalle = await apiCompra.ObtenerCompraMaestroDetallePorIdAsync(parameters);
+
+                        if (resultadoDetalle != null)
+                        {
+                            txtDescuento.Text = NumberHelper.ToDecimal(resultadoDetalle.Compra.Descuento).ToString().Replace(".00", "");
+                            txtSubTotal.Text = NumberHelper.ToDecimal(resultadoDetalle.Compra.SubTotal).ToString().Replace(".00", "");
+                            txtTotal.Text = NumberHelper.ToDecimal(resultadoDetalle.Compra.Total).ToString().Replace(".00","");
+
+                            cmbTipoFactura.SelectedValue = resultadoDetalle.Compra.TipoFactura;
+                            cmbProveedor.SelectedValue = resultadoDetalle.Compra.ProveedorId;
+
+                            var detalle = (from resul in resultadoDetalle.Detalle.ToList()
+                             join prod in resultado on resul.CatalogoId equals prod.IdCatalogo
+                             select new IngresoTallerDetalleDTO
+                             {
+                                 CompraDetalleId = NumberHelper.ToLong(resul.CompraDetalleId),
+                                 CompraId = NumberHelper.ToLong(resul.CompraId),
+                                 CatalogoId = int.Parse(resul.CatalogoId),
+                                 Producto = prod.Nombre,
+                                 Descripcion = resul.Descripcion??"",
+                                 Cantidad = int.Parse(resul.Cantidad.Replace(".00","0")),
+                                 PrecioCompra = NumberHelper.ToDecimal(resul.PrecioCompra),
+                                 PrecioVenta = NumberHelper.ToDecimal(resul.PrecioVenta),
+                                 Total = NumberHelper.ToDecimal(resul.PrecioCompra) * int.Parse(resul.Cantidad.Replace(".00", "0")),
+                             }).ToList();
+
+                            foreach (var x in detalle) Data.Add(x);
+                            CargarCompra();
+                        }
+                    }
+
+                    
+
                 }
                 finally
                 {
@@ -111,7 +147,23 @@ namespace SIGMAF.Desktop.MOTOS
                 }
             }
         }
+        private void CargarCompra()
+        {
+            // ...cargar filas en dataGridProductosComprados...
 
+            // Aplico formato por si las columnas se recrearon
+            ConfigurarFormatoGrid();
+
+            // Recalculo totales para asegurar coherencia
+            for (int i = 0; i < dataGridProductosComprados.Rows.Count; i++)
+            {
+                if (!dataGridProductosComprados.Rows[i].IsNewRow)
+                    RecalcularFila(i);
+            }
+
+            RecalcularTotales();
+        }
+       
         private void ConfiguracionGridProductos()
         {
             dataGridProductosCatalogos.AutoGenerateColumns = false;
@@ -393,7 +445,40 @@ namespace SIGMAF.Desktop.MOTOS
             }
 
         }
+        private void ConfigurarFormatoGrid()
+        {
+            // Cantidad: entero sin decimales
+            var colCant = dataGridProductosComprados.Columns["Cantidad"];
+            if (colCant != null)
+            {
+                colCant.DefaultCellStyle.Format = "N0"; // 1,000
+                colCant.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
 
+            // PrecioCompra: 2 decimales con separador de miles
+            var colPrecioCompra = dataGridProductosComprados.Columns["PrecioCompra"];
+            if (colPrecioCompra != null)
+            {
+                colPrecioCompra.DefaultCellStyle.Format = "N2"; // 1,000.00
+                colPrecioCompra.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+
+            // PrecioVenta
+            var colPrecioVenta = dataGridProductosComprados.Columns["PrecioVenta"];
+            if (colPrecioVenta != null)
+            {
+                colPrecioVenta.DefaultCellStyle.Format = "N2";
+                colPrecioVenta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+
+            // Total
+            var colTotal = dataGridProductosComprados.Columns["Total"];
+            if (colTotal != null)
+            {
+                colTotal.DefaultCellStyle.Format = "N2";
+                colTotal.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+        }
         private void dataGridProductosCatalogos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;

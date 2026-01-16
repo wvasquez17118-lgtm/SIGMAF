@@ -22,4 +22,16 @@ namespace SIGMAF.ApiClient
         [JsonPropertyName("mensajeerror")]
         public string? Mensaje { get; set; }
     }
+
+    public class ApiResponse<T>
+    {
+        [JsonPropertyName("estado")]
+        public bool Estado { get; set; }
+
+        [JsonPropertyName("data")]
+        public T? Data { get; set; }
+
+        [JsonPropertyName("mensajeerror")]
+        public string? MensajeError { get; set; }
+    }
 }

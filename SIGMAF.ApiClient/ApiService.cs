@@ -63,6 +63,43 @@ public class ApiService
         }
     }
 
+    public async Task<T?> PostAsync<T>(string relativeUrl, Dictionary<string, string>? parameters = null)
+    {
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, relativeUrl);
+
+            // Si hay parámetros, los mandamos como application/x-www-form-urlencoded
+            if (parameters != null && parameters.Count > 0)
+            {
+                request.Content = new FormUrlEncodedContent(parameters);
+            }
+
+            using var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return default;
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            // Respuesta tipo objeto (no lista)
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse<T>>(jsonString, _jsonOptions);
+
+            if (apiResponse != null && apiResponse.Estado && apiResponse.Data != null)
+            {
+                return apiResponse.Data;
+            }
+
+            return default;
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+    }
+
 
     /// <summary>
     /// Método genérico para hacer POST y devolver  T
