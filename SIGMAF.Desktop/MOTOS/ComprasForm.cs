@@ -5,11 +5,9 @@ using SIGMAF.Desktop.Helpers;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
-using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SIGMAF.Desktop.MOTOS
 {
@@ -22,10 +20,14 @@ namespace SIGMAF.Desktop.MOTOS
 
 
         public long compraid = 0;
+        public bool PermiteGuardar = true;
+        public string Titulo = "";
         CompraServicio apiCompra = new CompraServicio();
+
         public ComprasForm()
         {
             InitializeComponent();
+            
         }
 
         private void ComprasForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -42,6 +44,11 @@ namespace SIGMAF.Desktop.MOTOS
 
         private async void ComprasForm_Load(object sender, EventArgs e)
         {
+            if (!PermiteGuardar)
+            {
+                btnGuardar.Enabled = false;
+            }
+            lblTituloCompra.Text = string.IsNullOrEmpty(Titulo) ? "Crear nueva factura detalles de compras" : Titulo; 
             // Fuerza un cambio de tamaño para que se reajusten los controles
 
             SqliteDatabase.Initialize(AppServices.ConnectionString);
@@ -125,7 +132,7 @@ namespace SIGMAF.Desktop.MOTOS
                                  CatalogoId = int.Parse(resul.CatalogoId),
                                  Producto = prod.Nombre,
                                  Descripcion = resul.Descripcion??"",
-                                 Cantidad = int.Parse(resul.Cantidad.Replace(".00","0")),
+                                 Cantidad = int.Parse(resul.Cantidad.Replace(".00","")),
                                  PrecioCompra = NumberHelper.ToDecimal(resul.PrecioCompra),
                                  PrecioVenta = NumberHelper.ToDecimal(resul.PrecioVenta),
                                  Total = NumberHelper.ToDecimal(resul.PrecioCompra) * int.Parse(resul.Cantidad.Replace(".00", "0")),
@@ -564,7 +571,7 @@ namespace SIGMAF.Desktop.MOTOS
                     {
                         var compra = new MotoComprasDTO()
                         {
-                            CompraId = 0,
+                            CompraId = compraid,
                             Fecha = dateFechaCompra.Value,
                             TipoFactura = cmbTipoFactura.SelectedValue?.ToString() ?? "CO",
                             ProveedorId = int.Parse(cmbProveedor?.SelectedValue?.ToString() ?? "0"),
@@ -587,11 +594,12 @@ namespace SIGMAF.Desktop.MOTOS
                         var resultado = await apiCompra.GuardarCompraRepuestoAsync(parameters);
                         if (resultado.Estado)
                         {
-                            MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente);
+                            MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "ADMINISTRACIÓN");                            
+                            this.DialogResult = DialogResult.OK;
                         }
                         else
                         {
-                            MessageBox.Show(resultado.Mensaje);
+                            MessageBox.Show(resultado.Mensaje, "ADMINISTRACIÓN");
                         }
                     }
                     finally

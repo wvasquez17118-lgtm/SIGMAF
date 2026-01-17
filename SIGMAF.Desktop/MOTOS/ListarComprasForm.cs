@@ -23,9 +23,10 @@ namespace SIGMAF.Desktop.MOTOS
             compras.ShowDialog();
         }
 
-        private   void ListarComprasForm_Load(object sender, EventArgs e)
+        private void ListarComprasForm_Load(object sender, EventArgs e)
         {
-              Cargar();
+            lsvListadoCompras.OwnerDraw = true;
+            Cargar();
         }
 
 
@@ -58,7 +59,7 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvListadoCompras.Columns.Clear();
                     lsvListadoCompras.Items.Clear();
 
-                    lsvListadoCompras.Columns.Add("CompraID", 100);
+                    lsvListadoCompras.Columns.Add("ID", 100);
                     lsvListadoCompras.Columns.Add("Proveedor", 200);
                     lsvListadoCompras.Columns.Add("Tipo Compra", 200);
                     lsvListadoCompras.Columns.Add("Fecha Compra", 150);
@@ -78,11 +79,13 @@ namespace SIGMAF.Desktop.MOTOS
                         item.SubItems.Add(itemCat.SubTotalFmt);
                         item.SubItems.Add(itemCat.DescuentoFmt);
                         item.SubItems.Add(itemCat.TotalFmt);
-                        item.SubItems.Add(itemCat.EstadoProceso);
+                        item.SubItems.Add(itemCat.EstadoProceso);                        
                         lsvListadoCompras.Items.Add(item);
 
                     }
                     lsvListadoCompras.EndUpdate();
+                    lsvListadoCompras.Invalidate();
+                    lsvListadoCompras.Refresh();
                 }
                 finally
                 {
@@ -129,7 +132,8 @@ namespace SIGMAF.Desktop.MOTOS
                 using (ComprasForm form = new ComprasForm())
                 {
                     form.compraid = long.Parse(item.SubItems[0].Text);
-                  //  form.Titulo = string.Format("Detalle trabajo realizados ingreso taller => Moto placa N°. {0}  Fecha Ingreso taller => {1}.", item.SubItems[3].Text, item.SubItems[1].Text);
+                    form.PermiteGuardar = item.SubItems[7].Text != "Procesado";
+                    form.Titulo = string.Format("Editar detalle de la factura => Proveedor {0}, se encuentra en estado => {1}.", item.SubItems[1].Text, item.SubItems[7].Text);
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:
@@ -139,7 +143,50 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                 }
             }
-           
+
+        }
+
+        private void lsvListadoCompras_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            // Cambia este índice por el de tu columna "Estado"
+            // (en tu captura parece ser la última columna)
+            int colEstado = 7;
+
+            bool esCeldaEstado = e.ColumnIndex == colEstado;
+            bool estaAplicado = esCeldaEstado &&
+                                string.Equals(e.SubItem.Text, "Procesado", StringComparison.OrdinalIgnoreCase);
+
+            if (!estaAplicado)
+            {
+                e.DrawDefault = true; // deja que Windows dibuje normal (incluye selección)
+                return;
+            }
+
+            // Fondo verde + texto blanco
+            using (var b = new SolidBrush(Color.ForestGreen))
+                e.Graphics.FillRectangle(b, e.Bounds);
+
+            var bounds = e.Bounds;
+            bounds.Inflate(-4, 0);
+
+            TextRenderer.DrawText(
+                e.Graphics,
+                e.SubItem.Text,
+                e.SubItem.Font ?? e.Item.Font,
+                bounds,
+                Color.White,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter
+            );
+        }
+
+        private void lsvListadoCompras_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+         //   e.DrawBackground();
+        }
+
+        private void lsvListadoCompras_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+           e.DrawDefault = true;
         }
     }
 }

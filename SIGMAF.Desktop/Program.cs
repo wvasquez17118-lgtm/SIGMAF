@@ -19,7 +19,13 @@ namespace SIGMAF.Desktop
             // Inicializar SQLite y repositorios
             AppServices.Initialize();
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
+            using (var frmLogin = new LoginForm())
+            {
+                if (frmLogin.ShowDialog() == DialogResult.OK)
+                {
+                    Application.Run(new MenuForm()); // al cerrar FrmMenu, termina todo
+                }
+            }
         }
     }
 }

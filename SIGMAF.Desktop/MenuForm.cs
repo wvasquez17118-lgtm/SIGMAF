@@ -69,9 +69,9 @@ namespace SIGMAF.Desktop
             flowMenu.Controls.Add(CreateRibbonButton("Catálogos", "icon_catalogo.png", () => AbrirCatalogosMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Ventas", "icon_venta.png", () => AbrirVentaRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Compras", "icon_compras.png", () => AbrirAgregarComprasMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Inventarios", "icon_inventory.png", () => AbrirAgregarComprasMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Ajustes stock", "icon_ajustestock.png", () => AbrirCatalogosMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Stock", "icon_bar.png", () => AbrirCatalogosMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Inventarios", "icon_inventory.png", () => AbrirInventarioRepuestoMotos()));
+            //flowMenu.Controls.Add(CreateRibbonButton("Ajustes stock", "icon_ajustestock.png", () => AbrirCatalogosMotos()));
+            //flowMenu.Controls.Add(CreateRibbonButton("Stock", "icon_bar.png", () => AbrirCatalogosMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Sincronización", "icon_sincronizacion.png", () => AbrirSincronizacionMOTOS()));
             flowMenu.ResumeLayout();
         }
@@ -102,8 +102,7 @@ namespace SIGMAF.Desktop
                 frm.WindowState = FormWindowState.Maximized;
                 frm.Show();
             }
-        }
-        
+        }        
 
         private void AbrirAgregarComprasMotos()
         {
@@ -111,8 +110,18 @@ namespace SIGMAF.Desktop
             {
                 Global.FormularioAbierto = true;
                 this.Text = "SIGMAF – Agregar compras MOTOS";
-                //ComprasForm frm = new ComprasForm();
                 ListarComprasForm frm = new ListarComprasForm();
+                frm.MdiParent = this;
+                frm.Show();
+            }
+        }
+        private void AbrirInventarioRepuestoMotos()
+        {
+            if (!Global.FormularioAbierto)
+            {
+                Global.FormularioAbierto = true;
+                this.Text = "SIGMAF – Inventario repuestos MOTOS";
+                InventarioRepuestoMotoForm frm = new InventarioRepuestoMotoForm();
                 frm.MdiParent = this;
                 frm.Show();
             }

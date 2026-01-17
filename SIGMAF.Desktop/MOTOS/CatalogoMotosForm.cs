@@ -211,7 +211,7 @@ namespace SIGMAF.Desktop.MOTOS
                             var resultado = await api.GuardarCatalogoAsync(parameters);
                             if (resultado.Estado)
                             {
-                                MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente);
+                                MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente,"ADMINISTRACIÓN");
                                 await CargarCatalogoAsync();
                             }
                             idproducto = 0;

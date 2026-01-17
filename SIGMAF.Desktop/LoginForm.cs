@@ -16,10 +16,8 @@ namespace SIGMAF_MenuDemo
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-           
-            MenuForm menuForm = new MenuForm();
-            menuForm.ShowDialog();
-            this.Close();
+            this.DialogResult = DialogResult.OK;
+            this.Close(); // el login desaparece
         }
 
         private void LoginForm_Load(object sender, EventArgs e)

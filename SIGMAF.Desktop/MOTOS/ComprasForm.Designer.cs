@@ -30,7 +30,7 @@
         {
             panel1 = new Panel();
             lblTotalProducto = new Label();
-            label3 = new Label();
+            lblTituloCompra = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             groupBox1 = new GroupBox();
@@ -80,7 +80,7 @@
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(lblTotalProducto);
-            panel1.Controls.Add(label3);
+            panel1.Controls.Add(lblTituloCompra);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
@@ -98,15 +98,15 @@
             lblTotalProducto.TabIndex = 1;
             lblTotalProducto.Text = "Total: 0";
             // 
-            // label3
+            // lblTituloCompra
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(18, 13);
-            label3.Name = "label3";
-            label3.Size = new Size(218, 20);
-            label3.TabIndex = 0;
-            label3.Text = "Agregar detalles de la compra";
+            lblTituloCompra.AutoSize = true;
+            lblTituloCompra.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTituloCompra.Location = new Point(18, 13);
+            lblTituloCompra.Name = "lblTituloCompra";
+            lblTituloCompra.Size = new Size(218, 20);
+            lblTituloCompra.TabIndex = 0;
+            lblTituloCompra.Text = "Agregar detalles de la compra";
             // 
             // tableLayoutPanel1
             // 
@@ -489,7 +489,7 @@
 
         private Panel panel1;
         private Label lblTotalProducto;
-        private Label label3;
+        private Label lblTituloCompra;
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
         private GroupBox groupBox1;
