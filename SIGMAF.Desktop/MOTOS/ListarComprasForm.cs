@@ -7,6 +7,7 @@ namespace SIGMAF.Desktop.MOTOS
 {
     public partial class ListarComprasForm : Form
     {
+        CompraServicio compraServicio;
         public ListarComprasForm()
         {
             InitializeComponent();
@@ -25,13 +26,13 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void ListarComprasForm_Load(object sender, EventArgs e)
         {
-            lsvListadoCompras.OwnerDraw = true;
             Cargar();
         }
 
 
         private async void Cargar()
         {
+            compraServicio = new CompraServicio();
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
             using (var loading = new FrmLoading())
@@ -47,7 +48,7 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-                    CompraServicio compraServicio = new CompraServicio();
+
                     var data = await compraServicio.MotoListarFacturasComprasAsync();
                     var culture = CultureInfo.GetCultureInfo("es-NI");
 
@@ -67,7 +68,9 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvListadoCompras.Columns.Add("Descuento", 100);
                     lsvListadoCompras.Columns.Add("Total", 100);
                     lsvListadoCompras.Columns.Add("Estado", 200);
-
+                    lsvListadoCompras.View = View.Details;
+                    lsvListadoCompras.FullRowSelect = true;
+                    lsvListadoCompras.OwnerDraw = true;
                     lsvListadoCompras.BeginUpdate();
 
                     foreach (var itemCat in lista)
@@ -79,7 +82,7 @@ namespace SIGMAF.Desktop.MOTOS
                         item.SubItems.Add(itemCat.SubTotalFmt);
                         item.SubItems.Add(itemCat.DescuentoFmt);
                         item.SubItems.Add(itemCat.TotalFmt);
-                        item.SubItems.Add(itemCat.EstadoProceso);                        
+                        item.SubItems.Add(itemCat.EstadoProceso);
                         lsvListadoCompras.Items.Add(item);
 
                     }
@@ -148,8 +151,8 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void lsvListadoCompras_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            // Cambia este índice por el de tu columna "Estado"
-            // (en tu captura parece ser la última columna)
+            //// Cambia este índice por el de tu columna "Estado"
+            //// (en tu captura parece ser la última columna)
             int colEstado = 7;
 
             bool esCeldaEstado = e.ColumnIndex == colEstado;
@@ -177,16 +180,67 @@ namespace SIGMAF.Desktop.MOTOS
                 Color.White,
                 TextFormatFlags.Left | TextFormatFlags.VerticalCenter
             );
+            // e.DrawDefault = true;
         }
 
         private void lsvListadoCompras_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-         //   e.DrawBackground();
+            // e.DrawDefault = true;
         }
 
         private void lsvListadoCompras_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-           e.DrawDefault = true;
+            using (var backBrush = new SolidBrush(SystemColors.Control))
+            using (var borderPen = new Pen(SystemColors.ControlDark))
+            using (var headerFont = new Font(lsvListadoCompras.Font, FontStyle.Bold))
+            {
+                e.Graphics.FillRectangle(backBrush, e.Bounds);
+                e.Graphics.DrawRectangle(borderPen, e.Bounds);
+
+                // Texto en negrita
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    e.Header.Text,
+                    headerFont,
+                    e.Bounds,
+                    Color.Black,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis
+                );
+            }
+        }
+
+        private async void aplicarCompraFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lsvListadoCompras.SelectedItems.Count == 0)
+                return;
+
+            ListViewItem item = lsvListadoCompras.SelectedItems[0];
+            if (item.SubItems[7].Text == "Procesado")
+            {
+                MessageBox.Show("No se puede aplicar, ya que ya fue aplicado", "ADVERTENCIA");
+                return;
+            }
+
+            DialogResult r = MessageBox.Show("Estas seguro desea aplicar para ajustar el inventario?", "APLICACION", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+              
+
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                parameters.Add("id", item.SubItems[0].Text.ToString());
+                var result = await compraServicio.AplicarCompraFacturaAInventarioAsync(parameters);
+                if (result.Estado)
+                {
+                    Cargar();
+                    MessageBox.Show("Se aplico correctamente la factura, se ajusto el inventario", "CONFIRMACION");
+                }
+                else
+                {
+                    MessageBox.Show(result.Mensaje, "ERROR");
+                }
+
+            }
         }
     }
 }

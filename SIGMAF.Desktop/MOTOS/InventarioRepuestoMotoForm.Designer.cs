@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            label1 = new Label();
+            txtBuscarProducto = new TextBox();
             btnNuevaCompra = new Button();
             lblTotalProducto = new Label();
             label3 = new Label();
@@ -39,14 +41,34 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(txtBuscarProducto);
             panel1.Controls.Add(btnNuevaCompra);
             panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(914, 56);
+            panel1.Size = new Size(914, 68);
             panel1.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 5);
+            label1.Name = "label1";
+            label1.Size = new Size(163, 20);
+            label1.TabIndex = 4;
+            label1.Text = "Busqueda de producto";
+            // 
+            // txtBuscarProducto
+            // 
+            txtBuscarProducto.Location = new Point(12, 35);
+            txtBuscarProducto.Name = "txtBuscarProducto";
+            txtBuscarProducto.Size = new Size(308, 27);
+            txtBuscarProducto.TabIndex = 3;
+            txtBuscarProducto.TextChanged += txtBuscarProducto_TextChanged;
             // 
             // btnNuevaCompra
             // 
@@ -74,9 +96,10 @@
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(12, 18);
+            label3.Location = new Point(638, 28);
             label3.Name = "label3";
             label3.Size = new Size(264, 20);
             label3.TabIndex = 0;
@@ -87,12 +110,15 @@
             lsvInventario.Dock = DockStyle.Fill;
             lsvInventario.FullRowSelect = true;
             lsvInventario.GridLines = true;
-            lsvInventario.Location = new Point(0, 56);
+            lsvInventario.Location = new Point(0, 68);
             lsvInventario.Name = "lsvInventario";
-            lsvInventario.Size = new Size(914, 544);
+            lsvInventario.Size = new Size(914, 532);
             lsvInventario.TabIndex = 7;
             lsvInventario.UseCompatibleStateImageBehavior = false;
             lsvInventario.View = View.Details;
+            lsvInventario.DrawColumnHeader += lsvInventario_DrawColumnHeader;
+            lsvInventario.DrawItem += lsvInventario_DrawItem;
+            lsvInventario.DrawSubItem += lsvInventario_DrawSubItem;
             // 
             // InventarioRepuestoMotoForm
             // 
@@ -109,6 +135,7 @@
             Text = "Inventario repuestos motos";
             WindowState = FormWindowState.Maximized;
             FormClosing += InventarioRepuestoMotoForm_FormClosing;
+            Load += InventarioRepuestoMotoForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -121,5 +148,7 @@
         private Label lblTotalProducto;
         private Label label3;
         private ListView lsvInventario;
+        private TextBox txtBuscarProducto;
+        private Label label1;
     }
 }

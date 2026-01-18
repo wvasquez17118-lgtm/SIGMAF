@@ -109,7 +109,7 @@
             // 
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { editarCompraFacturaToolStripMenuItem, aplicarCompraFacturaToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(206, 48);
+            contextMenuStrip1.Size = new Size(206, 70);
             // 
             // editarCompraFacturaToolStripMenuItem
             // 
@@ -123,6 +123,7 @@
             aplicarCompraFacturaToolStripMenuItem.Name = "aplicarCompraFacturaToolStripMenuItem";
             aplicarCompraFacturaToolStripMenuItem.Size = new Size(205, 22);
             aplicarCompraFacturaToolStripMenuItem.Text = "Aplicar compra (Factura)";
+            aplicarCompraFacturaToolStripMenuItem.Click += aplicarCompraFacturaToolStripMenuItem_Click;
             // 
             // ListarComprasForm
             // 
