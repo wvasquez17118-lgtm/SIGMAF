@@ -39,27 +39,7 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-
-                    producto = await apiServicio.ObtenercatalogosconinventariomotoAsync();
-                    producto = producto
-                  .Select(x => x.ToVm())
-                  .OrderByDescending(x => x.CantidadFmt)
-                  .ToList();
-
-                    lsvInventario.Columns.Clear();
-                    lsvInventario.View = View.Details;
-                    lsvInventario.FullRowSelect = true;
-                    lsvInventario.OwnerDraw = true;
-
-                    lsvInventario.Columns.Add("ID", 0);
-                    lsvInventario.Columns.Add("Producto", 500);
-                    lsvInventario.Columns.Add("Disponible", 200);
-                    lsvInventario.Columns.Add("Stock", 200);
-                    lsvInventario.Columns.Add("Precio Compra", 200);
-                    lsvInventario.Columns.Add("Precio Venta", 200);
-                    CargarListView(producto);
-
-
+                    await CargarData();
                 }
                 finally
                 {
@@ -69,7 +49,27 @@ namespace SIGMAF.Desktop.MOTOS
                 }
             }
         }
+        private  async  Task  CargarData()
+        {
+            producto = await apiServicio.ObtenercatalogosconinventariomotoAsync();
+            producto = producto
+          .Select(x => x.ToVm())
+          .OrderByDescending(x => x.CantidadFmt)
+          .ToList();
 
+            lsvInventario.Columns.Clear();
+            lsvInventario.View = View.Details;
+            lsvInventario.FullRowSelect = true;
+            lsvInventario.OwnerDraw = true;
+
+            lsvInventario.Columns.Add("ID", 0);
+            lsvInventario.Columns.Add("Producto", 500);
+            lsvInventario.Columns.Add("Disponible", 200);
+            lsvInventario.Columns.Add("Stock", 200);
+            lsvInventario.Columns.Add("Precio Compra", 200);
+            lsvInventario.Columns.Add("Precio Venta", 200);
+            CargarListView(producto);
+        }
         public void CargarListView(List<ListadoInventarioDTO> data)
         {
             lsvInventario.Items.Clear();
@@ -138,31 +138,124 @@ namespace SIGMAF.Desktop.MOTOS
         }
 
         private void actualizarDisponibleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ActualizarInventarioForm form = new ActualizarInventarioForm();
-            form.caseTypeAction = "disponible";
-            form.ShowDialog();
+        { 
+
+            if (lsvInventario.SelectedItems.Count == 0)
+                return;
+            DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+                ListViewItem item = lsvInventario.SelectedItems[0];
+
+                using (ActualizarInventarioForm form = new ActualizarInventarioForm())
+                {
+                    form.caseTypeAction = "disponible";
+                    form.id = long.Parse(item.SubItems[0].Text);
+                    form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
+                    form.txtCantidadDisponible.Text = item.SubItems[2].Text;
+                    form.txtStock.Text = item.SubItems[3].Text;
+                    form.txtPrecioCompra.Text = item.SubItems[4].Text;
+                    form.txtPrecioVenta.Text = item.SubItems[5].Text;                    
+                    var result = form.ShowDialog();
+
+                    // 🔹 Solo recargo si realmente guardó:
+                    if (result == DialogResult.OK)
+                    {
+                        CargarData();
+                    }
+                }
+            }
         }
 
         private void actualizarStockToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ActualizarInventarioForm form = new ActualizarInventarioForm();
-            form.caseTypeAction = "stock";
-            form.ShowDialog();
+           if (lsvInventario.SelectedItems.Count == 0)
+                return;
+            DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+                ListViewItem item = lsvInventario.SelectedItems[0];
+
+                using (ActualizarInventarioForm form = new ActualizarInventarioForm())
+                {
+                    form.caseTypeAction = "stock";
+                    form.id = long.Parse(item.SubItems[0].Text);
+                    form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
+                    form.txtCantidadDisponible.Text = item.SubItems[2].Text;
+                    form.txtStock.Text = item.SubItems[3].Text;
+                    form.txtPrecioCompra.Text = item.SubItems[4].Text;
+                    form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    var result = form.ShowDialog();
+
+                    // 🔹 Solo recargo si realmente guardó:
+                    if (result == DialogResult.OK)
+                    {
+                        CargarData();
+                    }
+                }
+            }
         }
 
         private void actualizarPrecioCompraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ActualizarInventarioForm form = new ActualizarInventarioForm();
-            form.caseTypeAction = "preciocompra";
-            form.ShowDialog();
+            if (lsvInventario.SelectedItems.Count == 0)
+                return;
+            DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+                ListViewItem item = lsvInventario.SelectedItems[0];
+
+                using (ActualizarInventarioForm form = new ActualizarInventarioForm())
+                {
+                    form.caseTypeAction = "preciocompra";
+                    form.id = long.Parse(item.SubItems[0].Text);
+                    form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
+                    form.txtCantidadDisponible.Text = item.SubItems[2].Text;
+                    form.txtStock.Text = item.SubItems[3].Text;
+                    form.txtPrecioCompra.Text = item.SubItems[4].Text;
+                    form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    var result = form.ShowDialog();
+
+                    // 🔹 Solo recargo si realmente guardó:
+                    if (result == DialogResult.OK)
+                    {
+                        CargarData();
+                    }
+                }
+            }
         }
 
         private void actualizarPrecioVentaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ActualizarInventarioForm form = new ActualizarInventarioForm();
-            form.caseTypeAction = "precioventa";
-            form.ShowDialog();
+            if (lsvInventario.SelectedItems.Count == 0)
+                return;
+            DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+                ListViewItem item = lsvInventario.SelectedItems[0];
+
+                using (ActualizarInventarioForm form = new ActualizarInventarioForm())
+                {
+                    form.caseTypeAction = "precioventa";
+                    form.id = long.Parse(item.SubItems[0].Text);
+                    form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
+                    form.txtCantidadDisponible.Text = item.SubItems[2].Text;
+                    form.txtStock.Text = item.SubItems[3].Text;
+                    form.txtPrecioCompra.Text = item.SubItems[4].Text;
+                    form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    var result = form.ShowDialog();
+
+                    // 🔹 Solo recargo si realmente guardó:
+                    if (result == DialogResult.OK)
+                    {
+                        CargarData();
+                    }
+                }
+            }
         }
     }
 }

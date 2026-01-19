@@ -413,9 +413,9 @@
             lblSumaTotalPrecio.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSumaTotalPrecio.Location = new Point(6, 124);
             lblSumaTotalPrecio.Name = "lblSumaTotalPrecio";
-            lblSumaTotalPrecio.Size = new Size(96, 37);
+            lblSumaTotalPrecio.Size = new Size(80, 37);
             lblSumaTotalPrecio.TabIndex = 11;
-            lblSumaTotalPrecio.Text = "C$  25";
+            lblSumaTotalPrecio.Text = "C$  0";
             // 
             // lblTotalProductos
             // 

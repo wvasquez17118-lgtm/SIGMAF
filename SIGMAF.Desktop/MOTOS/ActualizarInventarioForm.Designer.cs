@@ -33,7 +33,7 @@
             lblTitulo = new Label();
             btnGuardar = new Button();
             label1 = new Label();
-            txtCodigo = new TextBox();
+            txtNombreProducto = new TextBox();
             label2 = new Label();
             txtCantidadDisponible = new TextBox();
             label4 = new Label();
@@ -91,6 +91,7 @@
             btnGuardar.Text = "GUARDAR";
             btnGuardar.TextAlign = ContentAlignment.BottomCenter;
             btnGuardar.UseVisualStyleBackColor = true;
+            btnGuardar.Click += btnGuardar_Click;
             // 
             // label1
             // 
@@ -102,15 +103,15 @@
             label1.TabIndex = 12;
             label1.Text = "Nombre producto";
             // 
-            // txtCodigo
+            // txtNombreProducto
             // 
-            txtCodigo.Enabled = false;
-            txtCodigo.Location = new Point(14, 106);
-            txtCodigo.Margin = new Padding(3, 4, 3, 4);
-            txtCodigo.Multiline = true;
-            txtCodigo.Name = "txtCodigo";
-            txtCodigo.Size = new Size(514, 45);
-            txtCodigo.TabIndex = 11;
+            txtNombreProducto.Enabled = false;
+            txtNombreProducto.Location = new Point(14, 106);
+            txtNombreProducto.Margin = new Padding(3, 4, 3, 4);
+            txtNombreProducto.Multiline = true;
+            txtNombreProducto.Name = "txtNombreProducto";
+            txtNombreProducto.Size = new Size(514, 45);
+            txtNombreProducto.TabIndex = 11;
             // 
             // label2
             // 
@@ -131,6 +132,7 @@
             txtCantidadDisponible.Name = "txtCantidadDisponible";
             txtCantidadDisponible.Size = new Size(514, 45);
             txtCantidadDisponible.TabIndex = 13;
+            txtCantidadDisponible.KeyPress += txtCantidadDisponible_KeyPress;
             // 
             // label4
             // 
@@ -151,6 +153,7 @@
             txtStock.Name = "txtStock";
             txtStock.Size = new Size(514, 45);
             txtStock.TabIndex = 15;
+            txtStock.KeyPress += txtCantidadDisponible_KeyPress;
             // 
             // label5
             // 
@@ -171,6 +174,7 @@
             txtPrecioCompra.Name = "txtPrecioCompra";
             txtPrecioCompra.Size = new Size(514, 45);
             txtPrecioCompra.TabIndex = 17;
+            txtPrecioCompra.KeyPress += txtCantidadDisponible_KeyPress;
             // 
             // label6
             // 
@@ -191,6 +195,7 @@
             txtPrecioVenta.Name = "txtPrecioVenta";
             txtPrecioVenta.Size = new Size(514, 45);
             txtPrecioVenta.TabIndex = 19;
+            txtPrecioVenta.KeyPress += txtCantidadDisponible_KeyPress;
             // 
             // ActualizarInventarioForm
             // 
@@ -207,7 +212,7 @@
             Controls.Add(label2);
             Controls.Add(txtCantidadDisponible);
             Controls.Add(label1);
-            Controls.Add(txtCodigo);
+            Controls.Add(txtNombreProducto);
             Controls.Add(btnGuardar);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -231,14 +236,14 @@
         private Label lblTitulo;
         private Button btnGuardar;
         private Label label1;
-        private TextBox txtCodigo;
         private Label label2;
-        private TextBox txtCantidadDisponible;
         private Label label4;
-        private TextBox txtStock;
         private Label label5;
-        private TextBox txtPrecioCompra;
         private Label label6;
-        private TextBox txtPrecioVenta;
+        public TextBox txtNombreProducto;
+        public TextBox txtStock;
+        public TextBox txtPrecioCompra;
+        public TextBox txtPrecioVenta;
+        public TextBox txtCantidadDisponible;
     }
 }
