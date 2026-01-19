@@ -136,5 +136,33 @@ namespace SIGMAF.Desktop.MOTOS
         {
             e.DrawDefault = true;
         }
+
+        private void actualizarDisponibleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ActualizarInventarioForm form = new ActualizarInventarioForm();
+            form.caseTypeAction = "disponible";
+            form.ShowDialog();
+        }
+
+        private void actualizarStockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ActualizarInventarioForm form = new ActualizarInventarioForm();
+            form.caseTypeAction = "stock";
+            form.ShowDialog();
+        }
+
+        private void actualizarPrecioCompraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ActualizarInventarioForm form = new ActualizarInventarioForm();
+            form.caseTypeAction = "preciocompra";
+            form.ShowDialog();
+        }
+
+        private void actualizarPrecioVentaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ActualizarInventarioForm form = new ActualizarInventarioForm();
+            form.caseTypeAction = "precioventa";
+            form.ShowDialog();
+        }
     }
 }

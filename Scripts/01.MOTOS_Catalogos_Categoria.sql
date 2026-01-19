@@ -160,6 +160,10 @@ ALTER TABLE moto_compras
   AFTER estado;
 
 
+  ALTER TABLE moto_ventas
+  ADD COLUMN estado_aplicado BIT DEFAULT 0 
+  COMMENT '1 = Aplicado a inventario, 0 = Pendiente de aplicar'
+
 INSERT INTO moto_categoria VALUES (1,'RM','Repuestos moto',1);
 INSERT INTO moto_categoria VALUES (2,'LUB','Lubricantes',1);
 INSERT INTO moto_categoria VALUES (3,'ACC','Accesorios',1);

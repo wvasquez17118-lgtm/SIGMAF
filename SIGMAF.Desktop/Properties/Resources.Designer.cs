@@ -93,6 +93,16 @@ namespace SIGMAF.Desktop.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_compras {
+            get {
+                object obj = ResourceManager.GetObject("icon_compras", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_delete {
             get {
                 object obj = ResourceManager.GetObject("icon_delete", resourceCulture);
@@ -106,6 +116,16 @@ namespace SIGMAF.Desktop.Properties {
         internal static System.Drawing.Bitmap icon_edit {
             get {
                 object obj = ResourceManager.GetObject("icon_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_inventory {
+            get {
+                object obj = ResourceManager.GetObject("icon_inventory", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +183,29 @@ namespace SIGMAF.Desktop.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_sincronizacion {
+            get {
+                object obj = ResourceManager.GetObject("icon_sincronizacion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_sincronizarguardar {
             get {
                 object obj = ResourceManager.GetObject("icon_sincronizarguardar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_venta {
+            get {
+                object obj = ResourceManager.GetObject("icon_venta", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

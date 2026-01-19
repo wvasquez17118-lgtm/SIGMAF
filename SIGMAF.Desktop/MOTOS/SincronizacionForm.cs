@@ -43,30 +43,51 @@ namespace SIGMAF.Desktop.MOTOS
 
                     try
                     {
-                        SqliteDatabase.DeleteDatabase(AppServices.ConnectionString);
-                        SqliteDatabase.Initialize(AppServices.ConnectionString);
-                        
-                        var catalogos = await api.ObtenerCatalogoAsync();
-                        var proveedor = await api.ObtenerProveedoresAsync();
-                        var catalogosConInventario = await api.ObtenerCatalogosConInventarioMotoAsync();
+                        if (chActualizarInventarioVenta.Checked)
+                        {
+                            Dictionary<string, string> parameters = new Dictionary<string, string>();
+                            parameters.Add("fecha", dateFechaSincronizacion.Value.ToString("yyyy-MM-dd", new CultureInfo("es-ES")));
+                            InventarioServicio apiInventario = new InventarioServicio();
+                            var resultado = await apiInventario.SincronizacionActualizarInventarioAsync(parameters);
+                            if (resultado.Estado)
+                            {
+                                MessageBox.Show(string.Format(ConstantesMensajes.MensajeTituloSincronizarInventarioExitosamente, dateFechaSincronizacion.Value.ToString("dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"))), "Confirmación");
+                            }else
+                            {
+                                MessageBox.Show(resultado.Mensaje, "ERROR SINCRONIZACION INVENTARIO");
+                            }
+                            btnSincronizar.Enabled = false;
+                            chActualizarInventarioVenta.Checked = false;
+                            ChDescargarCatalogo.Checked = false;
+                        }
+                        else
+                        {
+                            SqliteDatabase.DeleteDatabase(AppServices.ConnectionString);
+                            SqliteDatabase.Initialize(AppServices.ConnectionString);
 
-                        if (catalogos.Any())
-                        {
-                            AppServices.Catalogos.InsertarVarios(catalogos);
-                        }
-                        if (proveedor.Any())
-                        {
-                            AppServices.Proveedores.InsertarVarios(proveedor);
-                        }
-                        if (!catalogosConInventario.Any())
-                        {
-                            AppServices.CatalogoConInventario.InsertarVarios(catalogosConInventario);
-                        }
+                            var catalogos = await api.ObtenerCatalogoAsync();
+                            var proveedor = await api.ObtenerProveedoresAsync();
+                            var catalogosConInventario = await api.ObtenerCatalogosConInventarioMotoAsync();
 
-                        MessageBox.Show(chActualizarInventarioVenta.Checked ? string.Format(ConstantesMensajes.MensajeTituloSincronizarInventarioExitosamente, dateFechaSincronizacion.Value.ToString("dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"))) : ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "Confirmación");
-                        btnSincronizar.Enabled = false;
-                        chActualizarInventarioVenta.Checked = false;
-                        ChDescargarCatalogo.Checked = false;
+                            if (catalogos.Any())
+                            {
+                                AppServices.Catalogos.InsertarVarios(catalogos);
+                            }
+                            if (proveedor.Any())
+                            {
+                                AppServices.Proveedores.InsertarVarios(proveedor);
+                            }
+                            if (!catalogosConInventario.Any())
+                            {
+                                AppServices.CatalogoConInventario.InsertarVarios(catalogosConInventario);
+                            }
+
+                            MessageBox.Show(chActualizarInventarioVenta.Checked ? string.Format(ConstantesMensajes.MensajeTituloSincronizarInventarioExitosamente, dateFechaSincronizacion.Value.ToString("dd 'de' MMMM 'del' yyyy", new CultureInfo("es-ES"))) : ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "Confirmación");
+                            btnSincronizar.Enabled = false;
+                            chActualizarInventarioVenta.Checked = false;
+                            ChDescargarCatalogo.Checked = false;
+                        }
+                       
                     }
                     finally
                     {

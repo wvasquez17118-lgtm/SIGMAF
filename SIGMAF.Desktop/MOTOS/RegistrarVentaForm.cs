@@ -4,8 +4,6 @@ using SIGMAF.Desktop.DB;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
-using System.Text.Json;
-using System.Windows.Forms;
 
 namespace SIGMAF.Desktop.MOTOS
 {
@@ -211,7 +209,7 @@ namespace SIGMAF.Desktop.MOTOS
         }
 
         private async void btnGuardar_Click(object sender, EventArgs e)
-        { 
+        {
             if (catalogoId == 0)
             {
                 MessageBox.Show("Debe seleccionar un producto es requerido", "Advertencia");
@@ -307,6 +305,22 @@ namespace SIGMAF.Desktop.MOTOS
 
             // Bloquea todo lo demás
             e.Handled = true;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (resultado.Any())
+            {
+                if (textBox1.Text.Length == 0)
+                {
+                    dataGridProductosCatalogos.DataSource = resultado;
+                }
+                else
+                {
+                    string texto = textBox1.Text.Trim().ToLower();
+                    dataGridProductosCatalogos.DataSource = resultado.Where(p => p.NombreProducto.Trim().ToLower().Contains(texto)).ToList();
+                }
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             label1 = new Label();
             txtBuscarProducto = new TextBox();
@@ -35,7 +36,13 @@
             lblTotalProducto = new Label();
             label3 = new Label();
             lsvInventario = new ListView();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            actualizarDisponibleToolStripMenuItem = new ToolStripMenuItem();
+            actualizarStockToolStripMenuItem = new ToolStripMenuItem();
+            actualizarPrecioCompraToolStripMenuItem = new ToolStripMenuItem();
+            actualizarPrecioVentaToolStripMenuItem = new ToolStripMenuItem();
             panel1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -107,6 +114,7 @@
             // 
             // lsvInventario
             // 
+            lsvInventario.ContextMenuStrip = contextMenuStrip1;
             lsvInventario.Dock = DockStyle.Fill;
             lsvInventario.FullRowSelect = true;
             lsvInventario.GridLines = true;
@@ -119,6 +127,40 @@
             lsvInventario.DrawColumnHeader += lsvInventario_DrawColumnHeader;
             lsvInventario.DrawItem += lsvInventario_DrawItem;
             lsvInventario.DrawSubItem += lsvInventario_DrawSubItem;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem, actualizarStockToolStripMenuItem, actualizarPrecioCompraToolStripMenuItem, actualizarPrecioVentaToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(207, 92);
+            // 
+            // actualizarDisponibleToolStripMenuItem
+            // 
+            actualizarDisponibleToolStripMenuItem.Name = "actualizarDisponibleToolStripMenuItem";
+            actualizarDisponibleToolStripMenuItem.Size = new Size(206, 22);
+            actualizarDisponibleToolStripMenuItem.Text = "Actualizar Disponible";
+            actualizarDisponibleToolStripMenuItem.Click += actualizarDisponibleToolStripMenuItem_Click;
+            // 
+            // actualizarStockToolStripMenuItem
+            // 
+            actualizarStockToolStripMenuItem.Name = "actualizarStockToolStripMenuItem";
+            actualizarStockToolStripMenuItem.Size = new Size(206, 22);
+            actualizarStockToolStripMenuItem.Text = "Actualizar Stock";
+            actualizarStockToolStripMenuItem.Click += actualizarStockToolStripMenuItem_Click;
+            // 
+            // actualizarPrecioCompraToolStripMenuItem
+            // 
+            actualizarPrecioCompraToolStripMenuItem.Name = "actualizarPrecioCompraToolStripMenuItem";
+            actualizarPrecioCompraToolStripMenuItem.Size = new Size(206, 22);
+            actualizarPrecioCompraToolStripMenuItem.Text = "Actualizar precio compra";
+            actualizarPrecioCompraToolStripMenuItem.Click += actualizarPrecioCompraToolStripMenuItem_Click;
+            // 
+            // actualizarPrecioVentaToolStripMenuItem
+            // 
+            actualizarPrecioVentaToolStripMenuItem.Name = "actualizarPrecioVentaToolStripMenuItem";
+            actualizarPrecioVentaToolStripMenuItem.Size = new Size(206, 22);
+            actualizarPrecioVentaToolStripMenuItem.Text = "Actualizar  precio venta";
+            actualizarPrecioVentaToolStripMenuItem.Click += actualizarPrecioVentaToolStripMenuItem_Click;
             // 
             // InventarioRepuestoMotoForm
             // 
@@ -138,6 +180,7 @@
             Load += InventarioRepuestoMotoForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -150,5 +193,10 @@
         private ListView lsvInventario;
         private TextBox txtBuscarProducto;
         private Label label1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem actualizarDisponibleToolStripMenuItem;
+        private ToolStripMenuItem actualizarStockToolStripMenuItem;
+        private ToolStripMenuItem actualizarPrecioCompraToolStripMenuItem;
+        private ToolStripMenuItem actualizarPrecioVentaToolStripMenuItem;
     }
 }

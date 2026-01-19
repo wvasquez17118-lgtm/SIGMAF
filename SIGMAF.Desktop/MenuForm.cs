@@ -30,7 +30,7 @@ namespace SIGMAF.Desktop
         }
 
 
-        private Button CreateRibbonButton(string text, string iconFile, Action onClick = null)
+        private Button CreateRibbonButton(string text, Image iconFile, Action onClick = null)
         {
 
             var btn = new Button();
@@ -49,7 +49,7 @@ namespace SIGMAF.Desktop
             btn.Margin = new Padding(4);
             btn.Padding = new Padding(4);
 
-            btn.Image = LoadIcon(iconFile);
+            btn.Image = iconFile;
             btn.ImageAlign = ContentAlignment.TopCenter;
 
 
@@ -66,13 +66,11 @@ namespace SIGMAF.Desktop
             this.Text = "SIGMAF – Menu GYM";
             flowMenu.SuspendLayout();
             flowMenu.Controls.Clear();
-            flowMenu.Controls.Add(CreateRibbonButton("Catálogos", "icon_catalogo.png", () => AbrirCatalogosMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Ventas", "icon_venta.png", () => AbrirVentaRepuestoMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Compras", "icon_compras.png", () => AbrirAgregarComprasMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Inventarios", "icon_inventory.png", () => AbrirInventarioRepuestoMotos()));
-            //flowMenu.Controls.Add(CreateRibbonButton("Ajustes stock", "icon_ajustestock.png", () => AbrirCatalogosMotos()));
-            //flowMenu.Controls.Add(CreateRibbonButton("Stock", "icon_bar.png", () => AbrirCatalogosMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Sincronización", "icon_sincronizacion.png", () => AbrirSincronizacionMOTOS()));
+            flowMenu.Controls.Add(CreateRibbonButton("Catálogos", SIGMAF.Desktop.Properties.Resources.icon_catalogo, () => AbrirCatalogosMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Ventas", SIGMAF.Desktop.Properties.Resources.icon_venta, () => AbrirVentaRepuestoMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Compras", SIGMAF.Desktop.Properties.Resources.icon_compras, () => AbrirAgregarComprasMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Inventarios", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirInventarioRepuestoMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Sincronización", SIGMAF.Desktop.Properties.Resources.icon_sincronizacion, () => AbrirSincronizacionMOTOS()));
             flowMenu.ResumeLayout();
         }
         #endregion
@@ -223,41 +221,6 @@ namespace SIGMAF.Desktop
             return Color.FromArgb(255, r, g, b);
         }
         #endregion
-
-
-        private Image LoadIcon(string fileName)
-        {
-            try
-            {
-                string basePath = AppDomain.CurrentDomain.BaseDirectory;
-
-                // Caso publicado: exe + recursos
-                string pathBinRecursos = Path.Combine(basePath, "recursos");
-                string rootRecursos;
-
-                if (Directory.Exists(pathBinRecursos))
-                {
-                    rootRecursos = pathBinRecursos;
-                }
-                else
-                {
-                    // Caso Visual Studio: subir a la raíz del proyecto
-                    string projectRoot = Path.GetFullPath(Path.Combine(basePath, @"..\..\.."));
-                    rootRecursos = Path.Combine(projectRoot, "recursos");
-                }
-
-                string fullPath = Path.Combine(rootRecursos, fileName);
-                if (File.Exists(fullPath))
-                {
-                    return Image.FromFile(fullPath);
-                }
-            }
-            catch
-            {
-                // ignoramos errores
-            }
-
-            return null;
-        }
+         
     }
 }
