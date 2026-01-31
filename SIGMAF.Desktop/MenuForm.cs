@@ -70,71 +70,74 @@ namespace SIGMAF.Desktop
             flowMenu.Controls.Add(CreateRibbonButton("Ventas", SIGMAF.Desktop.Properties.Resources.icon_venta, () => AbrirVentaRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Compras", SIGMAF.Desktop.Properties.Resources.icon_compras, () => AbrirAgregarComprasMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Inventarios", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirInventarioRepuestoMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Ganancias", SIGMAF.Desktop.Properties.Resources.icon_ganancias, () => AbrirGanaciasRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Sincronización", SIGMAF.Desktop.Properties.Resources.icon_sincronizacion, () => AbrirSincronizacionMOTOS()));
             flowMenu.ResumeLayout();
         }
         #endregion
 
         #region FORMULARIOS MOTOS
+
+        private T AbrirOActivarForm<T>() where T : Form, new()
+        {
+            // 1. Buscar si ya hay una instancia abierta
+            var existente = this.MdiChildren.OfType<T>().FirstOrDefault();
+
+            if (existente != null)
+            {
+                // 2. Ya existe → traer al frente y refrescar datos
+                existente.WindowState = FormWindowState.Maximized;
+                existente.BringToFront();
+                existente.Activate();
+                 
+                return existente;
+            }
+
+            // 3. No existe → crear, mostrar y refrescar
+            var frm = new T
+            {
+                MdiParent = this,
+                WindowState = FormWindowState.Maximized
+            };
+
+            frm.Show();
+
+            return frm;
+        }
+
         private void AbrirCatalogosMotos()
         {
-            if (!Global.FormularioAbierto)
-            {
-                Global.FormularioAbierto = true;
-                this.Text = "SIGMAF – Catálogos MOTOS";
-                CatalogoMotosForm frm = new CatalogoMotosForm();
-                frm.MdiParent = this;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-            }
+            this.Text = "SIGMAF – Catálogos repuestos MOTOS";
+            AbrirOActivarForm<CatalogoMotosForm>();
         }
 
         private void AbrirVentaRepuestoMotos()
         {
-            if (!Global.FormularioAbierto)
-            {
-                Global.FormularioAbierto = true;
-                this.Text = "SIGMAF – Catálogos MOTOS";
-                RegistrarVentaForm frm = new RegistrarVentaForm();
-                frm.MdiParent = this;
-                frm.WindowState = FormWindowState.Maximized;
-                frm.Show();
-            }
+            this.Text = "SIGMAF – Agregar ventas MOTOS";
+            AbrirOActivarForm<RegistrarVentaForm>();    
         }        
 
         private void AbrirAgregarComprasMotos()
         {
-            if (!Global.FormularioAbierto)
-            {
-                Global.FormularioAbierto = true;
-                this.Text = "SIGMAF – Agregar compras MOTOS";
-                ListarComprasForm frm = new ListarComprasForm();
-                frm.MdiParent = this;
-                frm.Show();
-            }
+            this.Text = "SIGMAF – Listar compras MOTOS";
+            AbrirOActivarForm<ListarComprasForm>();
         }
         private void AbrirInventarioRepuestoMotos()
         {
-            if (!Global.FormularioAbierto)
-            {
-                Global.FormularioAbierto = true;
-                this.Text = "SIGMAF – Inventario repuestos MOTOS";
-                InventarioRepuestoMotoForm frm = new InventarioRepuestoMotoForm();
-                frm.MdiParent = this;
-                frm.Show();
-            }
+            this.Text = "SIGMAF – Inventario repuestos MOTOS";
+            AbrirOActivarForm<InventarioRepuestoMotoForm>();
+        }
+
+        private void AbrirGanaciasRepuestoMotos()
+        {
+            this.Text = "SIGMAF – Ganancias repuestos MOTOS";
+            AbrirOActivarForm<GananciasRepuestosForm>();
         }
 
         private void AbrirSincronizacionMOTOS()
         {
-            if (!Global.FormularioAbierto)
-            {
-                Global.FormularioAbierto = true;
-                this.Text = "SIGMAF – Sincronización MOTOS";
-                SincronizacionForm frm = new SincronizacionForm();
-                frm.MdiParent = this;
-                frm.Show();
-            }
+            this.Text = "SIGMAF – Sincronización MOTOS";
+            AbrirOActivarForm<SincronizacionForm>();
         }
         #endregion
 

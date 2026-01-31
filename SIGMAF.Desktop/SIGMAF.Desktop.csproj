@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OxyPlot.WindowsForms" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SIGMAF.ApiClient\SIGMAF.ApiClient.csproj" />
     <ProjectReference Include="..\SIGMAF.Infrastructure\SIGMAF.Infrastructure.csproj" />
   </ItemGroup>

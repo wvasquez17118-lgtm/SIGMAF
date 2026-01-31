@@ -6,7 +6,7 @@ using System;
 
 namespace SIGMAF.Desktop.MOTOS
 {
-    public partial class CatalogoMotosForm : Form
+    public partial class CatalogoMotosForm : Form 
     {
         CatalogoService api = new CatalogoService();
         private int idproducto = 0;
@@ -19,11 +19,12 @@ namespace SIGMAF.Desktop.MOTOS
         public CatalogoMotosForm()
         {
             InitializeComponent();
+           
         }
-
-        private List<CatalogoModel> resultado = new List<CatalogoModel>();
-        private async void CatalogoMotosForm_Load(object sender, EventArgs e)
-        { // Fuerza un cambio de tamaño para que se reajusten los controles
+        public async void RecargarDatos()
+        {
+            
+            // Fuerza un cambio de tamaño para que se reajusten los controles
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
             using (var loading = new FrmLoading())
@@ -40,6 +41,7 @@ namespace SIGMAF.Desktop.MOTOS
                 try
                 {
                     await CargarCatalogoAsync();
+                    CargarCategoria();
                 }
                 finally
                 {
@@ -48,20 +50,24 @@ namespace SIGMAF.Desktop.MOTOS
                     this.UseWaitCursor = false;
                 }
             }
-            CargarCategoria();
+         
         }
-
-        private async Task CargarCatalogoAsync()
+        private List<CatalogoModel> resultado = new List<CatalogoModel>();
+        private   void CatalogoMotosForm_Load(object sender, EventArgs e)
         {
             lsvCatalogos.Columns.Clear();
+            lsvCatalogos.Items.Clear();
             lsvCatalogos.Columns.Add("Id", 0);
             lsvCatalogos.Columns.Add("IdCatalogo", 0);
             lsvCatalogos.Columns.Add("Codigo", 0);
             lsvCatalogos.Columns.Add("Producto", 400);
             lsvCatalogos.Columns.Add("Descripcion", 400);
+            RecargarDatos();
+        }
 
+        private async Task CargarCatalogoAsync()
+        {
             resultado = await api.ObtenerCatalogoAsync();
-
             CargarListview(resultado);
         }
 
@@ -82,10 +88,9 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void CargarListview(List<CatalogoModel> data)
         {
-            lblTotalProducto.Text = "TOTAL: " + data.Count.ToString();
-            lsvCatalogos.BeginUpdate();
             lsvCatalogos.Items.Clear();
-
+           
+            lblTotalProducto.Text = "TOTAL: " + data.Count.ToString();
             foreach (var itemCat in data)
             {
                 var item = new ListViewItem(itemCat.IdCatalogo);
@@ -101,7 +106,7 @@ namespace SIGMAF.Desktop.MOTOS
                     item.ForeColor = Color.White;
                 }
             }
-            lsvCatalogos.EndUpdate();
+           /// lsvCatalogos.EndUpdate();
         }
 
         private void CargarCategoria()

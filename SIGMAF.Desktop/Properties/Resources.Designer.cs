@@ -123,6 +123,16 @@ namespace SIGMAF.Desktop.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_ganancias {
+            get {
+                object obj = ResourceManager.GetObject("icon_ganancias", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_inventory {
             get {
                 object obj = ResourceManager.GetObject("icon_inventory", resourceCulture);
