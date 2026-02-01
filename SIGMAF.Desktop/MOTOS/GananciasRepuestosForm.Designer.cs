@@ -37,10 +37,7 @@
             listView1 = new ListView();
             tableLayoutPanel2 = new TableLayoutPanel();
             groupBox1 = new GroupBox();
-            button1 = new Button();
-            comboBox1 = new ComboBox();
-            label6 = new Label();
-            label5 = new Label();
+            btnRefrescar = new Button();
             dateTimePicker2 = new DateTimePicker();
             label4 = new Label();
             dateTimePicker1 = new DateTimePicker();
@@ -164,10 +161,7 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(button1);
-            groupBox1.Controls.Add(comboBox1);
-            groupBox1.Controls.Add(label6);
-            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(btnRefrescar);
             groupBox1.Controls.Add(dateTimePicker2);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(dateTimePicker1);
@@ -180,54 +174,32 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtros";
             // 
-            // button1
+            // btnRefrescar
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Image = Properties.Resources.icon_sincronizarguardar;
-            button1.Location = new Point(806, 13);
-            button1.Name = "button1";
-            button1.Size = new Size(96, 58);
-            button1.TabIndex = 7;
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(558, 24);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(149, 28);
-            comboBox1.TabIndex = 6;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(475, 32);
-            label6.Name = "label6";
-            label6.Size = new Size(77, 20);
-            label6.TabIndex = 5;
-            label6.Text = "Categoria:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(444, 32);
-            label5.Name = "label5";
-            label5.Size = new Size(13, 20);
-            label5.TabIndex = 4;
-            label5.Text = "l";
+            btnRefrescar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRefrescar.Image = Properties.Resources.icon_sincronizarguardar;
+            btnRefrescar.Location = new Point(806, 13);
+            btnRefrescar.Name = "btnRefrescar";
+            btnRefrescar.Size = new Size(96, 58);
+            btnRefrescar.TabIndex = 7;
+            btnRefrescar.UseVisualStyleBackColor = true;
+            btnRefrescar.Click += btnRefrescar_Click;
             // 
             // dateTimePicker2
             // 
+            dateTimePicker2.Anchor = AnchorStyles.Top;
             dateTimePicker2.Format = DateTimePickerFormat.Short;
-            dateTimePicker2.Location = new Point(303, 27);
+            dateTimePicker2.Location = new Point(480, 30);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(120, 27);
+            dateTimePicker2.Size = new Size(131, 27);
             dateTimePicker2.TabIndex = 3;
             // 
             // label4
             // 
+            label4.Anchor = AnchorStyles.Top;
             label4.AutoSize = true;
-            label4.Location = new Point(276, 32);
+            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(452, 35);
             label4.Name = "label4";
             label4.Size = new Size(21, 20);
             label4.TabIndex = 2;
@@ -235,18 +207,21 @@
             // 
             // dateTimePicker1
             // 
+            dateTimePicker1.Anchor = AnchorStyles.Top;
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(150, 27);
+            dateTimePicker1.Location = new Point(312, 30);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(120, 27);
+            dateTimePicker1.Size = new Size(135, 27);
             dateTimePicker1.TabIndex = 1;
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Top;
             label2.AutoSize = true;
-            label2.Location = new Point(90, 32);
+            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(252, 35);
             label2.Name = "label2";
-            label2.Size = new Size(54, 20);
+            label2.Size = new Size(56, 20);
             label2.TabIndex = 0;
             label2.Text = "Desde:";
             // 
@@ -396,10 +371,7 @@
         private Label label2;
         private DateTimePicker dateTimePicker2;
         private Label label4;
-        private Label label5;
-        private ComboBox comboBox1;
-        private Label label6;
-        private Button button1;
+        private Button btnRefrescar;
         private TableLayoutPanel tableLayoutPanel3;
         private Button button2;
         private Button button5;

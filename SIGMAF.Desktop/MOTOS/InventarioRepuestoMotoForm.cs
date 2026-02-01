@@ -22,6 +22,10 @@ namespace SIGMAF.Desktop.MOTOS
 
         private async void InventarioRepuestoMotoForm_Load(object sender, EventArgs e)
         {
+            await CargarData();
+        }
+        private  async  Task  CargarData()
+        {
             producto = new List<ListadoInventarioDTO>();
             apiServicio = new InventarioServicio();
             this.WindowState = FormWindowState.Normal;
@@ -39,7 +43,24 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-                    await CargarData();
+                    producto = await apiServicio.ObtenercatalogosconinventariomotoAsync();
+                    producto = producto
+                  .Select(x => x.ToVm())
+                  .OrderByDescending(x => x.CantidadFmt)
+                  .ToList();
+
+                    lsvInventario.Columns.Clear();
+                    lsvInventario.View = View.Details;
+                    lsvInventario.FullRowSelect = true;
+                    lsvInventario.OwnerDraw = true;
+
+                    lsvInventario.Columns.Add("IDCatalogo", 0);
+                    lsvInventario.Columns.Add("Producto", 500);
+                    lsvInventario.Columns.Add("Disponible", 200);
+                    lsvInventario.Columns.Add("Stock", 200);
+                    lsvInventario.Columns.Add("Precio Compra", 200);
+                    lsvInventario.Columns.Add("Precio Venta", 200);
+                    CargarListView(producto);
                 }
                 finally
                 {
@@ -48,27 +69,8 @@ namespace SIGMAF.Desktop.MOTOS
                     this.UseWaitCursor = false;
                 }
             }
-        }
-        private  async  Task  CargarData()
-        {
-            producto = await apiServicio.ObtenercatalogosconinventariomotoAsync();
-            producto = producto
-          .Select(x => x.ToVm())
-          .OrderByDescending(x => x.CantidadFmt)
-          .ToList();
 
-            lsvInventario.Columns.Clear();
-            lsvInventario.View = View.Details;
-            lsvInventario.FullRowSelect = true;
-            lsvInventario.OwnerDraw = true;
-
-            lsvInventario.Columns.Add("ID", 0);
-            lsvInventario.Columns.Add("Producto", 500);
-            lsvInventario.Columns.Add("Disponible", 200);
-            lsvInventario.Columns.Add("Stock", 200);
-            lsvInventario.Columns.Add("Precio Compra", 200);
-            lsvInventario.Columns.Add("Precio Venta", 200);
-            CargarListView(producto);
+           
         }
         public void CargarListView(List<ListadoInventarioDTO> data)
         {
@@ -77,7 +79,7 @@ namespace SIGMAF.Desktop.MOTOS
 
             foreach (var itemCat in data)
             {
-                var item = new ListViewItem(itemCat.InventarioStockId);
+                var item = new ListViewItem(itemCat.CatalogoId);
                 item.SubItems.Add(itemCat.NombreProducto);
                 item.SubItems.Add(itemCat.StockDisponible);
                 item.SubItems.Add(itemCat.StockMinimo);

@@ -18,5 +18,10 @@ namespace SIGMAF.ApiClient.ApiRestMoto
         {
             return await services.PostCrudAsync("motoaplicarventasAinventarioporfecha", parameters);
         }
+
+        public async Task<ApiCrudResponse> MotoActualizarInventarioProductoAsync(Dictionary<string, string> parameters)
+        {
+            return await services.PostCrudAsync("motoactualizarinventarioproducto", parameters);
+        }
     }
 }

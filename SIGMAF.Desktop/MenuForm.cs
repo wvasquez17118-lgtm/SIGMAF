@@ -17,8 +17,35 @@ namespace SIGMAF.Desktop
         public MenuForm()
         {
             InitializeComponent();
+            this.MdiChildActivate += MenuForm_MdiChildActivate;
+        }
+        private void MenuForm_MdiChildActivate(object sender, EventArgs e)
+        {
+            // Si hay un hijo activo, enganchamos su evento de cierre
+            var child = this.ActiveMdiChild;
+            if (child != null)
+            {
+                // evita enganchar doble
+                child.FormClosed -= Child_FormClosed;
+                child.FormClosed += Child_FormClosed;
+            }
+
+            ActualizarFondoMDI(); // por si cambiaste de ventana
         }
 
+        private void Child_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Aquí ya se eliminó del MdiChildren ✅
+            ActualizarFondoMDI();
+        }
+
+        public void ActualizarFondoMDI()
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                pictureBox1.Visible = (this.MdiChildren.Length == 0);
+            }));
+        }
         private void MenuForm_Load(object sender, EventArgs e)
         {
             _imgBase = Properties.Resources.icon_moto_ida;
@@ -27,6 +54,7 @@ namespace SIGMAF.Desktop
             picAnimacion.Left = 0;
             picAnimacion.Top = (panelInferior.Height - picAnimacion.Height) / 2;
             timerAnimacion.Start();
+            inicioToolStripMenuItem_Click(null, null);
         }
 
 
@@ -82,6 +110,9 @@ namespace SIGMAF.Desktop
         {
             // 1. Buscar si ya hay una instancia abierta
             var existente = this.MdiChildren.OfType<T>().FirstOrDefault();
+
+            //pictureBox1.Dock = DockStyle.Fill;
+            //pictureBox1.SendToBack();
 
             if (existente != null)
             {

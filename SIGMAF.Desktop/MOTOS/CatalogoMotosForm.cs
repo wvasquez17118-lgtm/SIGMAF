@@ -22,8 +22,7 @@ namespace SIGMAF.Desktop.MOTOS
            
         }
         public async void RecargarDatos()
-        {
-            
+        { 
             // Fuerza un cambio de tamaño para que se reajusten los controles
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
@@ -49,8 +48,7 @@ namespace SIGMAF.Desktop.MOTOS
                     this.Enabled = true;
                     this.UseWaitCursor = false;
                 }
-            }
-         
+            }         
         }
         private List<CatalogoModel> resultado = new List<CatalogoModel>();
         private   void CatalogoMotosForm_Load(object sender, EventArgs e)
@@ -106,7 +104,7 @@ namespace SIGMAF.Desktop.MOTOS
                     item.ForeColor = Color.White;
                 }
             }
-           /// lsvCatalogos.EndUpdate();
+            lsvCatalogos.EndUpdate();
         }
 
         private void CargarCategoria()

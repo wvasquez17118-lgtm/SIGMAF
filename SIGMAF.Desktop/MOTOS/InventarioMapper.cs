@@ -20,7 +20,7 @@ namespace SIGMAF.Desktop.MOTOS
                 StockMinimo = dto.StockMinimo,
                 NombreProducto = dto.NombreProducto,
                 InventarioStockId = dto.InventarioStockId,
-
+                CatalogoId = dto.CatalogoId,
                 PrecioCompraFmt = NumberHelper.ToMiles(precioCom, culture, decimals: 2),
                 PrecioVentaFmt = NumberHelper.ToMiles(precioV, culture, decimals: 2),
             };

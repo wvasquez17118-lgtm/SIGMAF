@@ -39,10 +39,12 @@
             picAnimacion = new PictureBox();
             label1 = new Label();
             timerAnimacion = new System.Windows.Forms.Timer(components);
+            pictureBox1 = new PictureBox();
             menuPrincipalStrip.SuspendLayout();
             panelRibbon.SuspendLayout();
             panelInferior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picAnimacion).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // menuPrincipalStrip
@@ -131,11 +133,25 @@
             timerAnimacion.Interval = 50;
             timerAnimacion.Tick += timerAnimacion_Tick;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.BackgroundImage = Properties.Resources.imagen_fondo1;
+            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Location = new Point(0, 128);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1328, 467);
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
+            // 
             // MenuForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1328, 634);
+            Controls.Add(pictureBox1);
             Controls.Add(panelInferior);
             Controls.Add(panelRibbon);
             Controls.Add(menuPrincipalStrip);
@@ -154,6 +170,7 @@
             panelInferior.ResumeLayout(false);
             panelInferior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picAnimacion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -170,5 +187,6 @@
         private Label label1;
         private PictureBox picAnimacion;
         private System.Windows.Forms.Timer timerAnimacion;
+        private PictureBox pictureBox1;
     }
 }

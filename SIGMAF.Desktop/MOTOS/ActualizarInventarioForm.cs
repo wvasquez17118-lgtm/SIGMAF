@@ -1,4 +1,8 @@
-﻿namespace SIGMAF.Desktop.MOTOS
+﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Constantes;
+using SIGMAF_LoadingDemo;
+
+namespace SIGMAF.Desktop.MOTOS
 {
     public partial class ActualizarInventarioForm : Form
     {
@@ -52,8 +56,79 @@
             e.Handled = true;
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private async void btnGuardar_Click(object sender, EventArgs e)
         {
+            bool save = true;
+            
+            switch (caseTypeAction)
+            {
+                case "preciocompra":                    
+                    if (txtPrecioCompra.Text.Length == 0)
+                        save = false;
+                    break;
+                case "precioventa":
+                    if (txtPrecioVenta.Text.Length == 0)
+                        save = false;
+                    break;
+                case "stock":                    
+                    if (txtStock.Text.Length == 0)
+                        save = false;
+                    break;
+                case "disponible":
+                    if (txtCantidadDisponible.Text.Length == 0)
+                        save = false;
+                    break;
+                default:
+                    break;
+            }
+
+
+            if (save)
+            {
+                InventarioServicio api = new InventarioServicio();
+
+                DialogResult r = MessageBox.Show(ConstantesMensajes.MensajeConfirmacionGuardar, ConstantesMensajes.MensajeTituloConfirmacionGuardar, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (r == DialogResult.Yes)
+                {
+
+                    using (var loading = new FrmLoading())
+                    {
+                        loading.StartPosition = FormStartPosition.CenterScreen;
+                        loading.TopMost = true;
+
+                        this.Enabled = false;
+                        this.UseWaitCursor = true;
+                        loading.UseWaitCursor = true;
+
+                        loading.Show(this);
+
+                        try
+                        {
+                            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                            parameters.Add("catalogoId", id.ToString());
+                            parameters.Add("stockDisponible", txtCantidadDisponible.Text.Trim());
+                            parameters.Add("stockMinimo", txtStock.Text.Trim());
+                            parameters.Add("precioCompra", txtPrecioCompra.Text.Trim());
+                            parameters.Add("precioVenta", txtPrecioVenta.Text.Trim());
+
+                            var resultado = await api.MotoActualizarInventarioProductoAsync(parameters);
+                            if (resultado.Estado)
+                            {
+                                MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "ADMINISTRACIÓN");
+                            }
+                            DialogResult = DialogResult.OK;
+                        }
+                        finally
+                        {
+                            loading.Close();
+                            this.Enabled = true;
+                            this.UseWaitCursor = false;
+                        }
+                    }
+                }
+            }
 
         }
     }

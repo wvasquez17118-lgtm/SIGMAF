@@ -1,17 +1,7 @@
-﻿using OxyPlot.Legends;
+﻿using OxyPlot;
 using OxyPlot.Series;
-using OxyPlot;
 using OxyPlot.WindowsForms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Drawing.Printing;
+using SIGMAF_LoadingDemo;
 
 namespace SIGMAF.Desktop.MOTOS
 {
@@ -74,8 +64,8 @@ namespace SIGMAF.Desktop.MOTOS
                 OutsideLabelFormat = string.Empty,  // sin texto afuera
                 InsideLabelFormat = "{2:0.0}%",     // porcentaje
                 InsideLabelColor = OxyColors.White,
-              //  InsideLabelFontSize = 12,
-              FontSize = 15,
+                //  InsideLabelFontSize = 12,
+                FontSize = 15,
 
                 // esto ayuda a que se vea grande/centrado
                 Diameter = 0.95
@@ -92,9 +82,6 @@ namespace SIGMAF.Desktop.MOTOS
 
             // 2) LISTA IZQUIERDA (como tu ejemplo)
             PintarListaIzquierda(items);
-
-            // 3) LEYENDA DERECHA (● nombre)
-            //PintarLeyendaDerecha(items);
         }
 
         private void PintarListaIzquierda(List<CatResumen> items)
@@ -177,52 +164,9 @@ namespace SIGMAF.Desktop.MOTOS
             panel2.Controls.Add(tbl);
             tbl.BringToFront();
         }
-
-        //private void PintarLeyendaDerecha(List<CatResumen> items)
-        //{
-        //    panel4.Controls.Clear();
-
-        //    var flow = new FlowLayoutPanel
-        //    {
-        //        Dock = DockStyle.Fill,
-        //        FlowDirection = FlowDirection.TopDown,
-        //        WrapContents = false,
-        //        AutoScroll = true,
-        //        Padding = new Padding(8, 30, 8, 8)
-        //    };
-
-        //    foreach (var it in items)
-        //    {
-        //        var row = new Panel { Width = panel4.Width - 20, Height = 22 };
-
-        //        var dot = new Label
-        //        {
-        //            Text = "●",
-        //            ForeColor = OxyToColor(it.Color),
-        //            AutoSize = true,
-        //            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-        //            Location = new Point(0, 2)
-        //        };
-
-        //        var name = new Label
-        //        {
-        //            Text = it.Nombre,
-        //            AutoSize = true,
-        //            Font = new Font("Segoe UI", 9, FontStyle.Regular),
-        //            Location = new Point(18, 3)
-        //        };
-
-        //        row.Controls.Add(dot);
-        //        row.Controls.Add(name);
-        //        flow.Controls.Add(row);
-        //    }
-
-        //    panel4.Controls.Add(flow);
-        //}
-
         private Control MakeDotText(OxyColor color, string text)
         {
-        
+
             var p = new Panel { Dock = DockStyle.Fill, Height = 35 };
 
             var dot = new Label
@@ -233,13 +177,13 @@ namespace SIGMAF.Desktop.MOTOS
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 Location = new Point(0, 1)
             };
-           
+
             var lbl = new Label
             {
                 Text = text,
                 AutoSize = true,
                 Font = new Font("Segoe UI", 14, FontStyle.Regular),
-                Location = new Point(18, 3),                
+                Location = new Point(18, 3),
             };
             p.Controls.Add(dot);
             p.Controls.Add(lbl);
@@ -247,9 +191,38 @@ namespace SIGMAF.Desktop.MOTOS
         }
 
         private Color OxyToColor(OxyColor c) => Color.FromArgb(c.A, c.R, c.G, c.B);
+
+        private void btnRefrescar_Click(object sender, EventArgs e)
+        {
+            // Fuerza un cambio de tamaño para que se reajusten los controles
+            this.WindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Maximized;
+            using (var loading = new FrmLoading())
+            {
+                loading.StartPosition = FormStartPosition.CenterScreen;
+                loading.TopMost = true;
+
+                this.Enabled = false;
+                this.UseWaitCursor = true;
+                loading.UseWaitCursor = true;
+
+                loading.Show(this);
+
+                try
+                {
+                    
+                }
+                finally
+                {
+                    loading.Close();
+                    this.Enabled = true;
+                    this.UseWaitCursor = false;
+                }
+            }
+        }
     }
 
- 
+
 
     public class CatResumen
     {
