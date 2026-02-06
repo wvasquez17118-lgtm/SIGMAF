@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGMAF.Infrastructure", "SI
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SIGMAF", "SIGMAF\SIGMAF.vdproj", "{C76FE9F4-4400-4FE8-8D7E-B31A6FB67D2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGMAF.InfrastructureGYM", "SIGMAF.InfrastructureGYM\SIGMAF.InfrastructureGYM.csproj", "{F0D3D1A7-E13E-4BE2-908B-9184763A3182}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIGMAF.AplicationGYM", "SIGMAF.AplicationGYM\SIGMAF.AplicationGYM.csproj", "{47E70015-BFE8-4A4A-880E-8A0F5BCB1536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{DD26123B-9C7B-4059-A109-B8814455A70B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C76FE9F4-4400-4FE8-8D7E-B31A6FB67D2F}.Debug|Any CPU.ActiveCfg = Debug
 		{C76FE9F4-4400-4FE8-8D7E-B31A6FB67D2F}.Release|Any CPU.ActiveCfg = Release
+		{F0D3D1A7-E13E-4BE2-908B-9184763A3182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D3D1A7-E13E-4BE2-908B-9184763A3182}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D3D1A7-E13E-4BE2-908B-9184763A3182}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D3D1A7-E13E-4BE2-908B-9184763A3182}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47E70015-BFE8-4A4A-880E-8A0F5BCB1536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47E70015-BFE8-4A4A-880E-8A0F5BCB1536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47E70015-BFE8-4A4A-880E-8A0F5BCB1536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47E70015-BFE8-4A4A-880E-8A0F5BCB1536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

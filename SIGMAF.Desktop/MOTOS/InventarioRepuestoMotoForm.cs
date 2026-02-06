@@ -1,8 +1,6 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Text.RegularExpressions;
 
 namespace SIGMAF.Desktop.MOTOS
 {

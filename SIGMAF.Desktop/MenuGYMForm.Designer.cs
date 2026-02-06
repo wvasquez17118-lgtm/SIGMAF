@@ -1,6 +1,6 @@
 ﻿namespace SIGMAF.Desktop
 {
-    partial class MenuForm
+    partial class MenuGYMForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             menuPrincipalStrip = new MenuStrip();
             motosToolStripMenuItem = new ToolStripMenuItem();
             sALIRToolStripMenuItem = new ToolStripMenuItem();
-            panelRibbon = new Panel();
             panelInferior = new Panel();
             picAnimacion = new PictureBox();
             label1 = new Label();
-            timerAnimacion = new System.Windows.Forms.Timer(components);
-            pictureBox1 = new PictureBox();
+            panelRibbon = new Panel();
             flowMenu = new FlowLayoutPanel();
             menuPrincipalStrip.SuspendLayout();
-            panelRibbon.SuspendLayout();
             panelInferior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picAnimacion).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panelRibbon.SuspendLayout();
             SuspendLayout();
             // 
             // menuPrincipalStrip
@@ -53,7 +49,7 @@
             menuPrincipalStrip.Name = "menuPrincipalStrip";
             menuPrincipalStrip.Padding = new Padding(7, 2, 0, 2);
             menuPrincipalStrip.Size = new Size(1328, 29);
-            menuPrincipalStrip.TabIndex = 0;
+            menuPrincipalStrip.TabIndex = 7;
             menuPrincipalStrip.Text = "menuStrip1";
             // 
             // motosToolStripMenuItem
@@ -62,7 +58,6 @@
             motosToolStripMenuItem.Name = "motosToolStripMenuItem";
             motosToolStripMenuItem.Size = new Size(77, 25);
             motosToolStripMenuItem.Text = "MOTOS";
-            motosToolStripMenuItem.Click += inicioToolStripMenuItem_Click;
             // 
             // sALIRToolStripMenuItem
             // 
@@ -70,17 +65,6 @@
             sALIRToolStripMenuItem.Name = "sALIRToolStripMenuItem";
             sALIRToolStripMenuItem.Size = new Size(65, 25);
             sALIRToolStripMenuItem.Text = "SALIR";
-            sALIRToolStripMenuItem.Click += sALIRToolStripMenuItem_Click;
-            // 
-            // panelRibbon
-            // 
-            panelRibbon.BackColor = Color.FromArgb(225, 235, 245);
-            panelRibbon.Controls.Add(flowMenu);
-            panelRibbon.Dock = DockStyle.Top;
-            panelRibbon.Location = new Point(0, 29);
-            panelRibbon.Name = "panelRibbon";
-            panelRibbon.Size = new Size(1328, 100);
-            panelRibbon.TabIndex = 2;
             // 
             // panelInferior
             // 
@@ -91,7 +75,7 @@
             panelInferior.Location = new Point(0, 595);
             panelInferior.Name = "panelInferior";
             panelInferior.Size = new Size(1328, 39);
-            panelInferior.TabIndex = 4;
+            panelInferior.TabIndex = 9;
             // 
             // picAnimacion
             // 
@@ -111,22 +95,15 @@
             label1.TabIndex = 0;
             label1.Text = "Bienvenido al sistema: WALTER JAVIER VASQUEZ GONZALEZ";
             // 
-            // timerAnimacion
+            // panelRibbon
             // 
-            timerAnimacion.Interval = 50;
-            timerAnimacion.Tick += timerAnimacion_Tick;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImage = Properties.Resources.imagen_fondo1;
-            pictureBox1.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(0, 129);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1328, 466);
-            pictureBox1.TabIndex = 6;
-            pictureBox1.TabStop = false;
+            panelRibbon.BackColor = Color.FromArgb(225, 235, 245);
+            panelRibbon.Controls.Add(flowMenu);
+            panelRibbon.Dock = DockStyle.Top;
+            panelRibbon.Location = new Point(0, 29);
+            panelRibbon.Name = "panelRibbon";
+            panelRibbon.Size = new Size(1328, 100);
+            panelRibbon.TabIndex = 10;
             // 
             // flowMenu
             // 
@@ -136,35 +113,30 @@
             flowMenu.Name = "flowMenu";
             flowMenu.Padding = new Padding(8);
             flowMenu.Size = new Size(1328, 100);
-            flowMenu.TabIndex = 1;
+            flowMenu.TabIndex = 2;
             flowMenu.WrapContents = false;
             // 
-            // MenuForm
+            // MenuGYMForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1328, 634);
-            Controls.Add(pictureBox1);
-            Controls.Add(panelInferior);
             Controls.Add(panelRibbon);
             Controls.Add(menuPrincipalStrip);
+            Controls.Add(panelInferior);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             IsMdiContainer = true;
-            MainMenuStrip = menuPrincipalStrip;
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "MenuForm";
+            Margin = new Padding(4);
+            Name = "MenuGYMForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Sistema Integral de Gestión de Motos y Fitness (SIGMAF)";
+            Text = "Sistema Integral de Gestión Fitness (SIGMAF)";
             WindowState = FormWindowState.Maximized;
-            Load += MenuForm_Load;
             menuPrincipalStrip.ResumeLayout(false);
             menuPrincipalStrip.PerformLayout();
-            panelRibbon.ResumeLayout(false);
             panelInferior.ResumeLayout(false);
             panelInferior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picAnimacion).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panelRibbon.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -173,13 +145,11 @@
 
         private MenuStrip menuPrincipalStrip;
         private ToolStripMenuItem motosToolStripMenuItem;
-        private Panel panelRibbon;
-        private Panel panelInferior;
-        private Label label1;
-        private PictureBox picAnimacion;
-        private System.Windows.Forms.Timer timerAnimacion;
-        private PictureBox pictureBox1;
         private ToolStripMenuItem sALIRToolStripMenuItem;
+        private Panel panelInferior;
+        private PictureBox picAnimacion;
+        private Label label1;
+        private Panel panelRibbon;
         private FlowLayoutPanel flowMenu;
     }
 }

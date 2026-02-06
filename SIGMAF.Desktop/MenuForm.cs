@@ -1,5 +1,8 @@
-﻿using SIGMAF.Desktop.MOTOS;
+﻿using SIGMAF.Desktop.Constantes;
+using SIGMAF.Desktop.MOTOS;
+using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
+using System.Text.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace SIGMAF.Desktop
@@ -9,7 +12,7 @@ namespace SIGMAF.Desktop
         private int _velocidadX = 2;
         private bool _haciaDerecha = true;
 
-        private Bitmap _imgBase; 
+        private Bitmap _imgBase;
         private Bitmap _imgTintada;
         private readonly Random _rand = new Random();
 
@@ -86,7 +89,7 @@ namespace SIGMAF.Desktop
                 btn.Click += (s, e) => onClick();
             }
             return btn;
-        } 
+        }
 
         #region MENU STRIP MOTO
         private void inicioToolStripMenuItem_Click(object sender, EventArgs e)
@@ -120,7 +123,7 @@ namespace SIGMAF.Desktop
                 existente.WindowState = FormWindowState.Maximized;
                 existente.BringToFront();
                 existente.Activate();
-                 
+
                 return existente;
             }
 
@@ -145,8 +148,8 @@ namespace SIGMAF.Desktop
         private void AbrirVentaRepuestoMotos()
         {
             this.Text = "SIGMAF – Agregar ventas MOTOS";
-            AbrirOActivarForm<RegistrarVentaForm>();    
-        }        
+            AbrirOActivarForm<RegistrarVentaForm>();
+        }
 
         private void AbrirAgregarComprasMotos()
         {
@@ -172,12 +175,12 @@ namespace SIGMAF.Desktop
         }
         #endregion
 
-      
+
         private void movimientosVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             flowMenu.SuspendLayout();
             flowMenu.Controls.Clear();
-           // flowMenu.Controls.Add(CreateRibbonButton("Venta", "icon_catalogos.png", () => AbrirCatalogosGym()));
+            // flowMenu.Controls.Add(CreateRibbonButton("Venta", "icon_catalogos.png", () => AbrirCatalogosGym()));
             //flowMenu.Controls.Add(CreateRibbonButton("Inventario", "icon_catalogos.png", () => AbrirCatalogosGym()));
             flowMenu.ResumeLayout();
         }
@@ -255,6 +258,15 @@ namespace SIGMAF.Desktop
             return Color.FromArgb(255, r, g, b);
         }
         #endregion
-         
+
+        private void sALIRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult r = MessageBox.Show(ConstantesMensajes.MensajeConfirmacionGuardar, ConstantesMensajes.MensajeTituloConfirmacionGuardar, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Yes)
+            {
+                 
+            }
+        }
     }
 }
