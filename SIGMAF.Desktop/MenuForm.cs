@@ -120,7 +120,7 @@ namespace SIGMAF.Desktop
             if (existente != null)
             {
                 // 2. Ya existe → traer al frente y refrescar datos
-                existente.WindowState = FormWindowState.Maximized;
+                existente.WindowState =  FormWindowState.Maximized;
                 existente.BringToFront();
                 existente.Activate();
 
@@ -131,8 +131,9 @@ namespace SIGMAF.Desktop
             var frm = new T
             {
                 MdiParent = this,
-                WindowState = FormWindowState.Maximized
-            };
+                WindowState = FormWindowState.Maximized,
+                Visible = true,
+            };  
 
             frm.Show();
 
@@ -147,8 +148,8 @@ namespace SIGMAF.Desktop
 
         private void AbrirVentaRepuestoMotos()
         {
-            this.Text = "SIGMAF – Agregar ventas MOTOS";
-            AbrirOActivarForm<RegistrarVentaForm>();
+            this.Text = "SIGMAF – Listado ventas MOTOS";
+            AbrirOActivarForm<ListaVentasForm>();
         }
 
         private void AbrirAgregarComprasMotos()

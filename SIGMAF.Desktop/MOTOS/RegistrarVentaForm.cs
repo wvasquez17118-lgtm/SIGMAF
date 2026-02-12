@@ -12,6 +12,7 @@ namespace SIGMAF.Desktop.MOTOS
         private List<CatalogoConInventarioModel> resultado = new List<CatalogoConInventarioModel>();
         CatalogoService apiConInventario = new CatalogoService();
         int catalogoId = 0;
+        decimal preciocompraproductoFactura = 0;
         public RegistrarVentaForm()
         {
             InitializeComponent();
@@ -25,6 +26,7 @@ namespace SIGMAF.Desktop.MOTOS
         private async void RegistrarVentaForm_Load(object sender, EventArgs e)
         {
             catalogoId = 0;
+            preciocompraproductoFactura = 0;
             // Fuerza un cambio de tamaño para que se reajusten los controles
             lblFechaTitulo.Text = "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy");
             SqliteDatabase.Initialize(AppServices.ConnectionString);
@@ -134,6 +136,16 @@ namespace SIGMAF.Desktop.MOTOS
                 Width = 150
             };
 
+            // Precio compra facturado
+            var colPrecioCompraFacturado = new DataGridViewTextBoxColumn
+            {
+                Name = "PrecioCompra",
+                HeaderText = "Precio compra",
+                DataPropertyName = "PrecioCompra",
+                Width = 150,
+                Visible= true,
+            };
+
             // Botón Agregar
             var colAgregar = new DataGridViewButtonColumn
             {
@@ -151,7 +163,7 @@ namespace SIGMAF.Desktop.MOTOS
             colAgregar.DefaultCellStyle.SelectionBackColor = Color.FromArgb(56, 142, 60); // Verde más oscuro al seleccionar
             colAgregar.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            dataGridProductosCatalogos.Columns.AddRange(colId, colNombre, colDescripcion, colPrecioVenta, colStockMinimo, colStockDisponible, colAgregar);
+            dataGridProductosCatalogos.Columns.AddRange(colId, colNombre, colDescripcion, colPrecioVenta, colStockMinimo, colStockDisponible, colPrecioCompraFacturado, colAgregar);
             //dataGridProductosCatalogos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
 
@@ -198,6 +210,7 @@ namespace SIGMAF.Desktop.MOTOS
 
             // Tomamos el Id y el nombre del servicio (ajusta los nombres de columnas si son otros)
             catalogoId = int.Parse(filaOrigen.Cells["CatalogoId"].Value?.ToString() ?? "0");
+            preciocompraproductoFactura = decimal.Parse(filaOrigen.Cells["PrecioCompra"].Value?.ToString() ?? "0");
             var nombreServicio = filaOrigen.Cells["NombreProducto"].Value?.ToString();
             string PrecioVenta = filaOrigen.Cells["PrecioVenta"].Value?.ToString() ?? "";
             string StockDisponible = filaOrigen.Cells["StockDisponible"].Value?.ToString() ?? "";
@@ -253,12 +266,13 @@ namespace SIGMAF.Desktop.MOTOS
                         parameters.Add("Cantidad", txtCantidadAVender.Text ?? "0");
                         parameters.Add("Precio", txtPrecio.Text ?? "0");
                         parameters.Add("Total", txtTotal.Text ?? "0");
-                        parameters.Add("IdUsuario", "1");
+                        parameters.Add("IdUsuario", "6");
                         parameters.Add("Descripcion", "");
                         parameters.Add("DescripcionEliminado", "");
                         parameters.Add("Accion", "NUEVO");
                         parameters.Add("IdCatalogoProducto", catalogoId.ToString());
                         parameters.Add("Sucursal", "WAMA");
+                        parameters.Add("PrecioCompra", preciocompraproductoFactura.ToString());
 
                         CompraServicio compraServicio = new CompraServicio();
                         var resultado = await compraServicio.GuardarVentaRepuestoAsync(parameters);
@@ -266,6 +280,7 @@ namespace SIGMAF.Desktop.MOTOS
                         {
                             MessageBox.Show(ConstantesMensajes.MensajeTituloGuardadoCorrectamente, "WAMA");
                             catalogoId = 0;
+                            preciocompraproductoFactura = 0;
                             txtPrecio.Clear();
                             txtTotal.Clear();
                             txtCantidadAVender.Clear();
@@ -273,6 +288,7 @@ namespace SIGMAF.Desktop.MOTOS
                             txtNombreProducto.Clear();
                             dataGridProductosCatalogos.ClearSelection();
                             dataGridProductosCatalogos.CurrentCell = null;
+                            DialogResult = DialogResult.OK;
                         }
                         else
                         {
@@ -321,8 +337,6 @@ namespace SIGMAF.Desktop.MOTOS
                     dataGridProductosCatalogos.DataSource = resultado.Where(p => p.NombreProducto.Trim().ToLower().Contains(texto)).ToList();
                 }
             }
-        }
-
-       
+        }       
     }
 }

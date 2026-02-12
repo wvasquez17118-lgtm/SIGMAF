@@ -173,4 +173,8 @@ INSERT INTO `moto_proveedores` (`proveedor_id`, `nombre`, `celular`, `direccion`
 VALUES (NULL, 'Don Juan', '77681415', NULL, '1'), (NULL, 'BTS', '-', NULL, '1');
 
 
+  ALTER TABLE moto_ventas
+  ADD COLUMN PrecioCompra DOUBLE NULL
+ 
+
  
