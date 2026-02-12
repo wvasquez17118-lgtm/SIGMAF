@@ -71,8 +71,9 @@ namespace SIGMAF.Desktop.MOTOS
                 item.SubItems.Add(itemCat.Cantidad);
                 item.SubItems.Add(itemCat.Precio);
                 item.SubItems.Add(itemCat.Total);
-                item.SubItems.Add(itemCat.EstadoAplicado == "1" ? "Producto procesado en el inventario" : "");
+                item.SubItems.Add(itemCat.EstadoAplicado == "1" ? "Procesado en el inventario" : "");
                 item.SubItems.Add(itemCat.NombreUsuario);
+                item.SubItems.Add(Convert.ToDateTime(itemCat.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt"));
                 lsvListadoVentas.Items.Add(item);
 
             }
@@ -97,8 +98,9 @@ namespace SIGMAF.Desktop.MOTOS
             lsvListadoVentas.Columns.Add("Cantidad", 100);
             lsvListadoVentas.Columns.Add("Precio", 100);
             lsvListadoVentas.Columns.Add("Total", 100);
-            lsvListadoVentas.Columns.Add("Aplicado", 300);
+            lsvListadoVentas.Columns.Add("Aplicado", 200);
             lsvListadoVentas.Columns.Add("Usuario", 200);
+            lsvListadoVentas.Columns.Add("Fecha venta", 200);
             btnRefrescar_Click(null, null);
         }
 

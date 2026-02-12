@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            lblTotalProducto = new Label();
             label3 = new Label();
             btnSincronizar = new Button();
             panel2 = new Panel();
@@ -46,23 +45,12 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
-            panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(648, 60);
+            panel1.Size = new Size(644, 60);
             panel1.TabIndex = 4;
-            // 
-            // lblTotalProducto
-            // 
-            lblTotalProducto.AutoSize = true;
-            lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(1015, 19);
-            lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
-            lblTotalProducto.TabIndex = 1;
-            lblTotalProducto.Text = "Total: 0";
             // 
             // label3
             // 
@@ -156,7 +144,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(648, 323);
+            ClientSize = new Size(644, 323);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(btnSincronizar);
@@ -183,7 +171,6 @@
         #endregion
 
         private Panel panel1;
-        private Label lblTotalProducto;
         private Label label3;
         private Button btnSincronizar;
         private Panel panel2;

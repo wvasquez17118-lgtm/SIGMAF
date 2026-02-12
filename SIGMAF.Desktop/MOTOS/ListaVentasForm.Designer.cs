@@ -122,7 +122,7 @@
             // dateFechaFinal
             // 
             dateFechaFinal.Format = DateTimePickerFormat.Short;
-            dateFechaFinal.Location = new Point(623, 19);
+            dateFechaFinal.Location = new Point(623, 17);
             dateFechaFinal.Name = "dateFechaFinal";
             dateFechaFinal.Size = new Size(156, 27);
             dateFechaFinal.TabIndex = 4;
@@ -161,7 +161,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(12, 24);
+            label3.Location = new Point(12, 18);
             label3.Name = "label3";
             label3.Size = new Size(131, 20);
             label3.TabIndex = 0;

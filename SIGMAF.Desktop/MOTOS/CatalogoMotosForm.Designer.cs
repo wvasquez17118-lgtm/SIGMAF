@@ -76,7 +76,7 @@
             lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblTotalProducto.AutoSize = true;
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(1015, 19);
+            lblTotalProducto.Location = new Point(1016, 15);
             lblTotalProducto.Name = "lblTotalProducto";
             lblTotalProducto.Size = new Size(61, 20);
             lblTotalProducto.TabIndex = 1;
@@ -86,7 +86,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(18, 19);
+            label3.Location = new Point(18, 15);
             label3.Name = "label3";
             label3.Size = new Size(244, 20);
             label3.TabIndex = 0;

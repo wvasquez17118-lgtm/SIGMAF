@@ -33,12 +33,12 @@
             motosToolStripMenuItem = new ToolStripMenuItem();
             sALIRToolStripMenuItem = new ToolStripMenuItem();
             panelRibbon = new Panel();
+            flowMenu = new FlowLayoutPanel();
             panelInferior = new Panel();
             picAnimacion = new PictureBox();
             label1 = new Label();
             timerAnimacion = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
-            flowMenu = new FlowLayoutPanel();
             menuPrincipalStrip.SuspendLayout();
             panelRibbon.SuspendLayout();
             panelInferior.SuspendLayout();
@@ -82,6 +82,17 @@
             panelRibbon.Size = new Size(1328, 100);
             panelRibbon.TabIndex = 2;
             // 
+            // flowMenu
+            // 
+            flowMenu.BackColor = Color.Transparent;
+            flowMenu.Dock = DockStyle.Fill;
+            flowMenu.Location = new Point(0, 0);
+            flowMenu.Name = "flowMenu";
+            flowMenu.Padding = new Padding(8);
+            flowMenu.Size = new Size(1328, 100);
+            flowMenu.TabIndex = 1;
+            flowMenu.WrapContents = false;
+            // 
             // panelInferior
             // 
             panelInferior.BackColor = Color.FromArgb(225, 235, 245);
@@ -105,9 +116,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 4);
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(409, 20);
+            label1.Size = new Size(436, 20);
             label1.TabIndex = 0;
             label1.Text = "Bienvenido al sistema: WALTER JAVIER VASQUEZ GONZALEZ";
             // 
@@ -127,17 +139,6 @@
             pictureBox1.Size = new Size(1328, 466);
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
-            // 
-            // flowMenu
-            // 
-            flowMenu.BackColor = Color.Transparent;
-            flowMenu.Dock = DockStyle.Fill;
-            flowMenu.Location = new Point(0, 0);
-            flowMenu.Name = "flowMenu";
-            flowMenu.Padding = new Padding(8);
-            flowMenu.Size = new Size(1328, 100);
-            flowMenu.TabIndex = 1;
-            flowMenu.WrapContents = false;
             // 
             // MenuForm
             // 
