@@ -56,7 +56,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1027, 73);
+            panel1.Size = new Size(897, 73);
             panel1.TabIndex = 6;
             // 
             // label1
@@ -82,7 +82,7 @@
             btnNuevaCompra.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNuevaCompra.Image = Properties.Resources.icon_plus;
             btnNuevaCompra.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNuevaCompra.Location = new Point(1584, 0);
+            btnNuevaCompra.Location = new Point(1454, 0);
             btnNuevaCompra.Name = "btnNuevaCompra";
             btnNuevaCompra.Size = new Size(154, 56);
             btnNuevaCompra.TabIndex = 2;
@@ -95,7 +95,7 @@
             lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblTotalProducto.AutoSize = true;
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(3334, 19);
+            lblTotalProducto.Location = new Point(3204, 19);
             lblTotalProducto.Name = "lblTotalProducto";
             lblTotalProducto.Size = new Size(61, 20);
             lblTotalProducto.TabIndex = 1;
@@ -106,7 +106,7 @@
             label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(751, 28);
+            label3.Location = new Point(621, 28);
             label3.Name = "label3";
             label3.Size = new Size(264, 20);
             label3.TabIndex = 0;
@@ -120,7 +120,7 @@
             lsvInventario.GridLines = true;
             lsvInventario.Location = new Point(0, 73);
             lsvInventario.Name = "lsvInventario";
-            lsvInventario.Size = new Size(1027, 565);
+            lsvInventario.Size = new Size(897, 565);
             lsvInventario.TabIndex = 7;
             lsvInventario.UseCompatibleStateImageBehavior = false;
             lsvInventario.View = View.Details;
@@ -167,7 +167,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(1027, 638);
+            ClientSize = new Size(897, 638);
             Controls.Add(lsvInventario);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);

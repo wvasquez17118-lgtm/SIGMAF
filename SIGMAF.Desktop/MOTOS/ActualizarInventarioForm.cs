@@ -15,6 +15,10 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void ActualizarInventarioForm_Load(object sender, EventArgs e)
         {
+            txtPrecioCompra.Enabled = true;
+            txtPrecioVenta.Enabled = true;
+            txtStock.Enabled = true;
+            txtCantidadDisponible.Enabled = true;
             switch (caseTypeAction)
             {
                 case "preciocompra":
@@ -59,29 +63,18 @@ namespace SIGMAF.Desktop.MOTOS
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
             bool save = true;
-            
-            switch (caseTypeAction)
-            {
-                case "preciocompra":                    
-                    if (txtPrecioCompra.Text.Length == 0)
-                        save = false;
-                    break;
-                case "precioventa":
-                    if (txtPrecioVenta.Text.Length == 0)
-                        save = false;
-                    break;
-                case "stock":                    
-                    if (txtStock.Text.Length == 0)
-                        save = false;
-                    break;
-                case "disponible":
-                    if (txtCantidadDisponible.Text.Length == 0)
-                        save = false;
-                    break;
-                default:
-                    break;
-            }
 
+            if (txtPrecioCompra.Text.Length == 0)
+                save = false;                   
+            
+            if (txtPrecioVenta.Text.Length == 0)
+                save = false;                   
+                            
+            if (txtStock.Text.Length == 0)
+                save = false;                 
+            
+            if (txtCantidadDisponible.Text.Length == 0)
+                save = false;
 
             if (save)
             {
@@ -129,7 +122,10 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                 }
             }
-
+            else
+            {
+                MessageBox.Show("Por favor necesitas llenar todos los campos, es requerido", "ADMINISTRACIÓN");
+            }
         }
     }
 }

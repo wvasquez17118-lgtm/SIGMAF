@@ -1,7 +1,11 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
 using OxyPlot.WindowsForms;
+using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
+using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SIGMAF.Desktop.MOTOS
 {
@@ -17,27 +21,64 @@ namespace SIGMAF.Desktop.MOTOS
         {
             Global.FormularioAbierto = false;
         }
+        private void lsvData_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            using (var backBrush = new SolidBrush(SystemColors.Control))
+            using (var borderPen = new Pen(SystemColors.ControlDark))
+            using (var headerFont = new Font(lsvData.Font, FontStyle.Bold))
+            {
+                e.Graphics.FillRectangle(backBrush, e.Bounds);
+                e.Graphics.DrawRectangle(borderPen, e.Bounds);
+
+                // Texto en negrita
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    e.Header.Text,
+                    headerFont,
+                    e.Bounds,
+                    Color.Black,
+                    TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis
+                );
+            }
+        }
+
+        private void lsvData_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private void lsvData_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
 
         private void GananciasRepuestosForm_Load(object sender, EventArgs e)
         {
+            chWaMA.Checked = true;
             btnCostos.Text = "Costos " +
                 "\n" +
                 "\n" +
-                "C$  30 2522";
+                "0";
             _plot = new PlotView { Dock = DockStyle.Fill, BackColor = Color.White };
             panel3.Controls.Clear();
             panel3.Controls.Add(_plot);
 
-            // EJEMPLO (reemplazá por tus datos reales):
-            var data = new List<CatResumen>
-        {
-            new CatResumen { Nombre="Lubricantes", Unidades=75, Ganancia=500.15m, Color=OxyColor.Parse("#2E86DE") },
-            new CatResumen { Nombre="Repuestos",   Unidades=30, Ganancia=270.00m, Color=OxyColor.Parse("#F1C40F") },
-            new CatResumen { Nombre="Eléctricos",  Unidades=33, Ganancia=800.00m, Color=OxyColor.Parse("#E67E22") },
-            new CatResumen { Nombre="Lujo",        Unidades=78, Ganancia=1200.50m, Color=OxyColor.Parse("#2ECC71") },
-        };
 
-            RenderGananciaPorCategoria(data);
+            lsvData.Columns.Clear();
+            lsvData.View = View.Details;
+            lsvData.FullRowSelect = true;
+            lsvData.OwnerDraw = true;
+
+            lsvData.Columns.Add("IDCatalogo", 0);
+            lsvData.Columns.Add("Producto", 500);
+            lsvData.Columns.Add("Cantidad", 200);
+            lsvData.Columns.Add("Precio Compra", 200);
+            lsvData.Columns.Add("Precio Venta", 200);
+            lsvData.Columns.Add("Precio Ganancia Unitario", 200);
+            lsvData.Columns.Add("Precio Ganancia Total", 200);
+
+            btnRefrescar_Click(null, null);
+          
         }
         public void RenderGananciaPorCategoria(List<CatResumen> items)
         {
@@ -192,7 +233,12 @@ namespace SIGMAF.Desktop.MOTOS
 
         private Color OxyToColor(OxyColor c) => Color.FromArgb(c.A, c.R, c.G, c.B);
 
-        private void btnRefrescar_Click(object sender, EventArgs e)
+        private async  void btnRefrescar_Click(object sender, EventArgs e)
+        {
+            await CargarData();
+        }
+
+        private async Task CargarData()
         {
             // Fuerza un cambio de tamaño para que se reajusten los controles
             this.WindowState = FormWindowState.Normal;
@@ -210,7 +256,67 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-                    
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+
+                    parameters.Add("FechaInicio", dateFechaInicio.Value.ToString("yyyy-MM-dd", new CultureInfo("es-ES")));
+                    parameters.Add("FechaFin", dateFechaFinal.Value.ToString("yyyy-MM-dd", new CultureInfo("es-ES")));
+                    parameters.Add("Sucursal", chALTALIER.Checked && chWaMA.Checked ? "0" : chWaMA.Checked ? "2" : "1");
+
+                    InventarioServicio api = new InventarioServicio();
+                    var data = await api.MotoListarVentasPorRangoFechaGananciasAsync(parameters);
+                    data = data
+                .Select(x => x.ToVm())
+                .OrderByDescending(x => x.CantidadFmt)
+                .ToList();
+ 
+                    btnUnidades.Text = "Unidades " +
+            "\n" +
+            "\n" +
+            "" + data.Sum(p => p.CantidadFmt).ToString(); 
+                    btnGanancias.Text = "Ganancias " +
+            "\n" +
+            "\n" +
+            "C$ " + data.Sum(p => p.GananciaTotalFmt).ToString();
+
+
+                    btnTotal.Text =   "Total " +
+            "\n" +
+            "\n" +
+            "C$ " + data.Sum(p => p.TotalFmt).ToString(); data.Sum(p => p.PrecioFmt).ToString();
+
+
+                    List<CatResumen> resumen = data.GroupBy(p => new { p.Categoria }).Select(g => new CatResumen
+                    {
+                        Nombre = g.Key.Categoria,
+                        Unidades = g.Sum(x => x.CantidadFmt),
+                        Ganancia = g.Sum(x => x.GananciaTotalFmt),
+                        Color = ColorFromKey(g.Key.Categoria)
+                    }).ToList();
+
+                 
+
+                    RenderGananciaPorCategoria(resumen);
+
+                    lsvData.Items.Clear();
+                    lsvData.BeginUpdate();
+
+                    foreach (var itemCat in data)
+                    {
+                        var item = new ListViewItem(itemCat.IdCatalogoProducto);
+                        item.SubItems.Add(itemCat.nombre_catalogo);
+                        item.SubItems.Add(itemCat.Cantidad); 
+                        item.SubItems.Add(itemCat.PrecioCompra);
+                        item.SubItems.Add(itemCat.PrecioVentaUnit);
+                        item.SubItems.Add(itemCat.GananciaUnit);
+                        item.SubItems.Add(itemCat.GananciaTotal);
+                        lsvData.Items.Add(item);
+
+                    }
+                    lsvData.EndUpdate();
+                    lsvData.Invalidate();
+                    lsvData.Refresh();
+                     
                 }
                 finally
                 {
@@ -218,16 +324,28 @@ namespace SIGMAF.Desktop.MOTOS
                     this.Enabled = true;
                     this.UseWaitCursor = false;
                 }
-            }
+            } 
+        }
+        private static OxyColor ColorFromKey(string key)
+        {
+            // Seed estable por texto (hash)
+            int seed = key?.GetHashCode() ?? 0;
+            var rnd = new Random(seed);
+
+            // Rangos para evitar colores muy oscuros o muy claros
+            byte r = (byte)rnd.Next(60, 230);
+            byte g = (byte)rnd.Next(60, 230);
+            byte b = (byte)rnd.Next(60, 230);
+
+            return OxyColor.FromRgb(r, g, b);
         }
     }
-
 
 
     public class CatResumen
     {
         public string Nombre { get; set; } = "";
-        public int Unidades { get; set; }
+        public long Unidades { get; set; }
         public decimal Ganancia { get; set; }
         public OxyColor Color { get; set; } = OxyColors.Gray;
     }

@@ -14,5 +14,8 @@
         public string DescripcionEliminado { get; set; } = string.Empty;
         public string FechaCreacion { get; set; } = string.Empty;
         public string  EstadoAplicado {  get; set; } = string.Empty;
+        public string Sucursal {  get; set; } = string.Empty;
+        public string NombreSucursal => Sucursal == "1" ? "Altalier" : "Wama";
+
     }
 }
