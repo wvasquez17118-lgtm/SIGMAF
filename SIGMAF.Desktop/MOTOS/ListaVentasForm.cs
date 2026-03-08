@@ -75,6 +75,8 @@ namespace SIGMAF.Desktop.MOTOS
                 item.SubItems.Add(itemCat.NombreUsuario);
                 item.SubItems.Add(itemCat.NombreSucursal);
                 item.SubItems.Add(Convert.ToDateTime(itemCat.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt"));
+               
+                item.Tag = itemCat.Estado != "1";
                 lsvListadoVentas.Items.Add(item);
 
             }
@@ -141,12 +143,46 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void lsvListadoVentas_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-            e.DrawDefault = true;
+           // e.DrawDefault = true;
         }
 
         private void lsvListadoVentas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            e.DrawDefault = true;
+            bool ventaNoAplicada = e.Item.Tag != null && (bool)e.Item.Tag;
+
+            Color backColor;
+            Color foreColor;
+
+            if (ventaNoAplicada)
+            {
+                backColor = Color.Red;
+                foreColor = Color.White;
+            }
+            else if (e.Item.Selected)
+            {
+                backColor = SystemColors.Highlight;
+                foreColor = SystemColors.HighlightText;
+            }
+            else
+            {
+                backColor = e.SubItem.BackColor;
+                foreColor = e.SubItem.ForeColor;
+            }
+
+            using (SolidBrush backgroundBrush = new SolidBrush(backColor))
+            using (SolidBrush textBrush = new SolidBrush(foreColor))
+            {
+                e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
+
+                TextRenderer.DrawText(
+                    e.Graphics,
+                    e.SubItem.Text,
+                    lsvListadoVentas.Font,
+                    e.Bounds,
+                    foreColor,
+                    TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
+                );
+            }
         }
     }
 }
