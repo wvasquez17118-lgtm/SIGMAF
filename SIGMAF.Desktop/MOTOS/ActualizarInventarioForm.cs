@@ -76,6 +76,9 @@ namespace SIGMAF.Desktop.MOTOS
             if (txtCantidadDisponible.Text.Length == 0)
                 save = false;
 
+            if (txtPrecioVentaAltalier.Text.Length == 0)
+                save = false;
+
             if (save)
             {
                 InventarioServicio api = new InventarioServicio();
@@ -105,6 +108,7 @@ namespace SIGMAF.Desktop.MOTOS
                             parameters.Add("stockMinimo", txtStock.Text.Trim());
                             parameters.Add("precioCompra", txtPrecioCompra.Text.Trim());
                             parameters.Add("precioVenta", txtPrecioVenta.Text.Trim());
+                            parameters.Add("precioVentaAltalier", txtPrecioVentaAltalier.Text.Trim()); 
 
                             var resultado = await api.MotoActualizarInventarioProductoAsync(parameters);
                             if (resultado.Estado)

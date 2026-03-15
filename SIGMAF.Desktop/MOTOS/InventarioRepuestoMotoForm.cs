@@ -41,7 +41,10 @@ namespace SIGMAF.Desktop.MOTOS
 
                 try
                 {
-                    producto = await apiServicio.ObtenercatalogosconinventariomotoAsync();
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                    parameters.Add("sucursal", "ALL");
+                    producto = await apiServicio.ObtenercatalogosconinventariomotoAsync(parameters);
                     producto = producto
                   .Select(x => x.ToVm())
                   .OrderByDescending(x => x.CantidadFmt)
@@ -58,6 +61,7 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvInventario.Columns.Add("Stock", 200);
                     lsvInventario.Columns.Add("Precio Compra", 200);
                     lsvInventario.Columns.Add("Precio Venta", 200);
+                    lsvInventario.Columns.Add("Precio Venta Altalier", 200);
                     CargarListView(producto);
                 }
                 finally
@@ -83,6 +87,7 @@ namespace SIGMAF.Desktop.MOTOS
                 item.SubItems.Add(itemCat.StockMinimo);
                 item.SubItems.Add(itemCat.PrecioCompraFmt);
                 item.SubItems.Add(itemCat.PrecioVentaFmt);
+                item.SubItems.Add(itemCat.PrecioVentaAltalierFmt);
                 lsvInventario.Items.Add(item);
 
             }
@@ -156,7 +161,8 @@ namespace SIGMAF.Desktop.MOTOS
                     form.txtCantidadDisponible.Text = item.SubItems[2].Text;
                     form.txtStock.Text = item.SubItems[3].Text;
                     form.txtPrecioCompra.Text = item.SubItems[4].Text;
-                    form.txtPrecioVenta.Text = item.SubItems[5].Text;                    
+                    form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:
@@ -187,6 +193,7 @@ namespace SIGMAF.Desktop.MOTOS
                     form.txtStock.Text = item.SubItems[3].Text;
                     form.txtPrecioCompra.Text = item.SubItems[4].Text;
                     form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:
@@ -217,6 +224,7 @@ namespace SIGMAF.Desktop.MOTOS
                     form.txtStock.Text = item.SubItems[3].Text;
                     form.txtPrecioCompra.Text = item.SubItems[4].Text;
                     form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:
@@ -247,6 +255,7 @@ namespace SIGMAF.Desktop.MOTOS
                     form.txtStock.Text = item.SubItems[3].Text;
                     form.txtPrecioCompra.Text = item.SubItems[4].Text;
                     form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                    form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:

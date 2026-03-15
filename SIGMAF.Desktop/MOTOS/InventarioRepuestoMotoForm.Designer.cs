@@ -38,9 +38,6 @@
             lsvInventario = new ListView();
             contextMenuStrip1 = new ContextMenuStrip(components);
             actualizarDisponibleToolStripMenuItem = new ToolStripMenuItem();
-            actualizarStockToolStripMenuItem = new ToolStripMenuItem();
-            actualizarPrecioCompraToolStripMenuItem = new ToolStripMenuItem();
-            actualizarPrecioVentaToolStripMenuItem = new ToolStripMenuItem();
             panel1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
@@ -130,37 +127,16 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem, actualizarStockToolStripMenuItem, actualizarPrecioCompraToolStripMenuItem, actualizarPrecioVentaToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(207, 92);
+            contextMenuStrip1.Size = new Size(181, 48);
             // 
             // actualizarDisponibleToolStripMenuItem
             // 
             actualizarDisponibleToolStripMenuItem.Name = "actualizarDisponibleToolStripMenuItem";
             actualizarDisponibleToolStripMenuItem.Size = new Size(206, 22);
-            actualizarDisponibleToolStripMenuItem.Text = "Actualizar Disponible";
+            actualizarDisponibleToolStripMenuItem.Text = "Actualizar registros";
             actualizarDisponibleToolStripMenuItem.Click += actualizarDisponibleToolStripMenuItem_Click;
-            // 
-            // actualizarStockToolStripMenuItem
-            // 
-            actualizarStockToolStripMenuItem.Name = "actualizarStockToolStripMenuItem";
-            actualizarStockToolStripMenuItem.Size = new Size(206, 22);
-            actualizarStockToolStripMenuItem.Text = "Actualizar Stock";
-            actualizarStockToolStripMenuItem.Click += actualizarStockToolStripMenuItem_Click;
-            // 
-            // actualizarPrecioCompraToolStripMenuItem
-            // 
-            actualizarPrecioCompraToolStripMenuItem.Name = "actualizarPrecioCompraToolStripMenuItem";
-            actualizarPrecioCompraToolStripMenuItem.Size = new Size(206, 22);
-            actualizarPrecioCompraToolStripMenuItem.Text = "Actualizar precio compra";
-            actualizarPrecioCompraToolStripMenuItem.Click += actualizarPrecioCompraToolStripMenuItem_Click;
-            // 
-            // actualizarPrecioVentaToolStripMenuItem
-            // 
-            actualizarPrecioVentaToolStripMenuItem.Name = "actualizarPrecioVentaToolStripMenuItem";
-            actualizarPrecioVentaToolStripMenuItem.Size = new Size(206, 22);
-            actualizarPrecioVentaToolStripMenuItem.Text = "Actualizar  precio venta";
-            actualizarPrecioVentaToolStripMenuItem.Click += actualizarPrecioVentaToolStripMenuItem_Click;
             // 
             // InventarioRepuestoMotoForm
             // 
@@ -195,8 +171,5 @@
         private Label label1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem actualizarDisponibleToolStripMenuItem;
-        private ToolStripMenuItem actualizarStockToolStripMenuItem;
-        private ToolStripMenuItem actualizarPrecioCompraToolStripMenuItem;
-        private ToolStripMenuItem actualizarPrecioVentaToolStripMenuItem;
     }
 }

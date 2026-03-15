@@ -42,6 +42,8 @@
             txtPrecioCompra = new TextBox();
             label6 = new Label();
             txtPrecioVenta = new TextBox();
+            label3 = new Label();
+            txtPrecioVentaAltalier = new TextBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,7 +85,7 @@
             btnGuardar.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Properties.Resources.icon_save;
             btnGuardar.ImageAlign = ContentAlignment.TopCenter;
-            btnGuardar.Location = new Point(0, 462);
+            btnGuardar.Location = new Point(0, 526);
             btnGuardar.Margin = new Padding(3, 4, 3, 4);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(542, 73);
@@ -197,12 +199,33 @@
             txtPrecioVenta.TabIndex = 19;
             txtPrecioVenta.KeyPress += txtCantidadDisponible_KeyPress;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(15, 449);
+            label3.Name = "label3";
+            label3.Size = new Size(147, 20);
+            label3.TabIndex = 22;
+            label3.Text = "Precio venta altalier";
+            // 
+            // txtPrecioVentaAltalier
+            // 
+            txtPrecioVentaAltalier.Location = new Point(14, 474);
+            txtPrecioVentaAltalier.Margin = new Padding(3, 4, 3, 4);
+            txtPrecioVentaAltalier.Multiline = true;
+            txtPrecioVentaAltalier.Name = "txtPrecioVentaAltalier";
+            txtPrecioVentaAltalier.Size = new Size(514, 45);
+            txtPrecioVentaAltalier.TabIndex = 21;
+            // 
             // ActualizarInventarioForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(542, 535);
+            ClientSize = new Size(542, 602);
+            Controls.Add(label3);
+            Controls.Add(txtPrecioVentaAltalier);
             Controls.Add(label6);
             Controls.Add(txtPrecioVenta);
             Controls.Add(label5);
@@ -245,5 +268,7 @@
         public TextBox txtPrecioCompra;
         public TextBox txtPrecioVenta;
         public TextBox txtCantidadDisponible;
+        private Label label3;
+        public TextBox txtPrecioVentaAltalier;
     }
 }

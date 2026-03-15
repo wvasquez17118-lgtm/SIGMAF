@@ -11,6 +11,7 @@ namespace SIGMAF.Desktop.MOTOS
             CultureInfo culture = CultureInfo.GetCultureInfo("es-NI"); // o es-ES / en-US según cómo lo querés ver
 
             var precioV = NumberHelper.ToDecimal(dto.PrecioVenta);
+            var precioVAltalier = NumberHelper.ToDecimal(dto.PrecioVentaAltalier);
             var precioCom = NumberHelper.ToDecimal(dto.PrecioCompra);
 
             return new ListadoInventarioDTO
@@ -23,6 +24,7 @@ namespace SIGMAF.Desktop.MOTOS
                 CatalogoId = dto.CatalogoId,
                 PrecioCompraFmt = NumberHelper.ToMiles(precioCom, culture, decimals: 2),
                 PrecioVentaFmt = NumberHelper.ToMiles(precioV, culture, decimals: 2),
+                PrecioVentaAltalierFmt = NumberHelper.ToMiles(precioVAltalier, culture, decimals: 2),
             };
         }
     }

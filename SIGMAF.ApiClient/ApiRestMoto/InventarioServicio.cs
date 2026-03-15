@@ -9,9 +9,9 @@ namespace SIGMAF.ApiClient.ApiRestMoto
         {
             services = new ApiService();
         }
-        public async Task<List<ListadoInventarioDTO>> ObtenercatalogosconinventariomotoAsync()
+        public async Task<List<ListadoInventarioDTO>> ObtenercatalogosconinventariomotoAsync(Dictionary<string, string> parameters)
         {
-            return await services.PostListAsync<ListadoInventarioDTO>("obtenercatalogosconinventariomoto");
+            return await services.PostListAsync<ListadoInventarioDTO>("obtenercatalogosconinventariomoto", parameters);
         }
 
         public async Task<ApiCrudResponse> SincronizacionActualizarInventarioAsync(Dictionary<string, string> parameters)
