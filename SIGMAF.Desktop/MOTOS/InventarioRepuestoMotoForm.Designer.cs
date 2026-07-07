@@ -32,8 +32,6 @@
             panel1 = new Panel();
             label1 = new Label();
             txtBuscarProducto = new TextBox();
-            btnNuevaCompra = new Button();
-            lblTotalProducto = new Label();
             label3 = new Label();
             lsvInventario = new ListView();
             contextMenuStrip1 = new ContextMenuStrip(components);
@@ -47,8 +45,6 @@
             panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(label1);
             panel1.Controls.Add(txtBuscarProducto);
-            panel1.Controls.Add(btnNuevaCompra);
-            panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -73,30 +69,6 @@
             txtBuscarProducto.Size = new Size(308, 27);
             txtBuscarProducto.TabIndex = 3;
             txtBuscarProducto.TextChanged += txtBuscarProducto_TextChanged;
-            // 
-            // btnNuevaCompra
-            // 
-            btnNuevaCompra.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnNuevaCompra.Image = Properties.Resources.icon_plus;
-            btnNuevaCompra.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNuevaCompra.Location = new Point(1454, 0);
-            btnNuevaCompra.Name = "btnNuevaCompra";
-            btnNuevaCompra.Size = new Size(154, 56);
-            btnNuevaCompra.TabIndex = 2;
-            btnNuevaCompra.Text = "Nueva compra";
-            btnNuevaCompra.TextAlign = ContentAlignment.MiddleRight;
-            btnNuevaCompra.UseVisualStyleBackColor = true;
-            // 
-            // lblTotalProducto
-            // 
-            lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblTotalProducto.AutoSize = true;
-            lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(3204, 19);
-            lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
-            lblTotalProducto.TabIndex = 1;
-            lblTotalProducto.Text = "Total: 0";
             // 
             // label3
             // 
@@ -163,8 +135,6 @@
         #endregion
 
         private Panel panel1;
-        private Button btnNuevaCompra;
-        private Label lblTotalProducto;
         private Label label3;
         private ListView lsvInventario;
         private TextBox txtBuscarProducto;

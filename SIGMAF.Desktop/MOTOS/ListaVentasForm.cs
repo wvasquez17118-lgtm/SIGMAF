@@ -23,7 +23,7 @@ namespace SIGMAF.Desktop.MOTOS
             await CargarData();
         }
         private async Task CargarData()
-        { 
+        {
             using (var loading = new FrmLoading())
             {
                 loading.StartPosition = FormStartPosition.CenterScreen;
@@ -75,7 +75,7 @@ namespace SIGMAF.Desktop.MOTOS
                 item.SubItems.Add(itemCat.NombreUsuario);
                 item.SubItems.Add(itemCat.NombreSucursal);
                 item.SubItems.Add(Convert.ToDateTime(itemCat.FechaCreacion).ToString("dd/MM/yyyy hh:mm tt"));
-               
+
                 item.Tag = itemCat.Estado != "1";
                 lsvListadoVentas.Items.Add(item);
 
@@ -143,7 +143,7 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void lsvListadoVentas_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-           // e.DrawDefault = true;
+            // e.DrawDefault = true;
         }
 
         private void lsvListadoVentas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
@@ -183,6 +183,16 @@ namespace SIGMAF.Desktop.MOTOS
                     TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
                 );
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void chWAMA_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

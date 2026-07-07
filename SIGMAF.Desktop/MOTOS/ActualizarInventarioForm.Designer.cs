@@ -66,7 +66,7 @@
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalProducto.Location = new Point(1473, 25);
             lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
+            lblTotalProducto.Size = new Size(76, 25);
             lblTotalProducto.TabIndex = 1;
             lblTotalProducto.Text = "Total: 0";
             // 
@@ -76,7 +76,7 @@
             lblTitulo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTitulo.Location = new Point(21, 21);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(247, 20);
+            lblTitulo.Size = new Size(317, 25);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Actualizar producto del inventario";
             // 
@@ -101,7 +101,7 @@
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(15, 82);
             label1.Name = "label1";
-            label1.Size = new Size(135, 20);
+            label1.Size = new Size(175, 25);
             label1.TabIndex = 12;
             label1.Text = "Nombre producto";
             // 
@@ -112,27 +112,28 @@
             txtNombreProducto.Margin = new Padding(3, 4, 3, 4);
             txtNombreProducto.Multiline = true;
             txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.Size = new Size(514, 45);
+            txtNombreProducto.Size = new Size(514, 35);
             txtNombreProducto.TabIndex = 11;
+            txtNombreProducto.TextChanged += txtNombreProducto_TextChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(15, 155);
+            label2.Location = new Point(15, 147);
             label2.Name = "label2";
-            label2.Size = new Size(147, 20);
+            label2.Size = new Size(190, 25);
             label2.TabIndex = 14;
             label2.Text = "Cantidad disponible";
             // 
             // txtCantidadDisponible
             // 
             txtCantidadDisponible.Enabled = false;
-            txtCantidadDisponible.Location = new Point(14, 179);
+            txtCantidadDisponible.Location = new Point(14, 174);
             txtCantidadDisponible.Margin = new Padding(3, 4, 3, 4);
             txtCantidadDisponible.Multiline = true;
             txtCantidadDisponible.Name = "txtCantidadDisponible";
-            txtCantidadDisponible.Size = new Size(514, 45);
+            txtCantidadDisponible.Size = new Size(514, 35);
             txtCantidadDisponible.TabIndex = 13;
             txtCantidadDisponible.KeyPress += txtCantidadDisponible_KeyPress;
             // 
@@ -140,20 +141,20 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(15, 228);
+            label4.Location = new Point(15, 213);
             label4.Name = "label4";
-            label4.Size = new Size(47, 20);
+            label4.Size = new Size(62, 25);
             label4.TabIndex = 16;
             label4.Text = "Stock";
             // 
             // txtStock
             // 
             txtStock.Enabled = false;
-            txtStock.Location = new Point(14, 252);
+            txtStock.Location = new Point(14, 241);
             txtStock.Margin = new Padding(3, 4, 3, 4);
             txtStock.Multiline = true;
             txtStock.Name = "txtStock";
-            txtStock.Size = new Size(514, 45);
+            txtStock.Size = new Size(514, 35);
             txtStock.TabIndex = 15;
             txtStock.KeyPress += txtCantidadDisponible_KeyPress;
             // 
@@ -161,20 +162,20 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(15, 301);
+            label5.Location = new Point(15, 285);
             label5.Name = "label5";
-            label5.Size = new Size(109, 20);
+            label5.Size = new Size(141, 25);
             label5.TabIndex = 18;
             label5.Text = "Precio compra";
             // 
             // txtPrecioCompra
             // 
             txtPrecioCompra.Enabled = false;
-            txtPrecioCompra.Location = new Point(14, 325);
+            txtPrecioCompra.Location = new Point(14, 316);
             txtPrecioCompra.Margin = new Padding(3, 4, 3, 4);
             txtPrecioCompra.Multiline = true;
             txtPrecioCompra.Name = "txtPrecioCompra";
-            txtPrecioCompra.Size = new Size(514, 45);
+            txtPrecioCompra.Size = new Size(514, 35);
             txtPrecioCompra.TabIndex = 17;
             txtPrecioCompra.KeyPress += txtCantidadDisponible_KeyPress;
             // 
@@ -184,9 +185,9 @@
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(15, 374);
             label6.Name = "label6";
-            label6.Size = new Size(95, 20);
+            label6.Size = new Size(189, 25);
             label6.TabIndex = 20;
-            label6.Text = "Precio venta";
+            label6.Text = "Precio venta WAMA";
             // 
             // txtPrecioVenta
             // 
@@ -195,7 +196,7 @@
             txtPrecioVenta.Margin = new Padding(3, 4, 3, 4);
             txtPrecioVenta.Multiline = true;
             txtPrecioVenta.Name = "txtPrecioVenta";
-            txtPrecioVenta.Size = new Size(514, 45);
+            txtPrecioVenta.Size = new Size(222, 35);
             txtPrecioVenta.TabIndex = 19;
             txtPrecioVenta.KeyPress += txtCantidadDisponible_KeyPress;
             // 
@@ -203,24 +204,24 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(15, 449);
+            label3.Location = new Point(285, 374);
             label3.Name = "label3";
-            label3.Size = new Size(147, 20);
+            label3.Size = new Size(210, 25);
             label3.TabIndex = 22;
-            label3.Text = "Precio venta altalier";
+            label3.Text = "Precio venta ALTALIER";
             // 
             // txtPrecioVentaAltalier
             // 
-            txtPrecioVentaAltalier.Location = new Point(14, 474);
+            txtPrecioVentaAltalier.Location = new Point(285, 398);
             txtPrecioVentaAltalier.Margin = new Padding(3, 4, 3, 4);
             txtPrecioVentaAltalier.Multiline = true;
             txtPrecioVentaAltalier.Name = "txtPrecioVentaAltalier";
-            txtPrecioVentaAltalier.Size = new Size(514, 45);
+            txtPrecioVentaAltalier.Size = new Size(243, 35);
             txtPrecioVentaAltalier.TabIndex = 21;
             // 
             // ActualizarInventarioForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
             ClientSize = new Size(542, 602);

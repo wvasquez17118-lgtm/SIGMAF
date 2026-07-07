@@ -65,14 +65,14 @@ namespace SIGMAF.Desktop.MOTOS
             bool save = true;
 
             if (txtPrecioCompra.Text.Length == 0)
-                save = false;                   
-            
+                save = false;
+
             if (txtPrecioVenta.Text.Length == 0)
-                save = false;                   
-                            
+                save = false;
+
             if (txtStock.Text.Length == 0)
-                save = false;                 
-            
+                save = false;
+
             if (txtCantidadDisponible.Text.Length == 0)
                 save = false;
 
@@ -108,7 +108,7 @@ namespace SIGMAF.Desktop.MOTOS
                             parameters.Add("stockMinimo", txtStock.Text.Trim());
                             parameters.Add("precioCompra", txtPrecioCompra.Text.Trim());
                             parameters.Add("precioVenta", txtPrecioVenta.Text.Trim());
-                            parameters.Add("precioVentaAltalier", txtPrecioVentaAltalier.Text.Trim()); 
+                            parameters.Add("precioVentaAltalier", txtPrecioVentaAltalier.Text.Trim());
 
                             var resultado = await api.MotoActualizarInventarioProductoAsync(parameters);
                             if (resultado.Estado)
@@ -130,6 +130,11 @@ namespace SIGMAF.Desktop.MOTOS
             {
                 MessageBox.Show("Por favor necesitas llenar todos los campos, es requerido", "ADMINISTRACIÓN");
             }
+        }
+
+        private void txtNombreProducto_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

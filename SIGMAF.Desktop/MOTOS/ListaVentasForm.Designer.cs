@@ -36,8 +36,6 @@
             label1 = new Label();
             dateFechaFinal = new DateTimePicker();
             dataFechaInicio = new DateTimePicker();
-            lblFechaTitulo = new Label();
-            lblTotalProducto = new Label();
             label3 = new Label();
             lsvListadoVentas = new ListView();
             panel1.SuspendLayout();
@@ -53,21 +51,20 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(dateFechaFinal);
             panel1.Controls.Add(dataFechaInicio);
-            panel1.Controls.Add(lblFechaTitulo);
-            panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1047, 62);
+            panel1.Size = new Size(1210, 66);
             panel1.TabIndex = 6;
+            panel1.Paint += panel1_Paint;
             // 
             // btnNuevaVenta
             // 
             btnNuevaVenta.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNuevaVenta.Image = Properties.Resources.icon_plus;
             btnNuevaVenta.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNuevaVenta.Location = new Point(890, 4);
+            btnNuevaVenta.Location = new Point(1053, 4);
             btnNuevaVenta.Name = "btnNuevaVenta";
             btnNuevaVenta.Size = new Size(154, 56);
             btnNuevaVenta.TabIndex = 11;
@@ -82,7 +79,7 @@
             chALTALIER.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             chALTALIER.Location = new Point(298, 17);
             chALTALIER.Name = "chALTALIER";
-            chALTALIER.Size = new Size(96, 24);
+            chALTALIER.Size = new Size(117, 29);
             chALTALIER.TabIndex = 10;
             chALTALIER.Text = "ALTALIER";
             chALTALIER.UseVisualStyleBackColor = true;
@@ -93,18 +90,19 @@
             chWAMA.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             chWAMA.Location = new Point(214, 17);
             chWAMA.Name = "chWAMA";
-            chWAMA.Size = new Size(78, 24);
+            chWAMA.Size = new Size(96, 29);
             chWAMA.TabIndex = 9;
             chWAMA.Text = "WAMA";
             chWAMA.UseVisualStyleBackColor = true;
+            chWAMA.CheckedChanged += chWAMA_CheckedChanged;
             // 
             // btnRefrescar
             // 
             btnRefrescar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             btnRefrescar.Image = Properties.Resources.icon_sincronizarguardar;
-            btnRefrescar.Location = new Point(785, 3);
+            btnRefrescar.Location = new Point(948, 3);
             btnRefrescar.Name = "btnRefrescar";
-            btnRefrescar.Size = new Size(96, 59);
+            btnRefrescar.Size = new Size(96, 63);
             btnRefrescar.TabIndex = 8;
             btnRefrescar.UseVisualStyleBackColor = true;
             btnRefrescar.Click += btnRefrescar_Click;
@@ -115,7 +113,7 @@
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(596, 22);
             label1.Name = "label1";
-            label1.Size = new Size(21, 20);
+            label1.Size = new Size(28, 25);
             label1.TabIndex = 5;
             label1.Text = "--";
             // 
@@ -124,7 +122,7 @@
             dateFechaFinal.Format = DateTimePickerFormat.Short;
             dateFechaFinal.Location = new Point(623, 17);
             dateFechaFinal.Name = "dateFechaFinal";
-            dateFechaFinal.Size = new Size(156, 27);
+            dateFechaFinal.Size = new Size(156, 32);
             dateFechaFinal.TabIndex = 4;
             // 
             // dataFechaInicio
@@ -132,30 +130,8 @@
             dataFechaInicio.Format = DateTimePickerFormat.Short;
             dataFechaInicio.Location = new Point(434, 17);
             dataFechaInicio.Name = "dataFechaInicio";
-            dataFechaInicio.Size = new Size(156, 27);
+            dataFechaInicio.Size = new Size(156, 32);
             dataFechaInicio.TabIndex = 3;
-            // 
-            // lblFechaTitulo
-            // 
-            lblFechaTitulo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblFechaTitulo.AutoSize = true;
-            lblFechaTitulo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFechaTitulo.Location = new Point(1597, 13);
-            lblFechaTitulo.Name = "lblFechaTitulo";
-            lblFechaTitulo.Size = new Size(143, 20);
-            lblFechaTitulo.TabIndex = 2;
-            lblFechaTitulo.Text = "Fecha: 09/01/2026";
-            // 
-            // lblTotalProducto
-            // 
-            lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblTotalProducto.AutoSize = true;
-            lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(3354, 19);
-            lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
-            lblTotalProducto.TabIndex = 1;
-            lblTotalProducto.Text = "Total: 0";
             // 
             // label3
             // 
@@ -163,7 +139,7 @@
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(12, 18);
             label3.Name = "label3";
-            label3.Size = new Size(131, 20);
+            label3.Size = new Size(165, 25);
             label3.TabIndex = 0;
             label3.Text = "Listado de ventas";
             // 
@@ -172,9 +148,9 @@
             lsvListadoVentas.Dock = DockStyle.Fill;
             lsvListadoVentas.FullRowSelect = true;
             lsvListadoVentas.GridLines = true;
-            lsvListadoVentas.Location = new Point(0, 62);
+            lsvListadoVentas.Location = new Point(0, 66);
             lsvListadoVentas.Name = "lsvListadoVentas";
-            lsvListadoVentas.Size = new Size(1047, 538);
+            lsvListadoVentas.Size = new Size(1210, 546);
             lsvListadoVentas.TabIndex = 7;
             lsvListadoVentas.UseCompatibleStateImageBehavior = false;
             lsvListadoVentas.View = View.Details;
@@ -184,10 +160,10 @@
             // 
             // ListaVentasForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(1047, 600);
+            ClientSize = new Size(1210, 612);
             Controls.Add(lsvListadoVentas);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -204,8 +180,6 @@
         #endregion
 
         private Panel panel1;
-        private Label lblFechaTitulo;
-        private Label lblTotalProducto;
         private Label label3;
         private ListView lsvListadoVentas;
         private DateTimePicker dataFechaInicio;

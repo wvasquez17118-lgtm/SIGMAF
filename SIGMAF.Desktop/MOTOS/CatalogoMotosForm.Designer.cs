@@ -78,7 +78,7 @@
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalProducto.Location = new Point(1016, 15);
             lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
+            lblTotalProducto.Size = new Size(76, 25);
             lblTotalProducto.TabIndex = 1;
             lblTotalProducto.Text = "Total: 0";
             // 
@@ -88,7 +88,7 @@
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(18, 15);
             label3.Name = "label3";
-            label3.Size = new Size(244, 20);
+            label3.Size = new Size(312, 25);
             label3.TabIndex = 0;
             label3.Text = "Catalogos de productos de motos";
             // 
@@ -144,7 +144,7 @@
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(19, 294);
             label6.Name = "label6";
-            label6.Size = new Size(90, 20);
+            label6.Size = new Size(116, 25);
             label6.TabIndex = 17;
             label6.Text = "Descripción";
             // 
@@ -175,7 +175,7 @@
             cmbCategoriaProducto.IntegralHeight = false;
             cmbCategoriaProducto.Location = new Point(0, 0);
             cmbCategoriaProducto.Name = "cmbCategoriaProducto";
-            cmbCategoriaProducto.Size = new Size(356, 29);
+            cmbCategoriaProducto.Size = new Size(356, 36);
             cmbCategoriaProducto.TabIndex = 13;
             // 
             // label5
@@ -184,7 +184,7 @@
             label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.Location = new Point(20, 97);
             label5.Name = "label5";
-            label5.Size = new Size(76, 20);
+            label5.Size = new Size(98, 25);
             label5.TabIndex = 14;
             label5.Text = "Categoria";
             // 
@@ -194,7 +194,7 @@
             label4.Font = new Font("Segoe UI Black", 24F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label4.Location = new Point(19, 49);
             label4.Name = "label4";
-            label4.Size = new Size(352, 45);
+            label4.Size = new Size(438, 54);
             label4.TabIndex = 12;
             label4.Text = "Detalles del producto";
             // 
@@ -292,7 +292,7 @@
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(19, 232);
             label2.Name = "label2";
-            label2.Size = new Size(73, 20);
+            label2.Size = new Size(96, 25);
             label2.TabIndex = 5;
             label2.Text = "Producto";
             // 
@@ -302,7 +302,7 @@
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(19, 171);
             label1.Name = "label1";
-            label1.Size = new Size(58, 20);
+            label1.Size = new Size(77, 25);
             label1.TabIndex = 4;
             label1.Text = "Codigo";
             // 
@@ -345,7 +345,7 @@
             // 
             // CatalogoMotosForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
             ClientSize = new Size(1138, 743);

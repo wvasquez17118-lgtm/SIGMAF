@@ -31,7 +31,6 @@
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
             btnNuevaCompra = new Button();
-            lblTotalProducto = new Label();
             label3 = new Label();
             lsvListadoCompras = new ListView();
             contextMenuStrip1 = new ContextMenuStrip(components);
@@ -45,7 +44,6 @@
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(btnNuevaCompra);
-            panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(label3);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
@@ -66,17 +64,6 @@
             btnNuevaCompra.TextAlign = ContentAlignment.MiddleRight;
             btnNuevaCompra.UseVisualStyleBackColor = true;
             btnNuevaCompra.Click += btnNuevaCompra_Click;
-            // 
-            // lblTotalProducto
-            // 
-            lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblTotalProducto.AutoSize = true;
-            lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(2507, 19);
-            lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
-            lblTotalProducto.TabIndex = 1;
-            lblTotalProducto.Text = "Total: 0";
             // 
             // label3
             // 
@@ -150,7 +137,6 @@
         #endregion
 
         private Panel panel1;
-        private Label lblTotalProducto;
         private Label label3;
         private ListView lsvListadoCompras;
         private Button btnNuevaCompra;
