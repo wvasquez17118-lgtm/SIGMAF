@@ -9,6 +9,7 @@ namespace SIGMAF.Desktop.MOTOS
     {
         InventarioServicio apiServicio;
         public List<ListadoInventarioDTO> producto;
+        private string filtroCantidadUno = string.Empty;
         public InventarioRepuestoMotoForm()
         {
             InitializeComponent();
@@ -23,9 +24,10 @@ namespace SIGMAF.Desktop.MOTOS
         {
             await CargarData();
         }
-        private async Task CargarData()
+        private async Task CargarData(bool mostrarMensajeStockBajo = true)
         {
             producto = new List<ListadoInventarioDTO>();
+            ActualizarLabelAlertaStockBajo(new List<ListadoInventarioDTO>());
             apiServicio = new InventarioServicio();
             this.WindowState = FormWindowState.Normal;
             this.WindowState = FormWindowState.Maximized;
@@ -66,7 +68,7 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvInventario.Columns.Add("Cantidad Altalier", 200);
                     lsvInventario.Columns.Add("Cantidad Wama", 200);
                     AplicarFiltros();
-                    MostrarAlertaStockBajo();
+                    MostrarAlertaStockBajo(mostrarMensajeStockBajo);
                 }
                 finally
                 {
@@ -128,6 +130,15 @@ namespace SIGMAF.Desktop.MOTOS
                 data = data.Where(p => NumberHelper.ToLong(p.StockDisponible) <= NumberHelper.ToLong(p.StockMinimo));
             }
 
+            if (filtroCantidadUno == "wama")
+            {
+                data = data.Where(p => NumberHelper.ToLong(p.CantidadWama) == 1);
+            }
+            else if (filtroCantidadUno == "altalier")
+            {
+                data = data.Where(p => NumberHelper.ToLong(p.CantidadAltalier) == 1);
+            }
+
             CargarListView(data.ToList());
         }
 
@@ -143,13 +154,17 @@ namespace SIGMAF.Desktop.MOTOS
                 .ToList();
         }
 
-        private void MostrarAlertaStockBajo()
+        private void MostrarAlertaStockBajo(bool mostrarMensaje)
         {
             var productosStockBajo = ObtenerProductosStockBajo();
-            lblAlertaStock.Visible = productosStockBajo.Any();
-            lblAlertaStock.Text = $"Productos bajo stock: {productosStockBajo.Count}";
+            ActualizarLabelAlertaStockBajo(productosStockBajo);
 
             if (!productosStockBajo.Any())
+            {
+                return;
+            }
+
+            if (!mostrarMensaje)
             {
                 return;
             }
@@ -165,6 +180,14 @@ namespace SIGMAF.Desktop.MOTOS
                 chkStockMinimo.Checked = true;
                 AplicarFiltros();
             }
+        }
+
+        private void ActualizarLabelAlertaStockBajo(List<ListadoInventarioDTO> productosStockBajo)
+        {
+            lblAlertaStock.Text = $"Productos bajo stock bodega: {productosStockBajo.Count}";
+            lblAlertaStock.Visible = productosStockBajo.Any();
+            lblAlertaStock.Refresh();
+            panel1.Refresh();
         }
 
         private void lsvInventario_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -337,12 +360,31 @@ namespace SIGMAF.Desktop.MOTOS
 
         private async void btnRefrescar_Click(object sender, EventArgs e)
         {
+            filtroCantidadUno = string.Empty;
+            chkStockMinimo.Checked = false;
             await CargarData();
         }
 
         private void chkStockMinimo_CheckedChanged(object sender, EventArgs e)
         {
             AplicarFiltros();
+        }
+
+        private async Task ActualizarYFiltrarCantidadUnoAsync(string ubicacion)
+        {
+            filtroCantidadUno = ubicacion;
+            await CargarData(mostrarMensajeStockBajo: false);
+            AplicarFiltros();
+        }
+
+        private async void productosCon1DisponibleWamaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await ActualizarYFiltrarCantidadUnoAsync("wama");
+        }
+
+        private async void productosCon1DisponibleAltalierToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await ActualizarYFiltrarCantidadUnoAsync("altalier");
         }
     }
 }
