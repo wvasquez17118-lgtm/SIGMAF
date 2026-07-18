@@ -70,7 +70,6 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvInventario.Columns.Add("Cantidad Altalier", 200);
                     lsvInventario.Columns.Add("Cantidad Wama", 200);
                     AplicarFiltros();
-                    MostrarAlertaStockBajo(mostrarMensajeStockBajo);
                 }
                 finally
                 {
@@ -80,6 +79,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
             }
 
+            MostrarAlertaStockBajo(mostrarMensajeStockBajo);
 
         }
         public void CargarListView(List<ListadoInventarioDTO> data)
