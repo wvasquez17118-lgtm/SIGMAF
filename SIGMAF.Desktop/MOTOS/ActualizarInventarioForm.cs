@@ -79,6 +79,12 @@ namespace SIGMAF.Desktop.MOTOS
             if (txtPrecioVentaAltalier.Text.Length == 0)
                 save = false;
 
+            if (txtCantidadAltalier.Text.Length == 0)
+                save = false;
+
+            if (txtCantidadWAMA.Text.Length == 0)
+                save = false;
+
             if (save)
             {
                 InventarioServicio api = new InventarioServicio();
@@ -109,7 +115,8 @@ namespace SIGMAF.Desktop.MOTOS
                             parameters.Add("precioCompra", txtPrecioCompra.Text.Trim());
                             parameters.Add("precioVenta", txtPrecioVenta.Text.Trim());
                             parameters.Add("precioVentaAltalier", txtPrecioVentaAltalier.Text.Trim());
-
+                            parameters.Add("cantidadAltalier", txtCantidadAltalier.Text.Trim());
+                            parameters.Add("cantidadWama", txtCantidadWAMA.Text.Trim());
                             var resultado = await api.MotoActualizarInventarioProductoAsync(parameters);
                             if (resultado.Estado)
                             {
@@ -133,6 +140,26 @@ namespace SIGMAF.Desktop.MOTOS
         }
 
         private void txtNombreProducto_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCantidadWAMA_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCantidadAltalier_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStock_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtCantidadDisponible_TextChanged(object sender, EventArgs e)
         {
 
         }

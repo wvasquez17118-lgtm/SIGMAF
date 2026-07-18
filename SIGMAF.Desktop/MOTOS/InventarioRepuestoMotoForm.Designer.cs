@@ -30,9 +30,12 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            btnRefrescar = new Button();
+            chkStockMinimo = new CheckBox();
             label1 = new Label();
             txtBuscarProducto = new TextBox();
-            label3 = new Label();
+            lblTotalProductos = new Label();
+            lblAlertaStock = new Label();
             lsvInventario = new ListView();
             contextMenuStrip1 = new ContextMenuStrip(components);
             actualizarDisponibleToolStripMenuItem = new ToolStripMenuItem();
@@ -43,14 +46,41 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
+            panel1.Controls.Add(btnRefrescar);
+            panel1.Controls.Add(chkStockMinimo);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(txtBuscarProducto);
-            panel1.Controls.Add(label3);
+            panel1.Controls.Add(lblTotalProductos);
+            panel1.Controls.Add(lblAlertaStock);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(897, 73);
+            panel1.Size = new Size(1047, 73);
             panel1.TabIndex = 6;
+            panel1.Paint += panel1_Paint;
+            // 
+            // btnRefrescar
+            // 
+            btnRefrescar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRefrescar.Image = Properties.Resources.icon_sincronizarguardar;
+            btnRefrescar.Location = new Point(948, 5);
+            btnRefrescar.Name = "btnRefrescar";
+            btnRefrescar.Size = new Size(96, 58);
+            btnRefrescar.TabIndex = 8;
+            btnRefrescar.UseVisualStyleBackColor = true;
+            btnRefrescar.Click += btnRefrescar_Click;
+            // 
+            // chkStockMinimo
+            // 
+            chkStockMinimo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            chkStockMinimo.AutoSize = true;
+            chkStockMinimo.Location = new Point(738, 25);
+            chkStockMinimo.Name = "chkStockMinimo";
+            chkStockMinimo.Size = new Size(204, 29);
+            chkStockMinimo.TabIndex = 9;
+            chkStockMinimo.Text = "Disponible <= Stock";
+            chkStockMinimo.UseVisualStyleBackColor = true;
+            chkStockMinimo.CheckedChanged += chkStockMinimo_CheckedChanged;
             // 
             // label1
             // 
@@ -58,7 +88,7 @@
             label1.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 5);
             label1.Name = "label1";
-            label1.Size = new Size(163, 20);
+            label1.Size = new Size(206, 25);
             label1.TabIndex = 4;
             label1.Text = "Busqueda de producto";
             // 
@@ -66,20 +96,31 @@
             // 
             txtBuscarProducto.Location = new Point(12, 35);
             txtBuscarProducto.Name = "txtBuscarProducto";
-            txtBuscarProducto.Size = new Size(308, 27);
+            txtBuscarProducto.Size = new Size(273, 32);
             txtBuscarProducto.TabIndex = 3;
             txtBuscarProducto.TextChanged += txtBuscarProducto_TextChanged;
             // 
-            // label3
+            // lblTotalProductos
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(621, 28);
-            label3.Name = "label3";
-            label3.Size = new Size(264, 20);
-            label3.TabIndex = 0;
-            label3.Text = "Listado inventarios repuestos motos";
+            lblTotalProductos.AutoSize = true;
+            lblTotalProductos.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTotalProductos.Location = new Point(291, 42);
+            lblTotalProductos.Name = "lblTotalProductos";
+            lblTotalProductos.Size = new Size(165, 25);
+            lblTotalProductos.TabIndex = 10;
+            lblTotalProductos.Text = "Total productos: 0";
+            // 
+            // lblAlertaStock
+            // 
+            lblAlertaStock.AutoSize = true;
+            lblAlertaStock.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblAlertaStock.ForeColor = Color.Red;
+            lblAlertaStock.Location = new Point(510, 42);
+            lblAlertaStock.Name = "lblAlertaStock";
+            lblAlertaStock.Size = new Size(190, 25);
+            lblAlertaStock.TabIndex = 11;
+            lblAlertaStock.Text = "Productos bajo stock";
+            lblAlertaStock.Visible = false;
             // 
             // lsvInventario
             // 
@@ -89,7 +130,7 @@
             lsvInventario.GridLines = true;
             lsvInventario.Location = new Point(0, 73);
             lsvInventario.Name = "lsvInventario";
-            lsvInventario.Size = new Size(897, 565);
+            lsvInventario.Size = new Size(1047, 565);
             lsvInventario.TabIndex = 7;
             lsvInventario.UseCompatibleStateImageBehavior = false;
             lsvInventario.View = View.Details;
@@ -99,23 +140,25 @@
             // 
             // contextMenuStrip1
             // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(181, 48);
+            contextMenuStrip1.Size = new Size(206, 28);
+            contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
             // actualizarDisponibleToolStripMenuItem
             // 
             actualizarDisponibleToolStripMenuItem.Name = "actualizarDisponibleToolStripMenuItem";
-            actualizarDisponibleToolStripMenuItem.Size = new Size(206, 22);
+            actualizarDisponibleToolStripMenuItem.Size = new Size(205, 24);
             actualizarDisponibleToolStripMenuItem.Text = "Actualizar registros";
             actualizarDisponibleToolStripMenuItem.Click += actualizarDisponibleToolStripMenuItem_Click;
             // 
             // InventarioRepuestoMotoForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(897, 638);
+            ClientSize = new Size(1047, 638);
             Controls.Add(lsvInventario);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -135,11 +178,14 @@
         #endregion
 
         private Panel panel1;
-        private Label label3;
         private ListView lsvInventario;
         private TextBox txtBuscarProducto;
+        private Label lblTotalProductos;
+        private Label lblAlertaStock;
         private Label label1;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem actualizarDisponibleToolStripMenuItem;
+        private CheckBox chkStockMinimo;
+        private Button btnRefrescar;
     }
 }

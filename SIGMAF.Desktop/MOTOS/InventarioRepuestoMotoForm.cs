@@ -1,4 +1,5 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
 
@@ -22,7 +23,7 @@ namespace SIGMAF.Desktop.MOTOS
         {
             await CargarData();
         }
-        private  async  Task  CargarData()
+        private async Task CargarData()
         {
             producto = new List<ListadoInventarioDTO>();
             apiServicio = new InventarioServicio();
@@ -62,7 +63,10 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvInventario.Columns.Add("Precio Compra", 200);
                     lsvInventario.Columns.Add("Precio Venta", 200);
                     lsvInventario.Columns.Add("Precio Venta Altalier", 200);
-                    CargarListView(producto);
+                    lsvInventario.Columns.Add("Cantidad Altalier", 200);
+                    lsvInventario.Columns.Add("Cantidad Wama", 200);
+                    AplicarFiltros();
+                    MostrarAlertaStockBajo();
                 }
                 finally
                 {
@@ -72,7 +76,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
             }
 
-           
+
         }
         public void CargarListView(List<ListadoInventarioDTO> data)
         {
@@ -88,26 +92,78 @@ namespace SIGMAF.Desktop.MOTOS
                 item.SubItems.Add(itemCat.PrecioCompraFmt);
                 item.SubItems.Add(itemCat.PrecioVentaFmt);
                 item.SubItems.Add(itemCat.PrecioVentaAltalierFmt);
+                item.SubItems.Add(itemCat.CantidadAltalier);
+                item.SubItems.Add(itemCat.CantidadWama);
                 lsvInventario.Items.Add(item);
 
             }
             lsvInventario.EndUpdate();
             lsvInventario.Invalidate();
             lsvInventario.Refresh();
+            lblTotalProductos.Text = $"Total productos: {data.Count}";
         }
         private void txtBuscarProducto_TextChanged(object sender, EventArgs e)
         {
-            if (producto.Any())
+            AplicarFiltros();
+        }
+
+        private void AplicarFiltros()
+        {
+            if (producto == null || !producto.Any())
             {
-                if (txtBuscarProducto.Text.Length == 0)
-                {
-                    CargarListView(producto);
-                }
-                else
-                {
-                    string texto = txtBuscarProducto.Text.Trim().ToLower();
-                    CargarListView(producto.Where(p => p.NombreProducto.Trim().ToLower().Contains(texto)).ToList());
-                }
+                CargarListView(new List<ListadoInventarioDTO>());
+                return;
+            }
+
+            IEnumerable<ListadoInventarioDTO> data = producto;
+            string texto = txtBuscarProducto.Text.Trim().ToLower();
+
+            if (!string.IsNullOrWhiteSpace(texto))
+            {
+                data = data.Where(p => p.NombreProducto.Trim().ToLower().Contains(texto));
+            }
+
+            if (chkStockMinimo.Checked)
+            {
+                data = data.Where(p => NumberHelper.ToLong(p.StockDisponible) <= NumberHelper.ToLong(p.StockMinimo));
+            }
+
+            CargarListView(data.ToList());
+        }
+
+        private List<ListadoInventarioDTO> ObtenerProductosStockBajo()
+        {
+            if (producto == null || !producto.Any())
+            {
+                return new List<ListadoInventarioDTO>();
+            }
+
+            return producto
+                .Where(p => NumberHelper.ToLong(p.StockDisponible) <= NumberHelper.ToLong(p.StockMinimo))
+                .ToList();
+        }
+
+        private void MostrarAlertaStockBajo()
+        {
+            var productosStockBajo = ObtenerProductosStockBajo();
+            lblAlertaStock.Visible = productosStockBajo.Any();
+            lblAlertaStock.Text = $"Productos bajo stock: {productosStockBajo.Count}";
+
+            if (!productosStockBajo.Any())
+            {
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Hay productos con Stock Bodega igual o menor al Stock.\n\nPresiona Si para ver esos productos o No para continuar.",
+                "Alerta de stock",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                chkStockMinimo.Checked = true;
+                AplicarFiltros();
             }
         }
 
@@ -141,42 +197,42 @@ namespace SIGMAF.Desktop.MOTOS
         {
             e.DrawDefault = true;
         }
-
+        /// <summary>
+        /// /////////////////////////////aca es el metodo original
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void actualizarDisponibleToolStripMenuItem_Click(object sender, EventArgs e)
-        { 
+        {
 
             if (lsvInventario.SelectedItems.Count == 0)
                 return;
-            DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (r == DialogResult.Yes)
+            ListViewItem item = lsvInventario.SelectedItems[0];
+            using (ActualizarInventarioForm form = new ActualizarInventarioForm())
             {
-                ListViewItem item = lsvInventario.SelectedItems[0];
+                form.caseTypeAction = "disponible";
+                form.id = long.Parse(item.SubItems[0].Text);
+                form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
+                form.txtCantidadDisponible.Text = item.SubItems[2].Text;
+                form.txtStock.Text = item.SubItems[3].Text;
+                form.txtPrecioCompra.Text = item.SubItems[4].Text;
+                form.txtPrecioVenta.Text = item.SubItems[5].Text;
+                form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
+                form.txtCantidadAltalier.Text = item.SubItems[7].Text;
+                form.txtCantidadWAMA.Text = item.SubItems[8].Text;
 
-                using (ActualizarInventarioForm form = new ActualizarInventarioForm())
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    form.caseTypeAction = "disponible";
-                    form.id = long.Parse(item.SubItems[0].Text);
-                    form.txtNombreProducto.Text = item.SubItems[1].Text.ToUpper();
-                    form.txtCantidadDisponible.Text = item.SubItems[2].Text;
-                    form.txtStock.Text = item.SubItems[3].Text;
-                    form.txtPrecioCompra.Text = item.SubItems[4].Text;
-                    form.txtPrecioVenta.Text = item.SubItems[5].Text;
-                    form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
-                    var result = form.ShowDialog();
-
-                    // 🔹 Solo recargo si realmente guardó:
-                    if (result == DialogResult.OK)
-                    {
-                        CargarData();
-                    }
+                    CargarData();
                 }
             }
         }
 
         private void actualizarStockToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           if (lsvInventario.SelectedItems.Count == 0)
+            if (lsvInventario.SelectedItems.Count == 0)
                 return;
             DialogResult r = MessageBox.Show("Estas seguro desea editar el registro?", "Edicion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -256,6 +312,8 @@ namespace SIGMAF.Desktop.MOTOS
                     form.txtPrecioCompra.Text = item.SubItems[4].Text;
                     form.txtPrecioVenta.Text = item.SubItems[5].Text;
                     form.txtPrecioVentaAltalier.Text = item.SubItems[6].Text;
+                    form.txtCantidadAltalier.Text = item.SubItems[7].Text;
+                    form.txtCantidadWAMA.Text = item.SubItems[8].Text;
                     var result = form.ShowDialog();
 
                     // 🔹 Solo recargo si realmente guardó:
@@ -265,6 +323,26 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                 }
             }
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private async void btnRefrescar_Click(object sender, EventArgs e)
+        {
+            await CargarData();
+        }
+
+        private void chkStockMinimo_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
         }
     }
 }

@@ -25,6 +25,8 @@ namespace SIGMAF.Desktop.MOTOS
                 PrecioCompraFmt = NumberHelper.ToMiles(precioCom, culture, decimals: 2),
                 PrecioVentaFmt = NumberHelper.ToMiles(precioV, culture, decimals: 2),
                 PrecioVentaAltalierFmt = NumberHelper.ToMiles(precioVAltalier, culture, decimals: 2),
+                CantidadWama = dto.CantidadWama,
+                CantidadAltalier = dto.CantidadAltalier
             };
         }
     }

@@ -28,6 +28,12 @@ namespace SIGMAF.Domain.MOTOS
         [JsonPropertyName("precio_venta_altalier")]
         public string PrecioVentaAltalier { get; set; } = string.Empty;
 
+        [JsonPropertyName("cantidad_altalier")]
+        public string CantidadAltalier { get; set; } = string.Empty;
+
+        [JsonPropertyName("cantidad_wama")]
+        public string CantidadWama { get; set; } = string.Empty;
+
         // Para mostrar con separador de miles
         [JsonIgnore]
         public string PrecioCompraFmt { get; init; } = "0";
