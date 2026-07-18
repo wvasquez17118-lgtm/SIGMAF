@@ -9,7 +9,9 @@ namespace SIGMAF.Desktop.MOTOS
     {
         InventarioServicio apiServicio;
         public List<ListadoInventarioDTO> producto;
-        private string filtroCantidadUno = string.Empty;
+        private string filtroCantidadDosOMenos = string.Empty;
+        private bool filtroSinPrecioVenta = false;
+        private bool filtroSinPrecioCompra = false;
         public InventarioRepuestoMotoForm()
         {
             InitializeComponent();
@@ -130,13 +132,25 @@ namespace SIGMAF.Desktop.MOTOS
                 data = data.Where(p => NumberHelper.ToLong(p.StockDisponible) <= NumberHelper.ToLong(p.StockMinimo));
             }
 
-            if (filtroCantidadUno == "wama")
+            if (filtroCantidadDosOMenos == "wama")
             {
-                data = data.Where(p => NumberHelper.ToLong(p.CantidadWama) == 1);
+                data = data.Where(p => NumberHelper.ToLong(p.CantidadWama) <= 2);
             }
-            else if (filtroCantidadUno == "altalier")
+            else if (filtroCantidadDosOMenos == "altalier")
             {
-                data = data.Where(p => NumberHelper.ToLong(p.CantidadAltalier) == 1);
+                data = data.Where(p => NumberHelper.ToLong(p.CantidadAltalier) <= 2);
+            }
+
+            if (filtroSinPrecioVenta)
+            {
+                data = data.Where(p =>
+                    NumberHelper.ToDecimal(p.PrecioVentaFmt) <= 0 ||
+                    NumberHelper.ToDecimal(p.PrecioVentaAltalierFmt) <= 0);
+            }
+
+            if (filtroSinPrecioCompra)
+            {
+                data = data.Where(p => NumberHelper.ToDecimal(p.PrecioCompraFmt) <= 0);
             }
 
             CargarListView(data.ToList());
@@ -360,7 +374,9 @@ namespace SIGMAF.Desktop.MOTOS
 
         private async void btnRefrescar_Click(object sender, EventArgs e)
         {
-            filtroCantidadUno = string.Empty;
+            filtroCantidadDosOMenos = string.Empty;
+            filtroSinPrecioVenta = false;
+            filtroSinPrecioCompra = false;
             chkStockMinimo.Checked = false;
             await CargarData();
         }
@@ -370,21 +386,44 @@ namespace SIGMAF.Desktop.MOTOS
             AplicarFiltros();
         }
 
-        private async Task ActualizarYFiltrarCantidadUnoAsync(string ubicacion)
+        private async Task ActualizarYFiltrarCantidadDosOMenosAsync(string ubicacion)
         {
-            filtroCantidadUno = ubicacion;
+            filtroCantidadDosOMenos = ubicacion;
+            filtroSinPrecioVenta = false;
+            filtroSinPrecioCompra = false;
+            chkStockMinimo.Checked = false;
             await CargarData(mostrarMensajeStockBajo: false);
             AplicarFiltros();
         }
 
         private async void productosCon1DisponibleWamaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await ActualizarYFiltrarCantidadUnoAsync("wama");
+            await ActualizarYFiltrarCantidadDosOMenosAsync("wama");
         }
 
         private async void productosCon1DisponibleAltalierToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            await ActualizarYFiltrarCantidadUnoAsync("altalier");
+            await ActualizarYFiltrarCantidadDosOMenosAsync("altalier");
+        }
+
+        private async void productosSinPrecioVentaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            filtroCantidadDosOMenos = string.Empty;
+            filtroSinPrecioVenta = true;
+            filtroSinPrecioCompra = false;
+            chkStockMinimo.Checked = false;
+            await CargarData(mostrarMensajeStockBajo: false);
+            AplicarFiltros();
+        }
+
+        private async void productosSinPrecioCompraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            filtroCantidadDosOMenos = string.Empty;
+            filtroSinPrecioVenta = false;
+            filtroSinPrecioCompra = true;
+            chkStockMinimo.Checked = false;
+            await CargarData(mostrarMensajeStockBajo: false);
+            AplicarFiltros();
         }
     }
 }

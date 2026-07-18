@@ -41,6 +41,8 @@
             actualizarDisponibleToolStripMenuItem = new ToolStripMenuItem();
             productosCon1DisponibleWamaToolStripMenuItem = new ToolStripMenuItem();
             productosCon1DisponibleAltalierToolStripMenuItem = new ToolStripMenuItem();
+            productosSinPrecioVentaToolStripMenuItem = new ToolStripMenuItem();
+            productosSinPrecioCompraToolStripMenuItem = new ToolStripMenuItem();
             panel1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
@@ -143,9 +145,9 @@
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem, productosCon1DisponibleWamaToolStripMenuItem, productosCon1DisponibleAltalierToolStripMenuItem });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { actualizarDisponibleToolStripMenuItem, productosCon1DisponibleWamaToolStripMenuItem, productosCon1DisponibleAltalierToolStripMenuItem, productosSinPrecioVentaToolStripMenuItem, productosSinPrecioCompraToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(331, 76);
+            contextMenuStrip1.Size = new Size(373, 124);
             contextMenuStrip1.Opening += contextMenuStrip1_Opening;
             // 
             // actualizarDisponibleToolStripMenuItem
@@ -159,15 +161,29 @@
             // 
             productosCon1DisponibleWamaToolStripMenuItem.Name = "productosCon1DisponibleWamaToolStripMenuItem";
             productosCon1DisponibleWamaToolStripMenuItem.Size = new Size(330, 24);
-            productosCon1DisponibleWamaToolStripMenuItem.Text = "Productos con 1 disponible en WAMA";
+            productosCon1DisponibleWamaToolStripMenuItem.Text = "Productos con 2 o menos disponibles en WAMA";
             productosCon1DisponibleWamaToolStripMenuItem.Click += productosCon1DisponibleWamaToolStripMenuItem_Click;
             // 
             // productosCon1DisponibleAltalierToolStripMenuItem
             // 
             productosCon1DisponibleAltalierToolStripMenuItem.Name = "productosCon1DisponibleAltalierToolStripMenuItem";
             productosCon1DisponibleAltalierToolStripMenuItem.Size = new Size(330, 24);
-            productosCon1DisponibleAltalierToolStripMenuItem.Text = "Productos con 1 disponible en Altalier";
+            productosCon1DisponibleAltalierToolStripMenuItem.Text = "Productos con 2 o menos disponibles en Altalier";
             productosCon1DisponibleAltalierToolStripMenuItem.Click += productosCon1DisponibleAltalierToolStripMenuItem_Click;
+            // 
+            // productosSinPrecioVentaToolStripMenuItem
+            // 
+            productosSinPrecioVentaToolStripMenuItem.Name = "productosSinPrecioVentaToolStripMenuItem";
+            productosSinPrecioVentaToolStripMenuItem.Size = new Size(372, 24);
+            productosSinPrecioVentaToolStripMenuItem.Text = "Productos sin precio venta WAMA o Altalier";
+            productosSinPrecioVentaToolStripMenuItem.Click += productosSinPrecioVentaToolStripMenuItem_Click;
+            // 
+            // productosSinPrecioCompraToolStripMenuItem
+            // 
+            productosSinPrecioCompraToolStripMenuItem.Name = "productosSinPrecioCompraToolStripMenuItem";
+            productosSinPrecioCompraToolStripMenuItem.Size = new Size(372, 24);
+            productosSinPrecioCompraToolStripMenuItem.Text = "Productos sin precio compra";
+            productosSinPrecioCompraToolStripMenuItem.Click += productosSinPrecioCompraToolStripMenuItem_Click;
             // 
             // InventarioRepuestoMotoForm
             // 
@@ -203,6 +219,8 @@
         private ToolStripMenuItem actualizarDisponibleToolStripMenuItem;
         private ToolStripMenuItem productosCon1DisponibleWamaToolStripMenuItem;
         private ToolStripMenuItem productosCon1DisponibleAltalierToolStripMenuItem;
+        private ToolStripMenuItem productosSinPrecioVentaToolStripMenuItem;
+        private ToolStripMenuItem productosSinPrecioCompraToolStripMenuItem;
         private CheckBox chkStockMinimo;
         private Button btnRefrescar;
     }
