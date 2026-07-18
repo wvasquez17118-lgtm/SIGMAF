@@ -7,7 +7,7 @@ using SIGMAF_LoadingDemo;
 
 namespace SIGMAF.Desktop.MOTOS
 {
-    public partial class RegistrarVentaForm : Form 
+    public partial class RegistrarVentaForm : Form
     {
         private List<CatalogoConInventarioModel> resultado = new List<CatalogoConInventarioModel>();
         CatalogoService apiConInventario = new CatalogoService();
@@ -17,7 +17,7 @@ namespace SIGMAF.Desktop.MOTOS
         {
             InitializeComponent();
         }
-  
+
         private void RegistrarVentaForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Global.FormularioAbierto = false;
@@ -143,7 +143,7 @@ namespace SIGMAF.Desktop.MOTOS
                 HeaderText = "Precio compra",
                 DataPropertyName = "PrecioCompra",
                 Width = 150,
-                Visible= true,
+                Visible = true,
             };
 
             // Botón Agregar
@@ -337,6 +337,11 @@ namespace SIGMAF.Desktop.MOTOS
                     dataGridProductosCatalogos.DataSource = resultado.Where(p => p.NombreProducto.Trim().ToLower().Contains(texto)).ToList();
                 }
             }
-        }       
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

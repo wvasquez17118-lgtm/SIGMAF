@@ -68,6 +68,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(914, 44);
             panel1.TabIndex = 5;
+            panel1.Paint += panel1_Paint;
             // 
             // lblFechaTitulo
             // 
@@ -76,7 +77,7 @@
             lblFechaTitulo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFechaTitulo.Location = new Point(750, 13);
             lblFechaTitulo.Name = "lblFechaTitulo";
-            lblFechaTitulo.Size = new Size(143, 20);
+            lblFechaTitulo.Size = new Size(176, 25);
             lblFechaTitulo.TabIndex = 2;
             lblFechaTitulo.Text = "Fecha: 09/01/2026";
             // 
@@ -87,7 +88,7 @@
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalProducto.Location = new Point(2507, 19);
             lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
+            lblTotalProducto.Size = new Size(76, 25);
             lblTotalProducto.TabIndex = 1;
             lblTotalProducto.Text = "Total: 0";
             // 
@@ -97,7 +98,7 @@
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(18, 13);
             label3.Name = "label3";
-            label3.Size = new Size(162, 20);
+            label3.Size = new Size(205, 25);
             label3.TabIndex = 0;
             label3.Text = "Registrar nueva venta";
             // 
@@ -137,6 +138,7 @@
             dataGridProductosCatalogos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridProductosCatalogos.Location = new Point(6, 70);
             dataGridProductosCatalogos.Name = "dataGridProductosCatalogos";
+            dataGridProductosCatalogos.RowHeadersWidth = 51;
             dataGridProductosCatalogos.Size = new Size(596, 196);
             dataGridProductosCatalogos.TabIndex = 1;
             dataGridProductosCatalogos.CellContentClick += dataGridProductosCatalogos_CellContentClick;
@@ -146,7 +148,7 @@
             textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox1.Location = new Point(6, 37);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(596, 27);
+            textBox1.Size = new Size(596, 32);
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
@@ -171,7 +173,7 @@
             txtDisponible.Enabled = false;
             txtDisponible.Location = new Point(6, 201);
             txtDisponible.Name = "txtDisponible";
-            txtDisponible.Size = new Size(532, 27);
+            txtDisponible.Size = new Size(532, 32);
             txtDisponible.TabIndex = 5;
             // 
             // label5
@@ -180,7 +182,7 @@
             label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.Location = new Point(6, 178);
             label5.Name = "label5";
-            label5.Size = new Size(83, 20);
+            label5.Size = new Size(107, 25);
             label5.TabIndex = 4;
             label5.Text = "Disponible";
             // 
@@ -189,7 +191,7 @@
             txtPrecio.Enabled = false;
             txtPrecio.Location = new Point(6, 134);
             txtPrecio.Name = "txtPrecio";
-            txtPrecio.Size = new Size(532, 27);
+            txtPrecio.Size = new Size(532, 32);
             txtPrecio.TabIndex = 3;
             // 
             // label4
@@ -198,7 +200,7 @@
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.Location = new Point(6, 111);
             label4.Name = "label4";
-            label4.Size = new Size(120, 20);
+            label4.Size = new Size(157, 25);
             label4.TabIndex = 2;
             label4.Text = "Precio producto";
             // 
@@ -207,7 +209,7 @@
             txtNombreProducto.Enabled = false;
             txtNombreProducto.Location = new Point(6, 71);
             txtNombreProducto.Name = "txtNombreProducto";
-            txtNombreProducto.Size = new Size(532, 27);
+            txtNombreProducto.Size = new Size(532, 32);
             txtNombreProducto.TabIndex = 1;
             // 
             // label2
@@ -216,7 +218,7 @@
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(6, 48);
             label2.Name = "label2";
-            label2.Size = new Size(73, 20);
+            label2.Size = new Size(96, 25);
             label2.TabIndex = 0;
             label2.Text = "Producto";
             // 
@@ -239,7 +241,7 @@
             txtTotal.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtTotal.Location = new Point(6, 123);
             txtTotal.Name = "txtTotal";
-            txtTotal.Size = new Size(282, 27);
+            txtTotal.Size = new Size(282, 32);
             txtTotal.TabIndex = 5;
             txtTotal.KeyPress += txtCantidadAVender_KeyPress;
             // 
@@ -249,7 +251,7 @@
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.Location = new Point(6, 100);
             label7.Name = "label7";
-            label7.Size = new Size(44, 20);
+            label7.Size = new Size(55, 25);
             label7.TabIndex = 4;
             label7.Text = "Total";
             label7.TextAlign = ContentAlignment.MiddleCenter;
@@ -259,7 +261,7 @@
             txtCantidadAVender.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCantidadAVender.Location = new Point(6, 58);
             txtCantidadAVender.Name = "txtCantidadAVender";
-            txtCantidadAVender.Size = new Size(282, 27);
+            txtCantidadAVender.Size = new Size(282, 32);
             txtCantidadAVender.TabIndex = 3;
             txtCantidadAVender.KeyPress += txtCantidadAVender_KeyPress;
             // 
@@ -269,7 +271,7 @@
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.Location = new Point(6, 35);
             label6.Name = "label6";
-            label6.Size = new Size(123, 20);
+            label6.Size = new Size(159, 25);
             label6.TabIndex = 2;
             label6.Text = "Cantidad vender";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -292,7 +294,7 @@
             // 
             // RegistrarVentaForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
             ClientSize = new Size(914, 600);
