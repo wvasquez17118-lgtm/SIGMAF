@@ -146,14 +146,20 @@ namespace SIGMAF.Desktop.MOTOS
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
                 ColumnCount = 3,
-                Padding = new Padding(0, 6, 6, 6)
+                Padding = new Padding(0, 6, 6, 6),
+                GrowStyle = TableLayoutPanelGrowStyle.FixedSize
             };
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55)); // nombre
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); // nombre
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15)); // unidades
-            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30)); // ganancia
+            tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35)); // ganancia
 
             // filas dinámicas (+1 para TOTAL al final)
             tbl.RowCount = items.Count + 1;
+            tbl.RowStyles.Clear();
+            for (int i = 0; i < tbl.RowCount; i++)
+            {
+                tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
+            }
 
             int row = 0;
             foreach (var it in items)
@@ -167,7 +173,9 @@ namespace SIGMAF.Desktop.MOTOS
                     Text = it.Unidades.ToString(),
                     Dock = DockStyle.Fill,
                     TextAlign = ContentAlignment.MiddleRight,
-                    Font = new Font("Segoe UI", 14, FontStyle.Regular)
+                    Font = new Font("Segoe UI", 14, FontStyle.Regular),
+                    AutoEllipsis = true,
+                    Margin = new Padding(0, 0, 6, 0)
                 }, 1, row);
 
                 // Col 2: C$ ganancia
@@ -176,7 +184,9 @@ namespace SIGMAF.Desktop.MOTOS
                     Text = $"C$ {it.Ganancia:N2}",
                     Dock = DockStyle.Fill,
                     TextAlign = ContentAlignment.MiddleRight,
-                    Font = new Font("Segoe UI", 14, FontStyle.Regular)
+                    Font = new Font("Segoe UI", 14, FontStyle.Regular),
+                    AutoEllipsis = true,
+                    Margin = new Padding(0)
                 }, 2, row);
 
                 row++;
@@ -189,7 +199,9 @@ namespace SIGMAF.Desktop.MOTOS
                 Text = "Total",
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 14, FontStyle.Bold)
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                AutoEllipsis = true,
+                Margin = new Padding(0)
             }, 0, row);
 
             tbl.Controls.Add(new Label { Text = "", Dock = DockStyle.Fill }, 1, row);
@@ -199,7 +211,9 @@ namespace SIGMAF.Desktop.MOTOS
                 Text = $"C$ {total:N2}",
                 Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleRight,
-                Font = new Font("Segoe UI", 14, FontStyle.Bold)
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                AutoEllipsis = true,
+                Margin = new Padding(0)
             }, 2, row);
 
             panel2.Controls.Add(tbl);
@@ -208,26 +222,39 @@ namespace SIGMAF.Desktop.MOTOS
         private Control MakeDotText(OxyColor color, string text)
         {
 
-            var p = new Panel { Dock = DockStyle.Fill, Height = 35 };
+            var p = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2,
+                RowCount = 1,
+                Margin = new Padding(0),
+                Padding = new Padding(0)
+            };
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 22F));
+            p.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            p.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
             var dot = new Label
             {
                 Text = "●",
                 ForeColor = OxyToColor(color),
-                AutoSize = true,
+                Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                Location = new Point(0, 1)
+                TextAlign = ContentAlignment.MiddleLeft,
+                Margin = new Padding(0)
             };
 
             var lbl = new Label
             {
                 Text = text,
-                AutoSize = true,
+                Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 14, FontStyle.Regular),
-                Location = new Point(18, 3),
+                TextAlign = ContentAlignment.MiddleLeft,
+                AutoEllipsis = true,
+                Margin = new Padding(0)
             };
-            p.Controls.Add(dot);
-            p.Controls.Add(lbl);
+            p.Controls.Add(dot, 0, 0);
+            p.Controls.Add(lbl, 1, 0);
             return p;
         }
 
