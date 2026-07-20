@@ -49,24 +49,11 @@ namespace SIGMAF.Desktop.MOTOS
                 btnGuardar.Enabled = false;
             }
             lblTituloCompra.Text = string.IsNullOrEmpty(Titulo) ? "Crear nueva factura detalles de compras" : Titulo; 
-            // Fuerza un cambio de tamaño para que se reajusten los controles
-
             SqliteDatabase.Initialize(AppServices.ConnectionString);
             CatalogoService api = new CatalogoService();
 
-            this.WindowState = FormWindowState.Normal;
-            this.WindowState = FormWindowState.Maximized;
-            using (var loading = new FrmLoading())
+            using (var loading = LoadingHelper.Mostrar(this))
             {
-                loading.StartPosition = FormStartPosition.CenterScreen;
-                loading.TopMost = true;
-
-                this.Enabled = false;
-                this.UseWaitCursor = true;
-                loading.UseWaitCursor = true;
-
-                loading.Show(this);
-
                 try
                 {
                     ConfiguracionGridProductos();
@@ -148,9 +135,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
                 finally
                 {
-                    loading.Close();
-                    this.Enabled = true;
-                    this.UseWaitCursor = false;
+                    LoadingHelper.Cerrar(this, loading);
                 }
             }
         }
@@ -556,17 +541,8 @@ namespace SIGMAF.Desktop.MOTOS
             if (r == DialogResult.Yes)
             {
 
-                using (var loading = new FrmLoading())
+                using (var loading = LoadingHelper.Mostrar(this))
                 {
-                    loading.StartPosition = FormStartPosition.CenterScreen;
-                    loading.TopMost = true;
-
-                    this.Enabled = false;
-                    this.UseWaitCursor = true;
-                    loading.UseWaitCursor = true;
-
-                    loading.Show(this);
-
                     try
                     {
                         var compra = new MotoComprasDTO()
@@ -604,9 +580,7 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                     finally
                     {
-                        loading.Close();
-                        this.Enabled = true;
-                        this.UseWaitCursor = false;
+                        LoadingHelper.Cerrar(this, loading);
                     }
                 }
             }

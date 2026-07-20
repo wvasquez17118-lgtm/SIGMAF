@@ -1,6 +1,7 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
 using SIGMAF.Desktop.Constantes;
 using SIGMAF.Desktop.DB;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF.Infrastructure;
 using SIGMAF_LoadingDemo;
 using System.Globalization;
@@ -30,17 +31,8 @@ namespace SIGMAF.Desktop.MOTOS
 
             if (r == DialogResult.Yes)
             {
-                using (var loading = new FrmLoading())
+                using (var loading = LoadingHelper.Mostrar(this))
                 {
-                    loading.StartPosition = FormStartPosition.CenterScreen;
-                    loading.TopMost = true;
-
-                    this.Enabled = false;
-                    this.UseWaitCursor = true;
-                    loading.UseWaitCursor = true;
-
-                    loading.Show(this);
-
                     try
                     {
                         if (chActualizarInventarioVenta.Checked)
@@ -91,9 +83,7 @@ namespace SIGMAF.Desktop.MOTOS
                     }
                     finally
                     {
-                        loading.Close();
-                        this.Enabled = true;
-                        this.UseWaitCursor = false;
+                        LoadingHelper.Cerrar(this, loading);
                     }
                 }
             }

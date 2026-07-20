@@ -1,5 +1,6 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
 using SIGMAF.Desktop.Constantes;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
 using System;
@@ -23,20 +24,8 @@ namespace SIGMAF.Desktop.MOTOS
         }
         public async void RecargarDatos()
         { 
-            // Fuerza un cambio de tamaño para que se reajusten los controles
-            this.WindowState = FormWindowState.Normal;
-            this.WindowState = FormWindowState.Maximized;
-            using (var loading = new FrmLoading())
+            using (var loading = LoadingHelper.Mostrar(this))
             {
-                loading.StartPosition = FormStartPosition.CenterScreen;
-                loading.TopMost = true;
-
-                this.Enabled = false;
-                this.UseWaitCursor = true;
-                loading.UseWaitCursor = true;
-
-                loading.Show(this);
-
                 try
                 {
                     await CargarCatalogoAsync();
@@ -44,9 +33,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
                 finally
                 {
-                    loading.Close();
-                    this.Enabled = true;
-                    this.UseWaitCursor = false;
+                    LoadingHelper.Cerrar(this, loading);
                 }
             }         
         }
@@ -188,17 +175,8 @@ namespace SIGMAF.Desktop.MOTOS
                 if (r == DialogResult.Yes)
                 {
 
-                    using (var loading = new FrmLoading())
+                    using (var loading = LoadingHelper.Mostrar(this))
                     {
-                        loading.StartPosition = FormStartPosition.CenterScreen;
-                        loading.TopMost = true;
-
-                        this.Enabled = false;
-                        this.UseWaitCursor = true;
-                        loading.UseWaitCursor = true;
-
-                        loading.Show(this);
-
                         try
                         {
                             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -233,9 +211,7 @@ namespace SIGMAF.Desktop.MOTOS
                         }
                         finally
                         {
-                            loading.Close();
-                            this.Enabled = true;
-                            this.UseWaitCursor = false;
+                            LoadingHelper.Cerrar(this, loading);
                         }
                     }
                 }

@@ -31,19 +31,8 @@ namespace SIGMAF.Desktop.MOTOS
             producto = new List<ListadoInventarioDTO>();
             ActualizarLabelAlertaStockBajo(new List<ListadoInventarioDTO>());
             apiServicio = new InventarioServicio();
-            this.WindowState = FormWindowState.Normal;
-            this.WindowState = FormWindowState.Maximized;
-            using (var loading = new FrmLoading())
+            using (var loading = LoadingHelper.Mostrar(this))
             {
-                loading.StartPosition = FormStartPosition.CenterScreen;
-                loading.TopMost = true;
-
-                this.Enabled = false;
-                this.UseWaitCursor = true;
-                loading.UseWaitCursor = true;
-
-                loading.Show(this);
-
                 try
                 {
                     Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -73,9 +62,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
                 finally
                 {
-                    loading.Close();
-                    this.Enabled = true;
-                    this.UseWaitCursor = false;
+                    LoadingHelper.Cerrar(this, loading);
                 }
             }
 

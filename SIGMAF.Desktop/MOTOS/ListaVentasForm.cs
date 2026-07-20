@@ -1,4 +1,5 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF.Domain.MOTOS;
 using SIGMAF_LoadingDemo;
 using System.Globalization;
@@ -24,17 +25,8 @@ namespace SIGMAF.Desktop.MOTOS
         }
         private async Task CargarData()
         {
-            using (var loading = new FrmLoading())
+            using (var loading = LoadingHelper.Mostrar(this))
             {
-                loading.StartPosition = FormStartPosition.CenterScreen;
-                loading.TopMost = true;
-
-                this.Enabled = false;
-                this.UseWaitCursor = true;
-                loading.UseWaitCursor = true;
-
-                loading.Show(this);
-
                 try
                 {
                     Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -50,9 +42,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
                 finally
                 {
-                    loading.Close();
-                    this.Enabled = true;
-                    this.UseWaitCursor = false;
+                    LoadingHelper.Cerrar(this, loading);
                 }
             }
 
@@ -86,8 +76,6 @@ namespace SIGMAF.Desktop.MOTOS
         }
         private void ListaVentasForm_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.WindowState = FormWindowState.Maximized;
             api = new CompraServicio();
             chWAMA.Checked = true;
 

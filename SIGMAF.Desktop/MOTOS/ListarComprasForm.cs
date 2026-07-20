@@ -1,4 +1,5 @@
 ﻿using SIGMAF.ApiClient.ApiRestMoto;
+using SIGMAF.Desktop.Helpers;
 using SIGMAF_LoadingDemo;
 using System.Globalization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -33,19 +34,8 @@ namespace SIGMAF.Desktop.MOTOS
         private async void Cargar()
         {
             compraServicio = new CompraServicio();
-            this.WindowState = FormWindowState.Normal;
-            this.WindowState = FormWindowState.Maximized;
-            using (var loading = new FrmLoading())
+            using (var loading = LoadingHelper.Mostrar(this))
             {
-                loading.StartPosition = FormStartPosition.CenterScreen;
-                loading.TopMost = true;
-
-                this.Enabled = false;
-                this.UseWaitCursor = true;
-                loading.UseWaitCursor = true;
-
-                loading.Show(this);
-
                 try
                 {
 
@@ -92,9 +82,7 @@ namespace SIGMAF.Desktop.MOTOS
                 }
                 finally
                 {
-                    loading.Close();
-                    this.Enabled = true;
-                    this.UseWaitCursor = false;
+                    LoadingHelper.Cerrar(this, loading);
                 }
             }
         }
