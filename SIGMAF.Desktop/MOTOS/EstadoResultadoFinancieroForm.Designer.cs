@@ -32,8 +32,6 @@
             label1 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
-            groupBox2 = new GroupBox();
-            lstCostosFijos = new ListView();
             groupBox3 = new GroupBox();
             lsvResultadoOperacion = new ListView();
             groupBox1 = new GroupBox();
@@ -42,12 +40,19 @@
             label4 = new Label();
             dateFechaInicio = new DateTimePicker();
             label2 = new Label();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            groupBox2 = new GroupBox();
+            lstCostosFijos = new ListView();
+            groupBox4 = new GroupBox();
+            lvsCostosVariable = new ListView();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
-            groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -89,51 +94,25 @@
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Controls.Add(groupBox2, 0, 0);
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
             tableLayoutPanel2.Controls.Add(groupBox3, 1, 0);
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel3, 0, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 103);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Size = new Size(1094, 396);
             tableLayoutPanel2.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(lstCostosFijos);
-            groupBox2.Dock = DockStyle.Fill;
-            groupBox2.Location = new Point(3, 3);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(541, 390);
-            groupBox2.TabIndex = 0;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Costos Fijos";
-            // 
-            // lstCostosFijos
-            // 
-            lstCostosFijos.Dock = DockStyle.Fill;
-            lstCostosFijos.FullRowSelect = true;
-            lstCostosFijos.GridLines = true;
-            lstCostosFijos.Location = new Point(3, 28);
-            lstCostosFijos.Name = "lstCostosFijos";
-            lstCostosFijos.Size = new Size(535, 359);
-            lstCostosFijos.TabIndex = 1;
-            lstCostosFijos.UseCompatibleStateImageBehavior = false;
-            lstCostosFijos.View = View.Details;
-            lstCostosFijos.DrawColumnHeader += ListView_DrawColumnHeader;
-            lstCostosFijos.DrawItem += ListView_DrawItem;
-            lstCostosFijos.DrawSubItem += ListView_DrawSubItem;
             // 
             // groupBox3
             // 
             groupBox3.Controls.Add(lsvResultadoOperacion);
             groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(550, 3);
+            groupBox3.Location = new Point(686, 3);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(541, 390);
+            groupBox3.Size = new Size(405, 390);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Resultado operaciones";
@@ -145,7 +124,7 @@
             lsvResultadoOperacion.GridLines = true;
             lsvResultadoOperacion.Location = new Point(3, 28);
             lsvResultadoOperacion.Name = "lsvResultadoOperacion";
-            lsvResultadoOperacion.Size = new Size(535, 359);
+            lsvResultadoOperacion.Size = new Size(399, 359);
             lsvResultadoOperacion.TabIndex = 2;
             lsvResultadoOperacion.UseCompatibleStateImageBehavior = false;
             lsvResultadoOperacion.View = View.Details;
@@ -220,6 +199,73 @@
             label2.TabIndex = 8;
             label2.Text = "Desde:";
             // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 2;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Controls.Add(groupBox4, 1, 0);
+            tableLayoutPanel3.Controls.Add(groupBox2, 0, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(3, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.Size = new Size(677, 390);
+            tableLayoutPanel3.TabIndex = 2;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(lstCostosFijos);
+            groupBox2.Dock = DockStyle.Fill;
+            groupBox2.Location = new Point(3, 3);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(332, 384);
+            groupBox2.TabIndex = 1;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Costos Fijos";
+            // 
+            // lstCostosFijos
+            // 
+            lstCostosFijos.Dock = DockStyle.Fill;
+            lstCostosFijos.FullRowSelect = true;
+            lstCostosFijos.GridLines = true;
+            lstCostosFijos.Location = new Point(3, 28);
+            lstCostosFijos.Name = "lstCostosFijos";
+            lstCostosFijos.Size = new Size(326, 353);
+            lstCostosFijos.TabIndex = 1;
+            lstCostosFijos.UseCompatibleStateImageBehavior = false;
+            lstCostosFijos.View = View.Details;
+            lstCostosFijos.DrawColumnHeader += ListView_DrawColumnHeader;
+            lstCostosFijos.DrawItem += ListView_DrawItem;
+            lstCostosFijos.DrawSubItem += ListView_DrawSubItem;
+            // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(lvsCostosVariable);
+            groupBox4.Dock = DockStyle.Fill;
+            groupBox4.Location = new Point(341, 3);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(333, 384);
+            groupBox4.TabIndex = 2;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Costos Variables";
+            // 
+            // lvsCostosVariable
+            // 
+            lvsCostosVariable.Dock = DockStyle.Fill;
+            lvsCostosVariable.FullRowSelect = true;
+            lvsCostosVariable.GridLines = true;
+            lvsCostosVariable.Location = new Point(3, 28);
+            lvsCostosVariable.Name = "lvsCostosVariable";
+            lvsCostosVariable.Size = new Size(327, 353);
+            lvsCostosVariable.TabIndex = 1;
+            lvsCostosVariable.UseCompatibleStateImageBehavior = false;
+            lvsCostosVariable.View = View.Details;
+            lvsCostosVariable.DrawColumnHeader += ListView_DrawColumnHeader;
+            lvsCostosVariable.DrawItem += ListView_DrawItem;
+            lvsCostosVariable.DrawSubItem += ListView_DrawSubItem;
+            // 
             // EstadoResultadoFinancieroForm
             // 
             AutoScaleDimensions = new SizeF(11F, 25F);
@@ -239,10 +285,12 @@
             panel1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox4.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -258,9 +306,12 @@
         private Label label4;
         private DateTimePicker dateFechaInicio;
         private Label label2;
-        private GroupBox groupBox2;
-        private ListView lstCostosFijos;
         private GroupBox groupBox3;
         private ListView lsvResultadoOperacion;
+        private TableLayoutPanel tableLayoutPanel3;
+        private GroupBox groupBox4;
+        private ListView lvsCostosVariable;
+        private GroupBox groupBox2;
+        private ListView lstCostosFijos;
     }
 }

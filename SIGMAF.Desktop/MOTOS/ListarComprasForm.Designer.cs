@@ -48,7 +48,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(914, 56);
+            panel1.Size = new Size(1210, 66);
             panel1.TabIndex = 5;
             // 
             // btnNuevaCompra
@@ -56,7 +56,7 @@
             btnNuevaCompra.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNuevaCompra.Image = Properties.Resources.icon_plus;
             btnNuevaCompra.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNuevaCompra.Location = new Point(757, 0);
+            btnNuevaCompra.Location = new Point(1053, 4);
             btnNuevaCompra.Name = "btnNuevaCompra";
             btnNuevaCompra.Size = new Size(154, 56);
             btnNuevaCompra.TabIndex = 2;
@@ -69,9 +69,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(12, 18);
+            label3.Location = new Point(12, 20);
             label3.Name = "label3";
-            label3.Size = new Size(220, 20);
+            label3.Size = new Size(275, 25);
             label3.TabIndex = 0;
             label3.Text = "Listado de compras (Facturas)";
             // 
@@ -81,9 +81,9 @@
             lsvListadoCompras.Dock = DockStyle.Fill;
             lsvListadoCompras.FullRowSelect = true;
             lsvListadoCompras.GridLines = true;
-            lsvListadoCompras.Location = new Point(0, 56);
+            lsvListadoCompras.Location = new Point(0, 66);
             lsvListadoCompras.Name = "lsvListadoCompras";
-            lsvListadoCompras.Size = new Size(914, 544);
+            lsvListadoCompras.Size = new Size(1210, 546);
             lsvListadoCompras.TabIndex = 6;
             lsvListadoCompras.UseCompatibleStateImageBehavior = false;
             lsvListadoCompras.View = View.Details;
@@ -114,10 +114,10 @@
             // 
             // ListarComprasForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(1210, 612);
             Controls.Add(lsvListadoCompras);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);

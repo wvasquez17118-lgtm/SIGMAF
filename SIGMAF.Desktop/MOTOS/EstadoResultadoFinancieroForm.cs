@@ -28,6 +28,13 @@ namespace SIGMAF.Desktop.MOTOS
             lstCostosFijos.Columns.Add("COSTO", 350);
             lstCostosFijos.Columns.Add("VALOR", 200);
 
+            lvsCostosVariable.Columns.Clear();
+            lvsCostosVariable.View = View.Details;
+            lvsCostosVariable.FullRowSelect = true;
+            lvsCostosVariable.OwnerDraw = true;
+            lvsCostosVariable.Columns.Add("COSTO", 350);
+            lvsCostosVariable.Columns.Add("VALOR", 200);
+
             lsvResultadoOperacion.Columns.Clear();
             lsvResultadoOperacion.View = View.Details;
             lsvResultadoOperacion.FullRowSelect = true;
@@ -61,22 +68,32 @@ namespace SIGMAF.Desktop.MOTOS
                     if (data == null)
                     {
                         lstCostosFijos.Items.Clear();
+                        lvsCostosVariable.Items.Clear();
                         lsvResultadoOperacion.Items.Clear();
                         MessageBox.Show("No se pudo obtener la informacion del estado de resultado.", "ADMINISTRACION");
                         return;
                     }
 
-                    var costosFijos = data.gastosfijos
+                    var gastos = data.gastosfijos
                         .Select(x => x.ToVm())
                         .OrderByDescending(x => x.GastoFijoFmt)
+                        .ToList();
+
+                    var costosFijos = gastos
+                        .Where(x => !EsCostoVariable(x))
+                        .ToList();
+
+                    var costosVariables = gastos
+                        .Where(EsCostoVariable)
                         .ToList();
 
                     var ventas = data.ventas
                         .Select(x => x.ToVm())
                         .ToList();
 
-                    CargarCostosFijos(costosFijos);
-                    CargarResultadoOperacion(costosFijos, ventas);
+                    CargarCostos(lstCostosFijos, costosFijos);
+                    CargarCostos(lvsCostosVariable, costosVariables);
+                    CargarResultadoOperacion(costosFijos, costosVariables, ventas);
                 }
                 finally
                 {
@@ -85,51 +102,77 @@ namespace SIGMAF.Desktop.MOTOS
             }
         }
 
-        private void CargarCostosFijos(List<CostoFijoEstadoResultadoDTO> costosFijos)
+        private static bool EsCostoVariable(CostoFijoEstadoResultadoDTO costo)
         {
-            lstCostosFijos.Items.Clear();
-            lstCostosFijos.BeginUpdate();
-
-            foreach (var costo in costosFijos)
-            {
-                var item = new ListViewItem(costo.nombre_gasto);
-                item.SubItems.Add(costo.GastoFijoTexto);
-                lstCostosFijos.Items.Add(item);
-            }
-
-            decimal totalCostosFijos = costosFijos.Sum(x => x.GastoFijoFmt);
-            var itemTotal = new ListViewItem("TOTAL")
-            {
-                Font = new Font(lstCostosFijos.Font, FontStyle.Bold)
-            };
-            itemTotal.SubItems.Add($"C$ {NumberHelper.ToMiles(totalCostosFijos, _culture)}");
-            lstCostosFijos.Items.Add(itemTotal);
-
-            lstCostosFijos.EndUpdate();
-            lstCostosFijos.Invalidate();
-            lstCostosFijos.Refresh();
+            string esVariable = costo.EsVariable.Trim();
+            return esVariable.Equals("1", StringComparison.OrdinalIgnoreCase)
+              /*  || esVariable.Equals("1", StringComparison.OrdinalIgnoreCase)
+                || esVariable.Equals("si", StringComparison.OrdinalIgnoreCase)
+                || esVariable.Equals("sí", StringComparison.OrdinalIgnoreCase)*/;
         }
 
-        private void CargarResultadoOperacion(List<CostoFijoEstadoResultadoDTO> costosFijos, List<GanaciasMotoDTO> ventas)
+        private void CargarCostos(ListView listView, List<CostoFijoEstadoResultadoDTO> costos)
+        {
+            listView.BeginUpdate();
+            try
+            {
+                listView.Items.Clear();
+
+                foreach (var costo in costos)
+                {
+                    var item = new ListViewItem(costo.nombre_gasto);
+                    item.SubItems.Add(costo.GastoFijoTexto);
+                    listView.Items.Add(item);
+                }
+
+                decimal totalCostos = costos.Sum(x => x.GastoFijoFmt);
+                var itemTotal = new ListViewItem("TOTAL")
+                {
+                    Font = new Font(listView.Font, FontStyle.Bold)
+                };
+                itemTotal.SubItems.Add($"C$ {NumberHelper.ToMiles(totalCostos, _culture)}");
+                listView.Items.Add(itemTotal);
+            }
+            finally
+            {
+                listView.EndUpdate();
+            }
+            listView.Invalidate();
+            listView.Refresh();
+        }
+
+        private void CargarResultadoOperacion(
+            List<CostoFijoEstadoResultadoDTO> costosFijos,
+            List<CostoFijoEstadoResultadoDTO> costosVariables,
+            List<GanaciasMotoDTO> ventas)
         {
             decimal totalVentas = ventas.Sum(x => x.TotalFmt);
             decimal costoProductos = ventas.Sum(x => x.PrecioCompraFmt * x.CantidadFmt);
             decimal gananciaBruta = ventas.Sum(x => x.GananciaTotalFmt);
             decimal totalCostosFijos = costosFijos.Sum(x => x.GastoFijoFmt);
-            decimal resultadoNeto = gananciaBruta - totalCostosFijos;
+            decimal totalCostosVariables = costosVariables.Sum(x => x.GastoFijoFmt);
+            decimal totalGastos = totalCostosFijos + totalCostosVariables;
+            decimal resultadoNeto = gananciaBruta - totalGastos;
             long unidadesVendidas = ventas.Sum(x => x.CantidadFmt);
 
-            lsvResultadoOperacion.Items.Clear();
             lsvResultadoOperacion.BeginUpdate();
+            try
+            {
+                lsvResultadoOperacion.Items.Clear();
 
-            AgregarResultadoOperacion("UNIDADES VENDIDAS", unidadesVendidas.ToString("N0", _culture));
-            AgregarResultadoOperacion("TOTAL VENTAS", totalVentas);
-            AgregarResultadoOperacion("COSTO PRODUCTOS", costoProductos);
-            AgregarResultadoOperacion("GANANCIA BRUTA", gananciaBruta, destacar: true);
-            AgregarResultadoOperacion("COSTOS FIJOS", totalCostosFijos);
-            AgregarResultadoOperacion("RESULTADO NETO", resultadoNeto, destacar: true, resaltar: true);
-
-            lsvResultadoOperacion.EndUpdate();
+                AgregarResultadoOperacion("UNIDADES VENDIDAS", unidadesVendidas.ToString("N0", _culture));
+                AgregarResultadoOperacion("TOTAL VENTAS", totalVentas);
+                AgregarResultadoOperacion("COSTO PRODUCTOS", costoProductos);
+                AgregarResultadoOperacion("GANANCIA BRUTA", gananciaBruta, destacar: true);
+                AgregarResultadoOperacion("COSTOS FIJOS", totalCostosFijos);
+                AgregarResultadoOperacion("COSTOS VARIABLES", totalCostosVariables);
+                AgregarResultadoOperacion("TOTAL COSTOS FIJOS + VARIABLES", totalGastos, destacar: true);
+                AgregarResultadoOperacion("RESULTADO NETO", resultadoNeto, destacar: true, resaltar: true);
+            }
+            finally
+            {
+                lsvResultadoOperacion.EndUpdate();
+            }
             lsvResultadoOperacion.Invalidate();
             lsvResultadoOperacion.Refresh();
         }
@@ -197,6 +240,11 @@ namespace SIGMAF.Desktop.MOTOS
         private async void btnRefrescar_Click(object sender, EventArgs e)
         {
             await CargarDatosAsync();
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

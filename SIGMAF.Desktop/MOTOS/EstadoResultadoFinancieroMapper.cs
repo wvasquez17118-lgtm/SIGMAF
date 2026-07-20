@@ -17,6 +17,7 @@ namespace SIGMAF.Desktop.MOTOS
                 nombre_gasto = dto.nombre_gasto,
                 gasto_fijo = dto.gasto_fijo,
                 estado = dto.estado,
+                EsVariable = dto.EsVariable,
                 GastoFijoFmt = gastoFijo,
                 GastoFijoTexto = $"C$ {NumberHelper.ToMiles(gastoFijo, culture)}"
             };

@@ -14,6 +14,7 @@ namespace SIGMAF.Domain.MOTOS
         public string nombre_gasto { get; set; } = string.Empty;
         public string gasto_fijo { get; set; } = string.Empty;
         public string estado { get; set; } = string.Empty;
+        public string EsVariable { get; set; } = string.Empty;
 
         [JsonIgnore]
         public decimal GastoFijoFmt { get; set; }

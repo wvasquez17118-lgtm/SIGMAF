@@ -62,21 +62,25 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvListadoCompras.FullRowSelect = true;
                     lsvListadoCompras.OwnerDraw = true;
                     lsvListadoCompras.BeginUpdate();
-
-                    foreach (var itemCat in lista)
+                    try
                     {
-                        var item = new ListViewItem(itemCat.CompraIdFmt.ToString());
-                        item.SubItems.Add(itemCat.Proveedor);
-                        item.SubItems.Add(itemCat.TipoFactura);
-                        item.SubItems.Add(itemCat.FechaFactura.ToString("dd/MM/yyyy"));
-                        item.SubItems.Add(itemCat.SubTotalFmt);
-                        item.SubItems.Add(itemCat.DescuentoFmt);
-                        item.SubItems.Add(itemCat.TotalFmt);
-                        item.SubItems.Add(itemCat.EstadoProceso);
-                        lsvListadoCompras.Items.Add(item);
-
+                        foreach (var itemCat in lista)
+                        {
+                            var item = new ListViewItem(itemCat.CompraIdFmt.ToString());
+                            item.SubItems.Add(itemCat.Proveedor);
+                            item.SubItems.Add(itemCat.TipoFactura);
+                            item.SubItems.Add(itemCat.FechaFactura.ToString("dd/MM/yyyy"));
+                            item.SubItems.Add(itemCat.SubTotalFmt);
+                            item.SubItems.Add(itemCat.DescuentoFmt);
+                            item.SubItems.Add(itemCat.TotalFmt);
+                            item.SubItems.Add(itemCat.EstadoProceso);
+                            lsvListadoCompras.Items.Add(item);
+                        }
                     }
-                    lsvListadoCompras.EndUpdate();
+                    finally
+                    {
+                        lsvListadoCompras.EndUpdate();
+                    }
                     lsvListadoCompras.Invalidate();
                     lsvListadoCompras.Refresh();
                 }
@@ -173,7 +177,7 @@ namespace SIGMAF.Desktop.MOTOS
 
         private void lsvListadoCompras_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-            // e.DrawDefault = true;
+            e.DrawDefault = true;
         }
 
         private void lsvListadoCompras_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
