@@ -102,7 +102,7 @@ namespace SIGMAF.Desktop
             flowMenu.Controls.Add(CreateRibbonButton("Compras", SIGMAF.Desktop.Properties.Resources.icon_compras, () => AbrirAgregarComprasMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Inventarios", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirInventarioRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Ganancias", SIGMAF.Desktop.Properties.Resources.icon_ganancias, () => AbrirGanaciasRepuestoMotos()));
-            flowMenu.Controls.Add(CreateRibbonButton("Mi Lista", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirMiListaComprasMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Resultado", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirEstadoResultadoMotos()));
 
             //.Controls.Add(CreateRibbonButton("Sincronización", SIGMAF.Desktop.Properties.Resources.icon_sincronizacion, () => AbrirSincronizacionMOTOS()));
             flowMenu.ResumeLayout();
@@ -171,10 +171,10 @@ namespace SIGMAF.Desktop
             AbrirOActivarForm<GananciasRepuestosForm>();
         }
 
-        private void AbrirMiListaComprasMotos()
+        private void AbrirEstadoResultadoMotos()
         {
-            this.Text = "SIGMAF – Mi Lista de compras MOTOS";
-            AbrirOActivarForm<MiListaComprasForm>();
+            this.Text = "SIGMAF – Estado resultado financiero MOTOS";
+            AbrirOActivarForm<EstadoResultadoFinancieroForm>();
         }
 
         private void AbrirSincronizacionMOTOS()

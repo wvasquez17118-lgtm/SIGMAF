@@ -67,7 +67,7 @@
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(1352, 28);
             label3.Name = "label3";
-            label3.Size = new Size(264, 20);
+            label3.Size = new Size(333, 25);
             label3.TabIndex = 0;
             label3.Text = "Listado inventarios repuestos motos";
             // 
@@ -78,7 +78,7 @@
             lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTotalProducto.Location = new Point(3935, 19);
             lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
+            lblTotalProducto.Size = new Size(76, 25);
             lblTotalProducto.TabIndex = 1;
             lblTotalProducto.Text = "Total: 0";
             // 
@@ -101,7 +101,7 @@
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 8);
             label1.Name = "label1";
-            label1.Size = new Size(301, 20);
+            label1.Size = new Size(379, 25);
             label1.TabIndex = 3;
             label1.Text = "Ganancias de ventas de respuestos motos";
             // 
@@ -129,9 +129,9 @@
             tableLayoutPanel1.Location = new Point(0, 37);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 38.4615364F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 38.46154F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 23.0769253F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.064518F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3870964F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.5483856F));
             tableLayoutPanel1.Size = new Size(914, 620);
             tableLayoutPanel1.TabIndex = 8;
             // 
@@ -139,9 +139,9 @@
             // 
             lsvData.Dock = DockStyle.Fill;
             lsvData.GridLines = true;
-            lsvData.Location = new Point(3, 479);
+            lsvData.Location = new Point(3, 415);
             lsvData.Name = "lsvData";
-            lsvData.Size = new Size(908, 138);
+            lsvData.Size = new Size(908, 202);
             lsvData.TabIndex = 0;
             lsvData.UseCompatibleStateImageBehavior = false;
             lsvData.View = View.Details;
@@ -161,7 +161,7 @@
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(908, 232);
+            tableLayoutPanel2.Size = new Size(908, 199);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // groupBox1
@@ -185,9 +185,9 @@
             // 
             chWaMA.AutoSize = true;
             chWaMA.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            chWaMA.Location = new Point(158, 31);
+            chWaMA.Location = new Point(109, 31);
             chWaMA.Name = "chWaMA";
-            chWaMA.Size = new Size(78, 24);
+            chWaMA.Size = new Size(96, 29);
             chWaMA.TabIndex = 12;
             chWaMA.Text = "WAMA";
             chWaMA.UseVisualStyleBackColor = true;
@@ -198,7 +198,7 @@
             chALTALIER.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             chALTALIER.Location = new Point(237, 31);
             chALTALIER.Name = "chALTALIER";
-            chALTALIER.Size = new Size(96, 24);
+            chALTALIER.Size = new Size(117, 29);
             chALTALIER.TabIndex = 11;
             chALTALIER.Text = "ALTALIER";
             chALTALIER.UseVisualStyleBackColor = true;
@@ -218,9 +218,9 @@
             // 
             dateFechaFinal.Anchor = AnchorStyles.Top;
             dateFechaFinal.Format = DateTimePickerFormat.Short;
-            dateFechaFinal.Location = new Point(567, 26);
+            dateFechaFinal.Location = new Point(599, 26);
             dateFechaFinal.Name = "dateFechaFinal";
-            dateFechaFinal.Size = new Size(131, 27);
+            dateFechaFinal.Size = new Size(131, 32);
             dateFechaFinal.TabIndex = 3;
             // 
             // label4
@@ -228,9 +228,9 @@
             label4.Anchor = AnchorStyles.Top;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(539, 31);
+            label4.Location = new Point(571, 31);
             label4.Name = "label4";
-            label4.Size = new Size(21, 20);
+            label4.Size = new Size(28, 25);
             label4.TabIndex = 2;
             label4.Text = "--";
             // 
@@ -238,9 +238,9 @@
             // 
             dateFechaInicio.Anchor = AnchorStyles.Top;
             dateFechaInicio.Format = DateTimePickerFormat.Short;
-            dateFechaInicio.Location = new Point(399, 26);
+            dateFechaInicio.Location = new Point(431, 26);
             dateFechaInicio.Name = "dateFechaInicio";
-            dateFechaInicio.Size = new Size(135, 27);
+            dateFechaInicio.Size = new Size(135, 32);
             dateFechaInicio.TabIndex = 1;
             // 
             // label2
@@ -248,11 +248,12 @@
             label2.Anchor = AnchorStyles.Top;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(339, 31);
+            label2.Location = new Point(363, 31);
             label2.Name = "label2";
-            label2.Size = new Size(56, 20);
+            label2.Size = new Size(71, 25);
             label2.TabIndex = 0;
             label2.Text = "Desde:";
+            label2.Click += label2_Click;
             // 
             // tableLayoutPanel3
             // 
@@ -270,7 +271,7 @@
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(902, 146);
+            tableLayoutPanel3.Size = new Size(902, 113);
             tableLayoutPanel3.TabIndex = 1;
             // 
             // btnUnidades
@@ -281,7 +282,7 @@
             btnUnidades.ForeColor = Color.White;
             btnUnidades.Location = new Point(678, 3);
             btnUnidades.Name = "btnUnidades";
-            btnUnidades.Size = new Size(221, 140);
+            btnUnidades.Size = new Size(221, 107);
             btnUnidades.TabIndex = 3;
             btnUnidades.Text = "Unidades\r\n\r0";
             btnUnidades.UseVisualStyleBackColor = false;
@@ -294,7 +295,7 @@
             btnGanancias.ForeColor = Color.White;
             btnGanancias.Location = new Point(453, 3);
             btnGanancias.Name = "btnGanancias";
-            btnGanancias.Size = new Size(219, 140);
+            btnGanancias.Size = new Size(219, 107);
             btnGanancias.TabIndex = 2;
             btnGanancias.Text = "Ganancias\r\n\r\nC$ 0";
             btnGanancias.UseVisualStyleBackColor = false;
@@ -307,7 +308,7 @@
             btnCostos.ForeColor = Color.White;
             btnCostos.Location = new Point(228, 3);
             btnCostos.Name = "btnCostos";
-            btnCostos.Size = new Size(219, 140);
+            btnCostos.Size = new Size(219, 107);
             btnCostos.TabIndex = 1;
             btnCostos.Text = "Costos\r\n\r\n0";
             btnCostos.UseVisualStyleBackColor = false;
@@ -320,7 +321,7 @@
             btnTotal.ForeColor = Color.White;
             btnTotal.Location = new Point(3, 3);
             btnTotal.Name = "btnTotal";
-            btnTotal.Size = new Size(219, 140);
+            btnTotal.Size = new Size(219, 107);
             btnTotal.TabIndex = 0;
             btnTotal.Text = "Total \r\n\r\n C$ 0";
             btnTotal.UseVisualStyleBackColor = false;
@@ -333,11 +334,11 @@
             tableLayoutPanel4.Controls.Add(panel2, 0, 0);
             tableLayoutPanel4.Controls.Add(panel3, 1, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(3, 241);
+            tableLayoutPanel4.Location = new Point(3, 208);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.Size = new Size(908, 232);
+            tableLayoutPanel4.Size = new Size(908, 201);
             tableLayoutPanel4.TabIndex = 2;
             // 
             // panel2
@@ -346,7 +347,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(3, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(357, 226);
+            panel2.Size = new Size(357, 195);
             panel2.TabIndex = 0;
             // 
             // panel3
@@ -354,12 +355,12 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(366, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(539, 226);
+            panel3.Size = new Size(539, 195);
             panel3.TabIndex = 1;
             // 
             // GananciasRepuestosForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(223, 232, 242);
             ClientSize = new Size(914, 657);

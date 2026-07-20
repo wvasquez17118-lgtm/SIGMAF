@@ -78,7 +78,7 @@ namespace SIGMAF.Desktop.MOTOS
             lsvData.Columns.Add("Precio Ganancia Total", 200);
 
             btnRefrescar_Click(null, null);
-          
+
         }
         public void RenderGananciaPorCategoria(List<CatResumen> items)
         {
@@ -260,7 +260,7 @@ namespace SIGMAF.Desktop.MOTOS
 
         private Color OxyToColor(OxyColor c) => Color.FromArgb(c.A, c.R, c.G, c.B);
 
-        private async  void btnRefrescar_Click(object sender, EventArgs e)
+        private async void btnRefrescar_Click(object sender, EventArgs e)
         {
             await CargarData();
         }
@@ -296,21 +296,26 @@ namespace SIGMAF.Desktop.MOTOS
                 .Select(x => x.ToVm())
                 .OrderByDescending(x => x.CantidadFmt)
                 .ToList();
- 
+
                     btnUnidades.Text = "Unidades " +
             "\n" +
             "\n" +
-            "" + data.Sum(p => p.CantidadFmt).ToString(); 
+            "" + data.Sum(p => p.CantidadFmt).ToString();
                     btnGanancias.Text = "Ganancias " +
             "\n" +
             "\n" +
             "C$ " + data.Sum(p => p.GananciaTotalFmt).ToString();
 
 
-                    btnTotal.Text =   "Total " +
+                    btnTotal.Text = "Total " +
             "\n" +
             "\n" +
-            "C$ " + data.Sum(p => p.TotalFmt).ToString(); data.Sum(p => p.PrecioFmt).ToString();
+            "C$ " + data.Sum(p => p.TotalFmt).ToString();
+
+                    btnCostos.Text = "Costo " +
+                        "\n" +
+                        "\n" +
+                        "C$ " + data.Select(p => (p.PrecioCompraFmt * p.CantidadFmt)).Sum(p => p).ToString();
 
 
                     List<CatResumen> resumen = data.GroupBy(p => new { p.Categoria }).Select(g => new CatResumen
@@ -321,7 +326,7 @@ namespace SIGMAF.Desktop.MOTOS
                         Color = ColorFromKey(g.Key.Categoria)
                     }).ToList();
 
-                 
+
 
                     RenderGananciaPorCategoria(resumen);
 
@@ -332,7 +337,7 @@ namespace SIGMAF.Desktop.MOTOS
                     {
                         var item = new ListViewItem(itemCat.IdCatalogoProducto);
                         item.SubItems.Add(itemCat.nombre_catalogo);
-                        item.SubItems.Add(itemCat.Cantidad); 
+                        item.SubItems.Add(itemCat.Cantidad);
                         item.SubItems.Add(itemCat.PrecioCompra);
                         item.SubItems.Add(itemCat.PrecioVentaUnit);
                         item.SubItems.Add(itemCat.GananciaUnit);
@@ -343,7 +348,7 @@ namespace SIGMAF.Desktop.MOTOS
                     lsvData.EndUpdate();
                     lsvData.Invalidate();
                     lsvData.Refresh();
-                     
+
                 }
                 finally
                 {
@@ -351,7 +356,7 @@ namespace SIGMAF.Desktop.MOTOS
                     this.Enabled = true;
                     this.UseWaitCursor = false;
                 }
-            } 
+            }
         }
         private static OxyColor ColorFromKey(string key)
         {
@@ -365,6 +370,11 @@ namespace SIGMAF.Desktop.MOTOS
             byte b = (byte)rnd.Next(60, 230);
 
             return OxyColor.FromRgb(r, g, b);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
