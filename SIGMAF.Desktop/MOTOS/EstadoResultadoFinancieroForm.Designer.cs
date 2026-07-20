@@ -177,6 +177,7 @@
             btnRefrescar.Size = new Size(96, 58);
             btnRefrescar.TabIndex = 12;
             btnRefrescar.UseVisualStyleBackColor = true;
+            btnRefrescar.Click += btnRefrescar_Click;
             // 
             // dateFechaFinal
             // 
