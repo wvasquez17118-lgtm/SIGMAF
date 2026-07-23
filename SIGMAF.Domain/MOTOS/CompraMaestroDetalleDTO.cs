@@ -30,6 +30,9 @@ namespace SIGMAF.Domain.MOTOS
         [JsonPropertyName("precio_venta")]
         public string PrecioVenta { get; set; } = string.Empty;
 
+        [JsonPropertyName("precio_venta_altalier")]
+        public string PrecioVentaAltalier { get; set; } = string.Empty;
+
         [JsonPropertyName("descripcion")]
         public string? Descripcion { get; set; }
 

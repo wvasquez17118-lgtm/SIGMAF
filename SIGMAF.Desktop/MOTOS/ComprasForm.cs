@@ -122,6 +122,7 @@ namespace SIGMAF.Desktop.MOTOS
                                  Cantidad = int.Parse(resul.Cantidad.Replace(".00","")),
                                  PrecioCompra = NumberHelper.ToDecimal(resul.PrecioCompra),
                                  PrecioVenta = NumberHelper.ToDecimal(resul.PrecioVenta),
+                                 PrecioVentaAltalier = NumberHelper.ToDecimal(resul.PrecioVentaAltalier),
                                  Total = NumberHelper.ToDecimal(resul.PrecioCompra) * int.Parse(resul.Cantidad.Replace(".00", "0")),
                              }).ToList();
 
@@ -301,12 +302,21 @@ namespace SIGMAF.Desktop.MOTOS
 
             var colPrecioVenta = new DataGridViewTextBoxColumn();
             colPrecioVenta.Name = "PrecioVenta";
-            colPrecioVenta.HeaderText = "Precio Venta";
+            colPrecioVenta.HeaderText = "Precio Venta Wama";
             colPrecioVenta.DataPropertyName = "PrecioVenta";
             colPrecioVenta.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             colPrecioVenta.FillWeight = 100;
             colPrecioCompra.ReadOnly = false;      // 👈 sí se edita
             dataGridProductosComprados.Columns.Add(colPrecioVenta);
+
+            var colPrecioVentaAltalier = new DataGridViewTextBoxColumn();
+            colPrecioVentaAltalier.Name = "PrecioVentaAltalier";
+            colPrecioVentaAltalier.HeaderText = "Precio Venta Altalier";
+            colPrecioVentaAltalier.DataPropertyName = "PrecioVentaAltalier";
+            colPrecioVentaAltalier.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colPrecioVentaAltalier.FillWeight = 100;
+            colPrecioVentaAltalier.ReadOnly = false;      // 👈 sí se edita
+            dataGridProductosComprados.Columns.Add(colPrecioVentaAltalier);
 
 
             var colTotal = new DataGridViewTextBoxColumn();
@@ -341,6 +351,7 @@ namespace SIGMAF.Desktop.MOTOS
             dataGridProductosComprados.Columns["Cantidad"].ReadOnly = false;
             dataGridProductosComprados.Columns["PrecioCompra"].ReadOnly = false;
             dataGridProductosComprados.Columns["PrecioVenta"].ReadOnly = false;
+            dataGridProductosComprados.Columns["PrecioVentaAltalier"].ReadOnly = false;
 
             dataGridProductosComprados.EnableHeadersVisualStyles = false; // importante
             dataGridProductosComprados.ColumnHeadersDefaultCellStyle.Font =
@@ -496,6 +507,7 @@ namespace SIGMAF.Desktop.MOTOS
                 Producto = nombreServicio ?? "",
                 PrecioCompra = 0,
                 PrecioVenta = 0,
+                PrecioVentaAltalier = 0,
             });
         }
 
@@ -604,16 +616,17 @@ namespace SIGMAF.Desktop.MOTOS
                 int cantidad = GetInt(row, "Cantidad");
                 decimal precioCompra = GetDecimal(row, "PrecioCompra");
                 decimal precioVenta = GetDecimal(row, "PrecioVenta");
+                decimal precioVentaAltalier = GetDecimal(row, "PrecioVentaAltalier");
                 decimal total = GetDecimal(row, "Total");
 
                 // ✅ Validaciones de no-cero
-                if (cantidad <= 0 || precioCompra <= 0 || precioVenta <= 0 || total <= 0)
+                if (cantidad <= 0 || precioCompra <= 0 || precioVenta <= 0 || total <= 0 || precioVentaAltalier <= 0)
                 {
                     string producto = row.Cells["Producto"].Value?.ToString() ?? "(sin nombre)";
                     MessageBox.Show(
                         $"Revisa el producto: {producto}\n" +
                         $"No se permite Cantidad / PrecioCompra / PrecioVenta / Total en 0.\n\n" +
-                        $"Cantidad: {cantidad}\nPrecio Compra: {precioCompra}\nPrecio Venta: {precioVenta}\nTotal: {total}",
+                        $"Cantidad: {cantidad}\nPrecio Compra: {precioCompra}\nPrecio Venta Wama: {precioVenta}\nPrecio Venta Altalier: {precioVentaAltalier}\nTotal: {total}",
                         "Validación",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
@@ -638,6 +651,7 @@ namespace SIGMAF.Desktop.MOTOS
                     Cantidad = cantidad,
                     PrecioCompra = precioCompra,
                     PrecioVenta = precioVenta,
+                    PrecioVentaAltalier = precioVentaAltalier,
                     Total = total
                 };
 

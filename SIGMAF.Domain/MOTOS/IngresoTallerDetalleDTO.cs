@@ -10,6 +10,7 @@
         public int Cantidad { get; set; }
         public decimal PrecioCompra {  get; set; }
         public decimal PrecioVenta { get; set; }
+        public decimal PrecioVentaAltalier { get; set; }
         public decimal Total { get; set; }
     }
 }

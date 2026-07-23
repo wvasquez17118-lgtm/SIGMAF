@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            lblTotalProducto = new Label();
             lblTituloCompra = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -79,24 +78,12 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.ActiveCaption;
-            panel1.Controls.Add(lblTotalProducto);
             panel1.Controls.Add(lblTituloCompra);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(978, 44);
             panel1.TabIndex = 4;
-            // 
-            // lblTotalProducto
-            // 
-            lblTotalProducto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblTotalProducto.AutoSize = true;
-            lblTotalProducto.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotalProducto.Location = new Point(1793, 19);
-            lblTotalProducto.Name = "lblTotalProducto";
-            lblTotalProducto.Size = new Size(61, 20);
-            lblTotalProducto.TabIndex = 1;
-            lblTotalProducto.Text = "Total: 0";
             // 
             // lblTituloCompra
             // 
@@ -189,9 +176,9 @@
             btnGuardar.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnGuardar.Image = Properties.Resources.icon_save;
             btnGuardar.ImageAlign = ContentAlignment.TopCenter;
-            btnGuardar.Location = new Point(0, 226);
+            btnGuardar.Location = new Point(3, 223);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(483, 55);
+            btnGuardar.Size = new Size(474, 55);
             btnGuardar.TabIndex = 10;
             btnGuardar.Text = "GUARDAR";
             btnGuardar.TextAlign = ContentAlignment.BottomCenter;
@@ -205,12 +192,12 @@
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.Controls.Add(groupBox3, 0, 0);
             tableLayoutPanel3.Controls.Add(groupBox4, 1, 0);
-            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLayoutPanel3.Location = new Point(3, 23);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.Size = new Size(474, 255);
+            tableLayoutPanel3.Size = new Size(474, 197);
             tableLayoutPanel3.TabIndex = 0;
             // 
             // groupBox3
@@ -224,7 +211,7 @@
             groupBox3.Dock = DockStyle.Fill;
             groupBox3.Location = new Point(3, 3);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(231, 249);
+            groupBox3.Size = new Size(231, 191);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             // 
@@ -295,7 +282,7 @@
             groupBox4.Dock = DockStyle.Fill;
             groupBox4.Location = new Point(240, 3);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(231, 249);
+            groupBox4.Size = new Size(231, 191);
             groupBox4.TabIndex = 1;
             groupBox4.TabStop = false;
             // 
@@ -488,7 +475,6 @@
         #endregion
 
         private Panel panel1;
-        private Label lblTotalProducto;
         private Label lblTituloCompra;
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;

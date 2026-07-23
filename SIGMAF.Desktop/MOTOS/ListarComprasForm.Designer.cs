@@ -71,7 +71,7 @@
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(12, 20);
             label3.Name = "label3";
-            label3.Size = new Size(275, 25);
+            label3.Size = new Size(276, 25);
             label3.TabIndex = 0;
             label3.Text = "Listado de compras (Facturas)";
             // 
@@ -94,21 +94,22 @@
             // 
             // contextMenuStrip1
             // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { editarCompraFacturaToolStripMenuItem, aplicarCompraFacturaToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(206, 70);
+            contextMenuStrip1.Size = new Size(242, 80);
             // 
             // editarCompraFacturaToolStripMenuItem
             // 
             editarCompraFacturaToolStripMenuItem.Name = "editarCompraFacturaToolStripMenuItem";
-            editarCompraFacturaToolStripMenuItem.Size = new Size(205, 22);
+            editarCompraFacturaToolStripMenuItem.Size = new Size(241, 24);
             editarCompraFacturaToolStripMenuItem.Text = "Editar compra (Factura)";
             editarCompraFacturaToolStripMenuItem.Click += editarCompraFacturaToolStripMenuItem_Click;
             // 
             // aplicarCompraFacturaToolStripMenuItem
             // 
             aplicarCompraFacturaToolStripMenuItem.Name = "aplicarCompraFacturaToolStripMenuItem";
-            aplicarCompraFacturaToolStripMenuItem.Size = new Size(205, 22);
+            aplicarCompraFacturaToolStripMenuItem.Size = new Size(241, 24);
             aplicarCompraFacturaToolStripMenuItem.Text = "Aplicar compra (Factura)";
             aplicarCompraFacturaToolStripMenuItem.Click += aplicarCompraFacturaToolStripMenuItem_Click;
             // 
