@@ -375,7 +375,7 @@ namespace SIGMAF.Desktop.MOTOS
 
             string colName = dataGridProductosComprados.Columns[e.ColumnIndex].Name;
 
-            if (colName == "Cantidad" || colName == "PrecioCompra" || colName == "PrecioVenta")
+            if (colName == "Cantidad" || colName == "PrecioCompra" || colName == "PrecioVenta" || colName == "PrecioVentaAltalier")
             {
                 RecalcularFila(e.RowIndex);
                 RecalcularTotales();
@@ -472,6 +472,14 @@ namespace SIGMAF.Desktop.MOTOS
             {
                 colPrecioVenta.DefaultCellStyle.Format = "N2";
                 colPrecioVenta.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+
+            // PrecioVentaAltalier
+            var colPrecioVentaAltalier = dataGridProductosComprados.Columns["PrecioVentaAltalier"];
+            if (colPrecioVentaAltalier != null)
+            {
+                colPrecioVentaAltalier.DefaultCellStyle.Format = "N2";
+                colPrecioVentaAltalier.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             }
 
             // Total

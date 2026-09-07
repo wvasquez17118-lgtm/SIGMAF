@@ -103,6 +103,7 @@ namespace SIGMAF.Desktop
             flowMenu.Controls.Add(CreateRibbonButton("Inventarios", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirInventarioRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Ganancias", SIGMAF.Desktop.Properties.Resources.icon_ganancias, () => AbrirGanaciasRepuestoMotos()));
             flowMenu.Controls.Add(CreateRibbonButton("Resultado", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirEstadoResultadoMotos()));
+            flowMenu.Controls.Add(CreateRibbonButton("Gastos", SIGMAF.Desktop.Properties.Resources.icon_inventory, () => AbrirRegistrosGastosMotos()));
 
             //.Controls.Add(CreateRibbonButton("Sincronización", SIGMAF.Desktop.Properties.Resources.icon_sincronizacion, () => AbrirSincronizacionMOTOS()));
             flowMenu.ResumeLayout();
@@ -144,37 +145,43 @@ namespace SIGMAF.Desktop
 
         private void AbrirCatalogosMotos()
         {
-            this.Text = "SIGMAF – Catálogos repuestos MOTOS";
+            this.Text = "SIGMAF – Catálogos repuestos - MOTOS";
             AbrirOActivarForm<CatalogoMotosForm>();
         }
 
         private void AbrirVentaRepuestoMotos()
         {
-            this.Text = "SIGMAF – Listado ventas MOTOS";
+            this.Text = "SIGMAF – Listado ventas - MOTOS";
             AbrirOActivarForm<ListaVentasForm>();
         }
 
         private void AbrirAgregarComprasMotos()
         {
-            this.Text = "SIGMAF – Listar compras MOTOS";
+            this.Text = "SIGMAF – Listar compras - MOTOS";
             AbrirOActivarForm<ListarComprasForm>();
         }
         private void AbrirInventarioRepuestoMotos()
         {
-            this.Text = "SIGMAF – Inventario repuestos MOTOS";
+            this.Text = "SIGMAF – Inventario repuestos - MOTOS";
             AbrirOActivarForm<InventarioRepuestoMotoForm>();
         }
 
         private void AbrirGanaciasRepuestoMotos()
         {
-            this.Text = "SIGMAF – Ganancias repuestos MOTOS";
+            this.Text = "SIGMAF – Ganancias repuestos - MOTOS";
             AbrirOActivarForm<GananciasRepuestosForm>();
         }
 
         private void AbrirEstadoResultadoMotos()
         {
-            this.Text = "SIGMAF – Estado resultado financiero MOTOS";
+            this.Text = "SIGMAF – Estado resultado financiero - MOTOS";
             AbrirOActivarForm<EstadoResultadoFinancieroForm>();
+        }
+
+        private void AbrirRegistrosGastosMotos()
+        {
+            this.Text = "SIGMAF – Registros de gatos - MOTOS";
+            AbrirOActivarForm<RegistrosGastosForm>();
         }
 
         private void AbrirSincronizacionMOTOS()
